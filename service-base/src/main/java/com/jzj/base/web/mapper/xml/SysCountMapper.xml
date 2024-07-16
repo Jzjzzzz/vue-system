@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.base.web.mapper.SysCountMapper">
+    <resultMap id="sysCountResult" type="com.jzj.base.web.pojo.entity.SysCount">
+        <id     property="id"      column="id"      />
+        <result property="articleCount" column="article_count"/>
+        <result property="clickCount" column="click_count"/>
+        <result property="summaryCount" column="summary_count"/>
+        <result property="userCount" column="user_count"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="createTime" column="create_time"/>
+        <result property="clickDayCount" column="click_day_count"/>
+        <result property="likeDayCount" column="like_day_count"/>
+    </resultMap>
+    <sql id="selectSysCountVo">
+        SELECT
+            id,
+            article_count,
+            click_count,
+            summary_count,
+            user_count,
+            like_count,
+            create_time,
+            click_day_count,
+            like_day_count
+        FROM
+            sys_count
+    </sql>
+    <select id="getBeforeDayCount" resultType="com.jzj.base.web.pojo.entity.SysCount">
+        <include refid="selectSysCountVo"/>
+        WHERE
+            TO_DAYS( create_time ) = TO_DAYS(NOW())-1
+        LIMIT 1
+    </select>
+    <select id="getSevenCount" resultType="com.jzj.base.web.pojo.entity.SysCount">
+        SELECT
+        *
+        FROM
+        `sys_count`
+        WHERE
+        TO_DAYS( create_time ) &lt;= TO_DAYS( NOW())- 1 AND TO_DAYS( create_time ) &gt;= TO_DAYS(NOW())- 7
+        ORDER BY create_time
+    </select>
+    <select id="getNowDateCount" resultType="com.jzj.base.web.pojo.entity.SysCount">
+        SELECT * FROM `sys_count` WHERE DATE(create_time) = CURDATE()
+    </select>
+</mapper>
