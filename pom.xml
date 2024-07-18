@@ -25,7 +25,7 @@
         <jwt.version>0.7.0</jwt.version>
         <commons-lang.version>2.6</commons-lang.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
-        <velocity.version>2.0</velocity.version>
+        <velocity.version>2.3</velocity.version>
         <lombok.version>1.18.20</lombok.version>
         <fastjson.version>1.2.83</fastjson.version>
         <swagger.version>2.9.2</swagger.version>
@@ -33,6 +33,7 @@
         <mysql.version>8.0.33</mysql.version>
         <druid.version>1.2.6</druid.version>
         <commons-pool2.version>2.10.0</commons-pool2.version>
+        <commons.io.version>2.13.0</commons.io.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -161,6 +162,12 @@
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>
                 <version>1.7.2</version>
+            </dependency>
+            <!-- io常用工具类 -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,7 +1,6 @@
 package com.jzj.base.utils.properties;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -12,8 +11,7 @@ import org.springframework.stereotype.Component;
  * @Version 1.0
  * @Message: 阿里云OSS配置参数类
  */
-@Setter
-@Getter
+@Data
 @Component
 @ConfigurationProperties(prefix = "aliyun.oss")
 public class AliYunOssProperties implements InitializingBean {
