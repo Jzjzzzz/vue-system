@@ -1,5 +1,7 @@
 package com.jzj.base.web.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.aliyun.oss.ServiceException;
 import com.jzj.base.factory.VelocityFactory;
 import com.jzj.base.utils.constant.Constants;
@@ -7,12 +9,14 @@ import com.jzj.base.utils.constant.GenConstants;
 import com.jzj.base.utils.sign.GenUtils;
 import com.jzj.base.utils.sign.StringUtils;
 import com.jzj.base.utils.sign.VelocityUtils;
+import com.jzj.base.utils.text.CharsetKit;
 import com.jzj.base.web.mapper.GenTableColumnMapper;
 import com.jzj.base.web.mapper.GenTableMapper;
 import com.jzj.base.web.pojo.entity.GenTable;
 import com.jzj.base.web.pojo.entity.GenTableColumn;
 import com.jzj.base.web.service.GenTableService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -22,9 +26,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -130,6 +137,199 @@ public class GenTableServiceImpl implements GenTableService {
         }
         IOUtils.closeQuietly(zip);
         return outputStream.toByteArray();
+    }
+
+    /**
+     * 创建表
+     *
+     * @param sql 创建表语句
+     * @return 结果
+     */
+    @Override
+    public boolean createTable(String sql) {
+        return genTableMapper.createTable(sql) == 0;
+    }
+
+    /**
+     * 预览代码
+     *
+     * @param tableId 表编号
+     * @return 预览数据列表
+     */
+    @Override
+    public Map<String, String> previewCode(Long tableId) {
+        Map<String, String> dataMap = new LinkedHashMap<>();
+        // 查询表信息
+        GenTable table = genTableMapper.selectGenTableById(tableId);
+        // 设置主子表信息
+        setSubTable(table);
+        // 设置主键列信息
+        setPkColumn(table);
+        VelocityFactory.initVelocity();
+
+        VelocityContext context = VelocityUtils.prepareContext(table);
+
+        // 获取模板列表
+        List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory(), table.getTplWebType());
+        for (String template : templates)
+        {
+            // 渲染模板
+            StringWriter sw = new StringWriter();
+            Template tpl = Velocity.getTemplate(template, Constants.UTF8);
+            tpl.merge(context, sw);
+            dataMap.put(template, sw.toString());
+        }
+        return dataMap;
+    }
+
+    /**
+     * 查询业务信息
+     *
+     * @param id 业务ID
+     * @return 业务信息
+     */
+    @Override
+    public GenTable selectGenTableById(Long id) {
+        GenTable genTable = genTableMapper.selectGenTableById(id);
+        setTableFromOptions(genTable);
+        return genTable;
+    }
+
+    @Override
+    public List<GenTable> selectGenTableAll() {
+        return genTableMapper.selectGenTableAll();
+    }
+
+    /**
+     * 修改保存参数校验
+     *
+     * @param genTable 业务信息
+     */
+    @Override
+    public void validateEdit(GenTable genTable) {
+        if (GenConstants.TPL_TREE.equals(genTable.getTplCategory()))
+        {
+            String options = JSON.toJSONString(genTable.getParams());
+            JSONObject paramsObj = JSON.parseObject(options);
+            if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_CODE)))
+            {
+                throw new ServiceException("树编码字段不能为空");
+            }
+            else if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_PARENT_CODE)))
+            {
+                throw new ServiceException("树父编码字段不能为空");
+            }
+            else if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_NAME)))
+            {
+                throw new ServiceException("树名称字段不能为空");
+            }
+            else if (GenConstants.TPL_SUB.equals(genTable.getTplCategory()))
+            {
+                if (StringUtils.isEmpty(genTable.getSubTableName()))
+                {
+                    throw new ServiceException("关联子表的表名不能为空");
+                }
+                else if (StringUtils.isEmpty(genTable.getSubTableFkName()))
+                {
+                    throw new ServiceException("子表关联的外键名不能为空");
+                }
+            }
+        }
+    }
+
+    @Override
+    public void updateGenTable(GenTable genTable) {
+        String options = JSON.toJSONString(genTable.getParams());
+        genTable.setOptions(options);
+        int row = genTableMapper.updateGenTable(genTable);
+        if (row > 0)
+        {
+            for (GenTableColumn cenTableColumn : genTable.getColumns())
+            {
+                genTableColumnMapper.updateGenTableColumn(cenTableColumn);
+            }
+        }
+    }
+
+    /**
+     * 生成代码（自定义路径）
+     *
+     * @param tableName 表名称
+     */
+    @Override
+    public void generatorCode(String tableName) {
+        // 查询表信息
+        GenTable table = genTableMapper.selectGenTableByName(tableName);
+        // 设置主子表信息
+        setSubTable(table);
+        // 设置主键列信息
+        setPkColumn(table);
+
+        VelocityFactory.initVelocity();
+
+        VelocityContext context = VelocityUtils.prepareContext(table);
+
+        // 获取模板列表
+        List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory(), table.getTplWebType());
+        for (String template : templates)
+        {
+            if (!StringUtils.containsAny(template, "sql.vm", "api.js.vm", "index.vue.vm", "index-tree.vue.vm"))
+            {
+                // 渲染模板
+                StringWriter sw = new StringWriter();
+                Template tpl = Velocity.getTemplate(template, Constants.UTF8);
+                tpl.merge(context, sw);
+                try
+                {
+                    String path = getGenPath(table, template);
+                    FileUtils.writeStringToFile(new File(path), sw.toString(), CharsetKit.UTF_8);
+                }
+                catch (IOException e)
+                {
+                    throw new ServiceException("渲染模板失败，表名：" + table.getTableName());
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取代码生成地址
+     *
+     * @param table 业务表信息
+     * @param template 模板文件路径
+     * @return 生成地址
+     */
+    private String getGenPath(GenTable table, String template) {
+        String genPath = table.getGenPath();
+        if (StringUtils.equals(genPath, "/"))
+        {
+            return System.getProperty("user.dir") + File.separator + "src" + File.separator + VelocityUtils.getFileName(template, table);
+        }
+        return genPath + File.separator + VelocityUtils.getFileName(template, table);
+    }
+
+
+    /**
+     * 设置代码生成其他选项值
+     *
+     * @param genTable 设置后的生成对象
+     */
+    public void setTableFromOptions(GenTable genTable) {
+        JSONObject paramsObj = JSON.parseObject(genTable.getOptions());
+        if (StringUtils.isNotNull(paramsObj))
+        {
+            String treeCode = paramsObj.getString(GenConstants.TREE_CODE);
+            String treeParentCode = paramsObj.getString(GenConstants.TREE_PARENT_CODE);
+            String treeName = paramsObj.getString(GenConstants.TREE_NAME);
+            String parentMenuId = paramsObj.getString(GenConstants.PARENT_MENU_ID);
+            String parentMenuName = paramsObj.getString(GenConstants.PARENT_MENU_NAME);
+
+            genTable.setTreeCode(treeCode);
+            genTable.setTreeParentCode(treeParentCode);
+            genTable.setTreeName(treeName);
+            genTable.setParentMenuId(parentMenuId);
+            genTable.setParentMenuName(parentMenuName);
+        }
     }
 
     /**

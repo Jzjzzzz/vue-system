@@ -15,17 +15,30 @@ import org.springframework.stereotype.Component;
 @Data
 @ConfigurationProperties(prefix = "gen")
 public class GenProperties implements InitializingBean {
-    /** 作者 */
+    /**
+     * 作者
+     */
     private String author;
 
-    /** 生成包路径 */
+    /**
+     * 生成包路径
+     */
     private String packageName;
 
-    /** 自动去除表前缀，默认是false */
+    /**
+     * 自动去除表前缀，默认是false
+     */
     private boolean autoRemovePre;
 
-    /** 表前缀(类名不会包含表前缀) */
+    /**
+     * 表前缀(类名不会包含表前缀)
+     */
     private String tablePrefix;
+
+    /**
+     * 持久层框架(0-mybatis,1-mybatis-plus)
+     */
+    private String ormType;
 
     public static String AUTHOR;
 
@@ -35,6 +48,8 @@ public class GenProperties implements InitializingBean {
 
     public static String TABLE_PRE_FIX;
 
+    public static String ORM_TYPE;
+
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -42,5 +57,6 @@ public class GenProperties implements InitializingBean {
         PACKAGE_NAME = packageName;
         AUTO_REMOVE_PRE = autoRemovePre;
         TABLE_PRE_FIX = tablePrefix;
+        ORM_TYPE = ormType;
     }
 }

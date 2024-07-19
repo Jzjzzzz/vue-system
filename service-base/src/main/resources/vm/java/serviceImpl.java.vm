@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import java.util.Arrays;
 #if($table.sub)
 import java.util.ArrayList;
 import com.jzj.base.utils.sign.StringUtils;
@@ -33,9 +34,12 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${Cl
      * @return ${functionName}
      */
     @Override
-    public ${ClassName} select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField})
-    {
+    public ${ClassName} select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField}) {
+#if($ormType =='1')
+        return ${className}Mapper.selectById(${pkColumn.javaField});
+#else
         return ${className}Mapper.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField});
+#end
     }
 
     /**
@@ -45,8 +49,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${Cl
      * @return ${functionName}
      */
     @Override
-    public List<${ClassName}> select${ClassName}List(${ClassName} ${className})
-    {
+    public List<${ClassName}> select${ClassName}List(${ClassName} ${className}) {
         return ${className}Mapper.select${ClassName}List(${className});
     }
 
@@ -60,14 +63,17 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${Cl
     @Transactional
 #end
     @Override
-    public int insert${ClassName}(${ClassName} ${className})
-    {
+    public int insert${ClassName}(${ClassName} ${className}) {
+#if($ormType =='1')
+        return ${className}Mapper.insert(${className});
+#else
 #if($table.sub)
         int rows = ${className}Mapper.insert${ClassName}(${className});
         insert${subClassName}(${className});
         return rows;
 #else
         return ${className}Mapper.insert${ClassName}(${className});
+#end
 #end
     }
 
@@ -81,13 +87,17 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${Cl
     @Transactional
 #end
     @Override
-    public int update${ClassName}(${ClassName} ${className})
-    {
+    public int update${ClassName}(${ClassName} ${className}) {
+#if($ormType =='1')
+        return ${className}Mapper.updateById(${className});
+#else
 #if($table.sub)
         ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}());
         insert${subClassName}(${className});
-#end
+#else
         return ${className}Mapper.update${ClassName}(${className});
+#end
+#end
     }
 
     /**
@@ -100,12 +110,16 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${Cl
     @Transactional
 #end
     @Override
-    public int delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaType}[] ${pkColumn.javaField}s)
-    {
-#if($table.sub)
+    public int delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaType}[] ${pkColumn.javaField}s) {
+#if($ormType =='1')
+        return ${className}Mapper.deleteBatchIds(Arrays.asList(${pkColumn.javaField}s));
+#else
+    #if($table.sub)
         ${className}Mapper.delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaField}s);
-#end
+#else
         return ${className}Mapper.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s);
+#end
+#end
     }
 
     /**
@@ -118,12 +132,16 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${Cl
     @Transactional
 #end
     @Override
-    public int delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField})
-    {
-#if($table.sub)
+    public int delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField}) {
+#if($ormType =='1')
+        return ${className}Mapper.deleteById(${pkColumn.javaField});
+#else
+    #if($table.sub)
         ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${pkColumn.javaField});
-#end
+#else
         return ${className}Mapper.delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField});
+#end
+#end
     }
 #if($table.sub)
 
@@ -132,8 +150,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${Cl
      * 
      * @param ${className} ${functionName}对象
      */
-    public void insert${subClassName}(${ClassName} ${className})
-    {
+    public void insert${subClassName}(${ClassName} ${className}) {
         List<${subClassName}> ${subclassName}List = ${className}.get${subClassName}List();
         ${pkColumn.javaType} ${pkColumn.javaField} = ${className}.get${pkColumn.capJavaField}();
         if (StringUtils.isNotNull(${subclassName}List))

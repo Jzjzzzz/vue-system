@@ -159,3 +159,5 @@ gen:
   autoRemovePre: false
   # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
   tablePrefix: sys_
+  # 持久层框架(0-mybatis,1-mybatis-plus)
+  ormType: 1

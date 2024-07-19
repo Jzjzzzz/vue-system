@@ -110,6 +110,9 @@ public class GenTable extends BaseEntity {
     @ApiModelProperty(value = "上级菜单名称字段")
     private String parentMenuName;
 
+    @ApiModelProperty(value = "持久层框架(0-mybatis,1-mybatis-plus)")
+    private String ormType;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;

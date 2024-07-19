@@ -34,10 +34,8 @@ export default {
       }
       createTable({ sql: this.content }).then(res => {
         this.$modal.msgSuccess(res.msg);
-        if (res.code === 200) {
-          this.visible = false;
-          this.$emit("ok");
-        }
+        this.visible = false;
+        this.$emit("ok");
       });
     }
   }

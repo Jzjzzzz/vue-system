@@ -240,6 +240,10 @@ export default {
     };
   },
   created() {
+    let num = this.$route.query.pageNum;
+    if(num != null) {
+      this.queryParams.pageNum = Number(num);
+    }
     this.getList();
   },
   activated() {
