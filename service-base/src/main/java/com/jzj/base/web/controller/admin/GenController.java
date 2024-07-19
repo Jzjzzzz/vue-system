@@ -15,6 +15,7 @@ import com.jzj.base.web.pojo.enums.BusinessType;
 import com.jzj.base.web.pojo.page.TableDataInfo;
 import com.jzj.base.web.service.GenTableColumnService;
 import com.jzj.base.web.service.GenTableService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,8 @@ public class GenController extends BaseController {
     @Autowired
     private GenTableColumnService genTableColumnService;
 
-
-
-    /**
-     * 查询代码生成列表
-     */
+    @PreAuthorize("hasAuthority('btn.gen.list')")
+    @ApiOperation("查询代码生成列表")
     @GetMapping("/list")
     @ResponseBody
     public TableDataInfo genList(GenTable genTable) {
@@ -59,10 +57,8 @@ public class GenController extends BaseController {
         return getDataTable(list);
     }
 
-
-    /**
-     * 查询数据库列表
-     */
+    @PreAuthorize("hasAuthority('btn.gen.list')")
+    @ApiOperation("查询数据库列表")
     @GetMapping("/db/list")
     @ResponseBody
     public TableDataInfo dataList(GenTable genTable){
@@ -71,9 +67,8 @@ public class GenController extends BaseController {
         return getDataTable(list);
     }
 
-    /**
-     * 导入表结构（保存）
-     */
+    @PreAuthorize("hasAuthority('btn.gen.import')")
+    @ApiOperation("导入表结构（保存）")
     @Log(title = "代码生成", businessType = BusinessType.IMPORT)
     @PostMapping("/importTable")
     public R importTableSave(String tables) {
@@ -84,9 +79,8 @@ public class GenController extends BaseController {
         return success();
     }
 
-    /**
-     * 删除代码生成
-     */
+    @PreAuthorize("hasAuthority('btn.gen.del')")
+    @ApiOperation("删除代码生成")
     @Log(title = "代码生成", businessType = BusinessType.DELETE)
     @DeleteMapping("/{tableIds}")
     public R remove(@PathVariable Long [] tableIds){
@@ -94,6 +88,8 @@ public class GenController extends BaseController {
         return success();
     }
 
+    @PreAuthorize("hasAuthority('btn.gen.gen')")
+    @ApiOperation("生成代码（zip）")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/download/{tableName}")
     public void download(HttpServletResponse response,@PathVariable("tableName") String tableName) {
@@ -101,9 +97,8 @@ public class GenController extends BaseController {
         genCode(response, data);
     }
 
-    /**
-     * 生成代码（自定义路径）
-     */
+    @PreAuthorize("hasAuthority('btn.gen.gen')")
+    @ApiOperation("生成代码（自定义路径）")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/genCode/{tableName}")
     public R genCode(@PathVariable("tableName") String tableName)
@@ -112,9 +107,8 @@ public class GenController extends BaseController {
         return success();
     }
 
-    /**
-     * 批量生成代码
-     */
+    @PreAuthorize("hasAuthority('btn.gen.gen')")
+    @ApiOperation("批量生成代码")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/batchGenCode")
     public void batchGenCode(HttpServletResponse response, String tables) {
@@ -123,9 +117,8 @@ public class GenController extends BaseController {
         genCode(response, data);
     }
 
-    /**
-     * 创建表结构（保存）
-     */
+    @PreAuthorize("hasAuthority('btn.gen.sql')")
+    @ApiOperation("创建表结构（保存）")
     @Log(title = "创建表", businessType = BusinessType.OTHER)
     @PostMapping("/createTable")
     public R createTableSave(String sql) {
@@ -158,18 +151,16 @@ public class GenController extends BaseController {
         }
     }
 
-    /**
-     * 预览代码
-     */
+    @PreAuthorize("hasAuthority('btn.gen.list')")
+    @ApiOperation("预览代码")
     @GetMapping("/preview/{tableId}")
     public R preview(@PathVariable("tableId") Long tableId) throws IOException {
         Map<String, String> dataMap = genTableService.previewCode(tableId);
         return R.ok(dataMap);
     }
 
-    /**
-     * 修改代码生成业务
-     */
+    @PreAuthorize("hasAuthority('btn.gen.edit')")
+    @ApiOperation("修改代码生成业务")
     @GetMapping(value = "/{tableId}")
     public R getInfo(@PathVariable Long tableId) {
         GenTable table = genTableService.selectGenTableById(tableId);
@@ -182,14 +173,23 @@ public class GenController extends BaseController {
         return R.ok(map);
     }
 
-    /**
-     * 修改保存代码生成业务
-     */
+    @PreAuthorize("hasAuthority('btn.gen.edit')")
+    @ApiOperation("修改保存代码生成业务")
     @Log(title = "代码生成", businessType = BusinessType.UPDATE)
     @PutMapping
     public R editSave(@Validated @RequestBody GenTable genTable) {
         genTableService.validateEdit(genTable);
         genTableService.updateGenTable(genTable);
+        return success();
+    }
+
+    @PreAuthorize("hasAuthority('btn.gen.sync')")
+    @ApiOperation("同步数据库")
+    @Log(title = "代码生成", businessType = BusinessType.UPDATE)
+    @GetMapping("/synchDb/{tableName}")
+    public R synchDb(@PathVariable("tableName") String tableName)
+    {
+        genTableService.synchDb(tableName);
         return success();
     }
 

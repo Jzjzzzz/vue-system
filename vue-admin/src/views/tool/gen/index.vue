@@ -41,8 +41,8 @@
           plain
           icon="el-icon-download"
           size="mini"
-          :disabled="multiple"
           @click="handleGenTable"
+          :disabled="multiple || $hasBP('btn.gen.gen')  === false"
         >生成</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -52,6 +52,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="openCreateTable"
+          :disabled="$hasBP('btn.gen.sql')  === false"
         >创建</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -61,6 +62,7 @@
           icon="el-icon-upload"
           size="mini"
           @click="openImportTable"
+          :disabled="$hasBP('btn.gen.import')  === false"
         >导入</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -69,8 +71,8 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
           @click="handleEditTable"
+          :disabled="single || $hasBP('btn.gen.edit')  === false"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -79,8 +81,8 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
           @click="handleDelete"
+          :disabled="multiple || $hasBP('btn.gen.del')  === false"
         >删除</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -131,30 +133,35 @@
             size="small"
             icon="el-icon-view"
             @click="handlePreview(scope.row)"
+            :disabled="$hasBP('btn.gen.list')  === false"
           >预览</el-button>
           <el-button
             type="text"
             size="small"
             icon="el-icon-edit"
             @click="handleEditTable(scope.row)"
+            :disabled="$hasBP('btn.gen.edit')  === false"
           >编辑</el-button>
           <el-button
             type="text"
             size="small"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            :disabled="$hasBP('btn.gen.del')  === false"
           >删除</el-button>
           <el-button
             type="text"
             size="small"
             icon="el-icon-refresh"
             @click="handleSynchDb(scope.row)"
+            :disabled="$hasBP('btn.gen.sync')  === false"
           >同步</el-button>
           <el-button
             type="text"
             size="small"
             icon="el-icon-download"
             @click="handleGenTable(scope.row)"
+            :disabled="$hasBP('btn.gen.gen')  === false"
           >生成代码</el-button>
         </template>
       </el-table-column>

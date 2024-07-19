@@ -11,31 +11,11 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 18/07/2024 14:44:45
+ Date: 19/07/2024 17:20:31
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for friend_link
--- ----------------------------
-DROP TABLE IF EXISTS `friend_link`;
-CREATE TABLE `friend_link`  (
-  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'id',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '链接名称',
-  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '链接',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
-  `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '状态',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '友情链接' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of friend_link
--- ----------------------------
-INSERT INTO `friend_link` VALUES ('d855c662eddc70853cee7304bb1c1b05', 'Jzjzzzz1', 'https://www.jzjzzzz.icu/', '2022-09-10 00:50:33', '2022-09-10 00:50:33', '1');
-INSERT INTO `friend_link` VALUES ('dd33dabc16073267de0711c30709b446', 'Ashinch', 'https://ash7.io/', '2022-12-02 16:04:10', '2023-06-01 00:13:46', '1');
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -63,8 +43,9 @@ CREATE TABLE `gen_table`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `orm_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '持久层框架(0-mybatis,1-mybatis-plus)',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gen_table
@@ -98,7 +79,7 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 194 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -115,7 +96,7 @@ CREATE TABLE `qrtz_blob_triggers`  (
   `BLOB_DATA` blob NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_blob_triggers
@@ -130,7 +111,7 @@ CREATE TABLE `qrtz_calendars`  (
   `CALENDAR_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `CALENDAR` blob NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_calendars
@@ -148,7 +129,7 @@ CREATE TABLE `qrtz_cron_triggers`  (
   `TIME_ZONE_ID` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_cron_triggers
@@ -173,7 +154,7 @@ CREATE TABLE `qrtz_fired_triggers`  (
   `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `ENTRY_ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_fired_triggers
@@ -195,7 +176,7 @@ CREATE TABLE `qrtz_job_details`  (
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `JOB_DATA` blob NULL,
   PRIMARY KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_job_details
@@ -209,7 +190,7 @@ CREATE TABLE `qrtz_locks`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `LOCK_NAME` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `LOCK_NAME`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_locks
@@ -224,7 +205,7 @@ CREATE TABLE `qrtz_paused_trigger_grps`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_paused_trigger_grps
@@ -240,7 +221,7 @@ CREATE TABLE `qrtz_scheduler_state`  (
   `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
   `CHECKIN_INTERVAL` bigint(13) NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_scheduler_state
@@ -259,7 +240,7 @@ CREATE TABLE `qrtz_simple_triggers`  (
   `TIMES_TRIGGERED` bigint(10) NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_simple_triggers
@@ -286,7 +267,7 @@ CREATE TABLE `qrtz_simprop_triggers`  (
   `BOOL_PROP_2` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_simprop_triggers
@@ -316,7 +297,7 @@ CREATE TABLE `qrtz_triggers`  (
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   INDEX `SCHED_NAME`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_triggers
@@ -497,7 +478,7 @@ CREATE TABLE `sys_dict_data`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 169 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 171 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -560,6 +541,8 @@ INSERT INTO `sys_dict_data` VALUES (165, 0, 'SpringBoot', '21', 'sys_article_tag
 INSERT INTO `sys_dict_data` VALUES (166, 0, 'Swagger', '22', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2023-07-13 08:00:01', '', NULL, 'Swagger');
 INSERT INTO `sys_dict_data` VALUES (167, 0, 'Redis', '23', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2023-07-13 08:42:52', '', NULL, 'Redis');
 INSERT INTO `sys_dict_data` VALUES (168, 0, 'uni-app', '24', 'sys_article_tag', NULL, 'primary', 'N', '0', 'admin', '2023-09-05 03:25:52', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (169, 0, '正常', '1', 'currency_status', NULL, 'default', 'N', '0', 'admin', '2024-07-18 16:34:31', '', NULL, '正常');
+INSERT INTO `sys_dict_data` VALUES (170, 0, '停用', '0', 'currency_status', NULL, 'default', 'N', '0', 'admin', '2024-07-18 16:34:48', '', NULL, '停用');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -577,7 +560,7 @@ CREATE TABLE `sys_dict_type`  (
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `dict_type`(`dict_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 109 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典类型表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_type
@@ -596,6 +579,7 @@ INSERT INTO `sys_dict_type` VALUES (104, '文章标签', 'sys_article_tag', '0',
 INSERT INTO `sys_dict_type` VALUES (106, '文章状态', 'sys_article_status', '0', 'admin', '2022-07-22 17:09:06', 'admin', '2024-05-06 10:34:17', '文章状态列表');
 INSERT INTO `sys_dict_type` VALUES (107, '文章置顶', 'sys_article_top', '0', 'admin', '2022-07-22 19:23:51', 'admin', '2024-05-06 10:34:13', '文章是否置顶列表');
 INSERT INTO `sys_dict_type` VALUES (108, '文章原创', 'sys_article_origin', '0', 'admin', '2022-07-22 19:26:02', 'admin', '2024-05-06 10:34:10', '文章是否原创列表');
+INSERT INTO `sys_dict_type` VALUES (110, '通用状态', 'currency_status', '0', 'admin', '2024-07-18 16:34:13', '', NULL, '通用状态');
 
 -- ----------------------------
 -- Table structure for sys_logininfor
@@ -656,8 +640,11 @@ CREATE TABLE `sys_menu`  (
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES ('0186f5e32d71f917bd4cb4d693346cde', '8be50fe7341b636c2115ea7c9cf36854', '列表', 2, '', '', 'btn.config.list', '', 1, '1', '2024-05-11 17:50:49', '2024-05-11 17:50:49', '0');
+INSERT INTO `sys_menu` VALUES ('05fa1dd782ad6b196769e9d9585ff6f3', '1c2d6c42822884c157897af502ca251e', '编辑', 2, '/tool/gen-edit/index/:tableId', 'tool/gen/editTable', 'btn.gen.edit', '', 1, '1', '2024-07-18 16:36:06', '2024-07-19 17:02:42', '0');
+INSERT INTO `sys_menu` VALUES ('0c2f7bcab57cd177ddce93fa5057c993', '1c2d6c42822884c157897af502ca251e', '创建表', 2, '', '', 'btn.gen.sql', '', 1, '1', '2024-07-19 17:10:09', '2024-07-19 17:10:09', '0');
 INSERT INTO `sys_menu` VALUES ('1298ab16f667edbece17a2b73cf51fc0', '8be50fe7341b636c2115ea7c9cf36854', '删除', 2, '', '', 'btn.config.del', '', 1, '1', '2024-05-11 17:50:33', '2024-05-11 17:50:33', '0');
 INSERT INTO `sys_menu` VALUES ('16e3dc94b0a0b0ab3eb491d4e172295d', 'be190c8cd6238ea9119a0befa954cf7a', '网站信息', 1, 'information', 'system/information/index', '', 'el-icon-s-platform', 8, '1', '2024-05-08 10:42:56', '2024-05-08 10:46:20', '0');
+INSERT INTO `sys_menu` VALUES ('1c2d6c42822884c157897af502ca251e', 'be190c8cd6238ea9119a0befa954cf7a', '代码生成', 1, 'gen', 'tool/gen/index', '', 'el-icon-s-flag', 1, '1', '2024-07-18 16:32:30', '2024-07-18 16:32:30', '0');
 INSERT INTO `sys_menu` VALUES ('240307c217e98687e93b05c16a5424aa', '8be50fe7341b636c2115ea7c9cf36854', '修改', 2, '', '', 'btn.config.edit', '', 1, '1', '2024-05-11 17:50:21', '2024-05-11 17:50:21', '0');
 INSERT INTO `sys_menu` VALUES ('2d812ec5ddaedd70c93a2f78ab984334', '5ef83c1291ff3e1f435c3dffbf1be55a', '删除', 2, '', '', 'btn.notice.del', '', 1, '1', '2024-05-11 17:34:43', '2024-05-11 17:34:43', '0');
 INSERT INTO `sys_menu` VALUES ('30318a16f713de861d99a789e0caac77', '85413b9370843cdb477dfbabf62bf6e5', '删除', 2, '', '', 'btn.dict.del', '', 1, '1', '2024-05-11 17:39:28', '2024-05-11 17:39:28', '0');
@@ -678,6 +665,7 @@ INSERT INTO `sys_menu` VALUES ('77b30e9d5b7f261153c67947ae97963e', '471c8a9a73d0
 INSERT INTO `sys_menu` VALUES ('7e6e754ee2d1f2e0339b5a275a45acdd', 'dae1346779d28f39a06d1e1ce3026781', '列表', 2, '', '', 'btn.operlog.list', '', 1, '1', '2024-05-13 09:29:56', '2024-05-13 09:29:56', '0');
 INSERT INTO `sys_menu` VALUES ('85413b9370843cdb477dfbabf62bf6e5', 'be190c8cd6238ea9119a0befa954cf7a', '字典分类', 1, 'dict', 'system/dict/index', '', 'el-icon-tickets', 4, '1', '2024-05-08 10:40:46', '2024-05-08 10:45:53', '0');
 INSERT INTO `sys_menu` VALUES ('8be50fe7341b636c2115ea7c9cf36854', 'be190c8cd6238ea9119a0befa954cf7a', '参数设置', 1, 'config', 'system/config/index', '', 'el-icon-setting', 7, '1', '2024-05-08 10:41:52', '2024-05-08 10:46:10', '0');
+INSERT INTO `sys_menu` VALUES ('a14e227cf950c10bc96bfc9061487a87', '1c2d6c42822884c157897af502ca251e', '生成代码', 2, '', '', 'btn.gen.gen', '', 1, '1', '2024-07-19 17:07:46', '2024-07-19 17:07:46', '0');
 INSERT INTO `sys_menu` VALUES ('a1cf74abe6ef8075975281c08bfe1895', '85413b9370843cdb477dfbabf62bf6e5', '字典数据', 2, 'data/:id(\\d+)', 'system/dict/data', 'btn.dict.data', '', 1, '1', '2024-05-08 10:41:13', '2024-05-08 15:52:27', '0');
 INSERT INTO `sys_menu` VALUES ('a3a7a0cf00f49ca90765dd869d5ce399', '85413b9370843cdb477dfbabf62bf6e5', '列表', 2, '', '', 'btn.dict.list', '', 1, '1', '2024-05-11 17:39:55', '2024-05-11 17:39:55', '0');
 INSERT INTO `sys_menu` VALUES ('a88286a2308fb14175868ded546953b7', 'dae1346779d28f39a06d1e1ce3026781', '删除', 2, '', '', 'btn.operlog.del', '', 1, '1', '2024-05-13 09:29:37', '2024-05-13 09:29:37', '0');
@@ -685,10 +673,10 @@ INSERT INTO `sys_menu` VALUES ('af19e30c6aa4f2fa195918528273aa6d', '5ef83c1291ff
 INSERT INTO `sys_menu` VALUES ('af1ddec5003e789ea5d167e7b8b0a773', '16e3dc94b0a0b0ab3eb491d4e172295d', '修改', 2, '', '', 'btn.information.edit', '', 1, '1', '2024-05-11 17:11:14', '2024-05-11 17:11:14', '0');
 INSERT INTO `sys_menu` VALUES ('afef72e3ee28af35f2de19ba4c1dc88e', 'b602e401093b6a40da8dc0101570bcf9', '修改', 2, '', '', 'btn.job.edit', '', 1, '1', '2024-05-13 09:22:44', '2024-05-13 09:22:44', '0');
 INSERT INTO `sys_menu` VALUES ('b602e401093b6a40da8dc0101570bcf9', 'be190c8cd6238ea9119a0befa954cf7a', '定时任务', 1, 'job', 'system/job/index', '', 'el-icon-s-unfold', 5, '1', '2024-05-08 10:42:17', '2024-05-08 10:45:59', '0');
+INSERT INTO `sys_menu` VALUES ('b9d414c8de0b6ba6e2c44ab59e0ce8a9', '1c2d6c42822884c157897af502ca251e', '删除', 2, '', '', 'btn.gen.del', '', 1, '1', '2024-07-19 17:04:43', '2024-07-19 17:04:43', '0');
 INSERT INTO `sys_menu` VALUES ('ba5f42390d98d1ac546119627cec0b37', '5ef83c1291ff3e1f435c3dffbf1be55a', '新增', 2, '', '', 'btn.notice.add', '', 1, '1', '2024-05-11 17:34:10', '2024-05-11 17:34:10', '0');
 INSERT INTO `sys_menu` VALUES ('be190c8cd6238ea9119a0befa954cf7a', '0', '系统管理', 0, 'system', 'Layout', '', 'el-icon-s-tools', 6, '1', '2024-05-08 10:33:07', '2024-05-08 10:38:51', '0');
 INSERT INTO `sys_menu` VALUES ('cd0f17b0d5ff3de2ddc974e07681f13e', '85413b9370843cdb477dfbabf62bf6e5', '修改', 2, '', '', 'btn.dict.edit', '', 1, '1', '2024-05-11 17:39:15', '2024-05-11 17:39:15', '0');
-INSERT INTO `sys_menu` VALUES ('d0b81ea003c025713a2c8d934e34320b', 'be190c8cd6238ea9119a0befa954cf7a', '代码生成', 0, 'gen', 'tool/gen/index', '', 'el-icon-s-flag', 1, '1', '2024-07-16 16:22:39', '2024-07-16 16:22:39', '0');
 INSERT INTO `sys_menu` VALUES ('d839e3275f5fa4b708929c93f1bc531a', '5ef83c1291ff3e1f435c3dffbf1be55a', '修改', 2, '', '', 'btn.notice.edit', '', 1, '1', '2024-05-11 17:34:34', '2024-05-11 17:34:34', '0');
 INSERT INTO `sys_menu` VALUES ('dae1346779d28f39a06d1e1ce3026781', 'be190c8cd6238ea9119a0befa954cf7a', '日志管理', 1, 'operlog', 'monitor/operlog/index', '', 'el-icon-edit', 9, '1', '2024-05-08 10:43:53', '2024-05-08 10:46:26', '0');
 INSERT INTO `sys_menu` VALUES ('db75d07485333f3a052cac79b54b7c59', 'e4dca1309de7f2d9efa1f09beb5ae34a', '新增', 2, '', '', 'btn.user.add', '', 1, '1', '2024-05-11 17:59:17', '2024-05-11 17:59:17', '0');
@@ -696,8 +684,11 @@ INSERT INTO `sys_menu` VALUES ('e1466d34d8c97f3b0cd10370d95ebea3', '471c8a9a73d0
 INSERT INTO `sys_menu` VALUES ('e18a1c6b71f13161ef1580f4fc2bd740', '440867f56dbf23944789d672b158bd32', '列表', 2, '', '', 'btn.role.list', '', 1, '1', '2024-05-11 17:14:55', '2024-05-11 17:14:55', '0');
 INSERT INTO `sys_menu` VALUES ('e4dca1309de7f2d9efa1f09beb5ae34a', 'be190c8cd6238ea9119a0befa954cf7a', '用户管理', 1, 'user', 'system/user/index', '', 'el-icon-s-custom', 1, '1', '2024-05-08 10:36:58', '2024-05-08 10:36:58', '0');
 INSERT INTO `sys_menu` VALUES ('efafe29a11921a7026b73d59dfcaa0b4', '440867f56dbf23944789d672b158bd32', '修改', 2, '', '', 'btn.role.edit', '', 1, '1', '2024-05-11 17:14:19', '2024-05-11 17:14:19', '0');
+INSERT INTO `sys_menu` VALUES ('f0c2e6792c806012822fcef73c0b44c3', '1c2d6c42822884c157897af502ca251e', '同步', 2, '', '', 'btn.gen.sync', '', 1, '1', '2024-07-19 17:08:05', '2024-07-19 17:08:05', '0');
 INSERT INTO `sys_menu` VALUES ('f60544908c9665fe8a7bbc8718531f99', 'b602e401093b6a40da8dc0101570bcf9', '删除', 2, '', '', 'btn.job.del', '', 1, '1', '2024-05-13 09:22:57', '2024-05-13 09:22:57', '0');
+INSERT INTO `sys_menu` VALUES ('f61f9dc267e64d6fd6b509030ef9b756', '1c2d6c42822884c157897af502ca251e', '列表', 2, '', '', 'btn.gen.list', '', 1, '1', '2024-07-19 17:03:03', '2024-07-19 17:03:03', '0');
 INSERT INTO `sys_menu` VALUES ('f65a794f7aaa73d994048c53a928fbec', '16e3dc94b0a0b0ab3eb491d4e172295d', '列表', 2, '', '', 'btn.information.list', '', 1, '1', '2024-05-11 17:11:37', '2024-05-11 17:11:37', '0');
+INSERT INTO `sys_menu` VALUES ('f8bd0f8742c68ddfae6acaa2a26cef69', '1c2d6c42822884c157897af502ca251e', '导入', 2, '', '', 'btn.gen.import', '', 1, '1', '2024-07-19 17:03:54', '2024-07-19 17:04:20', '0');
 INSERT INTO `sys_menu` VALUES ('ff635db54aeba2e9ca4968973347685e', '85413b9370843cdb477dfbabf62bf6e5', '新增', 2, '', '', 'btn.dict.add', '', 1, '1', '2024-05-11 17:38:57', '2024-05-11 17:38:57', '0');
 
 -- ----------------------------
@@ -744,121 +735,11 @@ CREATE TABLE `sys_oper_log`  (
   `error_msg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
 -- ----------------------------
-INSERT INTO `sys_oper_log` VALUES (1, '操作日志', 9, 'com.jzj.base.web.controller.admin.SysOperLogController.clean()', 'DELETE', 1, 'admin', NULL, '/monitor/operlog/clean', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-08 17:05:55');
-INSERT INTO `sys_oper_log` VALUES (2, '定时任务', 3, 'com.jzj.base.web.controller.admin.SysJobController.deleteJob()', 'DELETE', 1, 'admin', NULL, '/system/job', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-08 17:06:04');
-INSERT INTO `sys_oper_log` VALUES (3, '定时任务', 2, 'com.jzj.base.web.controller.admin.SysJobController.pauseJob()', 'PUT', 1, 'admin', NULL, '/system/job/pause', '127.0.0.1', '内网IP', '{\"jobGroupName\":\"ArticleCount\",\"jobClassName\":\"com.jzj.vblog.job.ArticleCountJob\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-08 17:06:07');
-INSERT INTO `sys_oper_log` VALUES (4, '定时任务', 3, 'com.jzj.base.web.controller.admin.SysJobController.deleteJob()', 'DELETE', 1, 'admin', NULL, '/system/job', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-08 17:06:09');
-INSERT INTO `sys_oper_log` VALUES (5, '定时任务', 3, 'com.jzj.base.web.controller.admin.SysJobController.deleteJob()', 'DELETE', 1, 'admin', NULL, '/system/job', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-08 17:06:32');
-INSERT INTO `sys_oper_log` VALUES (6, '定时任务', 3, 'com.jzj.base.web.controller.admin.SysJobController.deleteJob()', 'DELETE', 1, 'admin', NULL, '/system/job', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-08 17:13:17');
-INSERT INTO `sys_oper_log` VALUES (7, '定时任务', 1, 'com.jzj.base.web.controller.admin.SysJobController.addJob()', 'POST', 1, 'admin', NULL, '/system/job', '127.0.0.1', '内网IP', '{\"cronExpression\":\"ss\",\"jobGroupName\":\"ss\",\"jobClassName\":\"aa\"}', '{\"code\":20001,\"msg\":\"操作失败\",\"success\":false}', 0, NULL, '2024-07-08 17:21:17');
-INSERT INTO `sys_oper_log` VALUES (8, '定时任务', 1, 'com.jzj.base.web.controller.admin.SysJobController.addJob()', 'POST', 1, 'admin', NULL, '/system/job', '127.0.0.1', '内网IP', '{\"cronExpression\":\"0/2 * * * * ?\",\"jobGroupName\":\"测试\",\"jobClassName\":\"com.jzj.base.job.HelloJob\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-08 17:23:32');
-INSERT INTO `sys_oper_log` VALUES (9, '定时任务', 2, 'com.jzj.base.web.controller.admin.SysJobController.pauseJob()', 'PUT', 1, 'admin', NULL, '/system/job/pause', '127.0.0.1', '内网IP', '{\"jobGroupName\":\"测试\",\"jobClassName\":\"com.jzj.base.job.HelloJob\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-08 17:23:47');
-INSERT INTO `sys_oper_log` VALUES (10, '定时任务', 3, 'com.jzj.base.web.controller.admin.SysJobController.deleteJob()', 'DELETE', 1, 'admin', NULL, '/system/job', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-08 17:23:48');
-INSERT INTO `sys_oper_log` VALUES (11, '备忘录', 2, 'com.jzj.base.web.controller.admin.SysTodoController.edit()', 'PUT', 1, 'admin', NULL, '/system/todo', '127.0.0.1', '内网IP', '{\"createTime\":1670396047000,\"updateTime\":1720514525446,\"id\":\"7fbf8cdf5b49cf0f6362d4f64b55feb0\",\"text\":\"资源前台展示\",\"params\":{},\"done\":true}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 16:42:05');
-INSERT INTO `sys_oper_log` VALUES (12, '备忘录', 2, 'com.jzj.base.web.controller.admin.SysTodoController.edit()', 'PUT', 1, 'admin', NULL, '/system/todo', '127.0.0.1', '内网IP', '{\"createTime\":1670396047000,\"updateTime\":1720514526366,\"id\":\"7fbf8cdf5b49cf0f6362d4f64b55feb0\",\"text\":\"资源前台展示\",\"params\":{},\"done\":false}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 16:42:06');
-INSERT INTO `sys_oper_log` VALUES (13, '备忘录', 2, 'com.jzj.base.web.controller.admin.SysTodoController.edit()', 'PUT', 1, 'admin', NULL, '/system/todo', '127.0.0.1', '内网IP', '{\"createTime\":1670396047000,\"updateTime\":1720514528206,\"id\":\"7fbf8cdf5b49cf0f6362d4f64b55feb0\",\"text\":\"资源前台展示\",\"params\":{},\"done\":true}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 16:42:08');
-INSERT INTO `sys_oper_log` VALUES (14, '备忘录', 2, 'com.jzj.base.web.controller.admin.SysTodoController.edit()', 'PUT', 1, 'admin', NULL, '/system/todo', '127.0.0.1', '内网IP', '{\"createTime\":1670396047000,\"updateTime\":1720514528671,\"id\":\"7fbf8cdf5b49cf0f6362d4f64b55feb0\",\"text\":\"资源前台展示\",\"params\":{},\"done\":false}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 16:42:08');
-INSERT INTO `sys_oper_log` VALUES (15, '备忘录', 2, 'com.jzj.base.web.controller.admin.SysTodoController.edit()', 'PUT', 1, 'admin', NULL, '/system/todo', '127.0.0.1', '内网IP', '{\"createTime\":1670396047000,\"updateTime\":1720514529782,\"id\":\"7fbf8cdf5b49cf0f6362d4f64b55feb0\",\"text\":\"资源前台展示\",\"params\":{},\"done\":true}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 16:42:09');
-INSERT INTO `sys_oper_log` VALUES (16, '备忘录', 2, 'com.jzj.base.web.controller.admin.SysTodoController.edit()', 'PUT', 1, 'admin', NULL, '/system/todo', '127.0.0.1', '内网IP', '{\"createTime\":1670396047000,\"updateTime\":1720514530630,\"id\":\"7fbf8cdf5b49cf0f6362d4f64b55feb0\",\"text\":\"资源前台展示\",\"params\":{},\"done\":false}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 16:42:10');
-INSERT INTO `sys_oper_log` VALUES (17, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/100', '127.0.0.1', '内网IP', '{dictIds=100}', '{\"code\":20001,\"msg\":\"操作失败\",\"success\":false}', 0, NULL, '2024-07-09 17:23:03');
-INSERT INTO `sys_oper_log` VALUES (18, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/100', '127.0.0.1', '内网IP', '{dictIds=100}', '{\"code\":20001,\"msg\":\"操作失败\",\"success\":false}', 0, NULL, '2024-07-09 17:23:05');
-INSERT INTO `sys_oper_log` VALUES (19, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictDataController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/data/171,172', '127.0.0.1', '内网IP', '{dictCodes=171,172}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:23:17');
-INSERT INTO `sys_oper_log` VALUES (20, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/120', '127.0.0.1', '内网IP', '{dictIds=120}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:23:24');
-INSERT INTO `sys_oper_log` VALUES (21, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictDataController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/data/152,153,154,155,156,157,158,159,160,163', '127.0.0.1', '内网IP', '{dictCodes=152,153,154,155,156,157,158,159,160,163}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:23:30');
-INSERT INTO `sys_oper_log` VALUES (22, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/118', '127.0.0.1', '内网IP', '{dictIds=118}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:23:36');
-INSERT INTO `sys_oper_log` VALUES (23, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictDataController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/data/134,135,136', '127.0.0.1', '内网IP', '{dictCodes=134,135,136}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:23:47');
-INSERT INTO `sys_oper_log` VALUES (24, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/117', '127.0.0.1', '内网IP', '{dictIds=117}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:23:54');
-INSERT INTO `sys_oper_log` VALUES (25, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictDataController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/data/132,133', '127.0.0.1', '内网IP', '{dictCodes=132,133}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:23:59');
-INSERT INTO `sys_oper_log` VALUES (26, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/116', '127.0.0.1', '内网IP', '{dictIds=116}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:24:11');
-INSERT INTO `sys_oper_log` VALUES (27, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictDataController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/data/130,131', '127.0.0.1', '内网IP', '{dictCodes=130,131}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:24:17');
-INSERT INTO `sys_oper_log` VALUES (28, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/115', '127.0.0.1', '内网IP', '{dictIds=115}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:24:29');
-INSERT INTO `sys_oper_log` VALUES (29, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictDataController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/data/123,124', '127.0.0.1', '内网IP', '{dictCodes=123,124}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:24:34');
-INSERT INTO `sys_oper_log` VALUES (30, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/113', '127.0.0.1', '内网IP', '{dictIds=113}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:24:39');
-INSERT INTO `sys_oper_log` VALUES (31, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictDataController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/data/113,114,115,143,144,145,146', '127.0.0.1', '内网IP', '{dictCodes=113,114,115,143,144,145,146}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:24:45');
-INSERT INTO `sys_oper_log` VALUES (32, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/110', '127.0.0.1', '内网IP', '{dictIds=110}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:24:54');
-INSERT INTO `sys_oper_log` VALUES (33, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictDataController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/data/111,112', '127.0.0.1', '内网IP', '{dictCodes=111,112}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:25:00');
-INSERT INTO `sys_oper_log` VALUES (34, '字典类型', 3, 'com.jzj.base.web.controller.admin.SysDictTypeController.remove()', 'DELETE', 1, 'admin', NULL, '/system/dict/type/109', '127.0.0.1', '内网IP', '{dictIds=109}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:25:05');
-INSERT INTO `sys_oper_log` VALUES (35, '定时任务', 1, 'com.jzj.base.web.controller.admin.SysJobController.addJob()', 'POST', 1, 'admin', NULL, '/system/job', '127.0.0.1', '内网IP', '{\"cronExpression\":\"0/2 * * * * ?\",\"jobGroupName\":\"测试\",\"jobClassName\":\"com.jzj.base.job.HelloJob\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:25:55');
-INSERT INTO `sys_oper_log` VALUES (36, '定时任务', 2, 'com.jzj.base.web.controller.admin.SysJobController.pauseJob()', 'PUT', 1, 'admin', NULL, '/system/job/pause', '127.0.0.1', '内网IP', '{\"jobGroupName\":\"测试\",\"jobClassName\":\"com.jzj.base.job.HelloJob\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:26:12');
-INSERT INTO `sys_oper_log` VALUES (37, '定时任务', 3, 'com.jzj.base.web.controller.admin.SysJobController.deleteJob()', 'DELETE', 1, 'admin', NULL, '/system/job', '127.0.0.1', '内网IP', '{}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-09 17:26:13');
-INSERT INTO `sys_oper_log` VALUES (38, '菜单表管理', 1, 'com.jzj.base.web.controller.admin.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"el-icon-s-flag\",\"updateTime\":1721118011352,\"params\":{},\"type\":\"0\",\"parentId\":\"be190c8cd6238ea9119a0befa954cf7a\",\"path\":\"/tool/gen/index\",\"sortValue\":1,\"component\":\"/tool/gen/index\",\"createTime\":1721118011352,\"name\":\"代码生成\",\"perms\":\"\",\"id\":\"a49fd0a6f4d4f7f51772511abc94fdeb\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-16 16:20:11');
-INSERT INTO `sys_oper_log` VALUES (39, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/a49fd0a6f4d4f7f51772511abc94fdeb', '127.0.0.1', '内网IP', '{ids=a49fd0a6f4d4f7f51772511abc94fdeb}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-16 16:20:40');
-INSERT INTO `sys_oper_log` VALUES (40, '菜单表管理', 1, 'com.jzj.base.web.controller.admin.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"el-icon-s-flag\",\"updateTime\":1721118158639,\"params\":{},\"type\":\"0\",\"parentId\":\"be190c8cd6238ea9119a0befa954cf7a\",\"path\":\"gen\",\"sortValue\":1,\"component\":\"tool/gen/index\",\"createTime\":1721118158639,\"name\":\"代码生成\",\"perms\":\"\",\"id\":\"d0b81ea003c025713a2c8d934e34320b\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-16 16:22:38');
-INSERT INTO `sys_oper_log` VALUES (41, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'sys_user', NULL, 1, '导入失败：nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named \'remark\' in \'class com.jzj.base.web.pojo.entity.GenTable\'\n[ErrorCode]: null\n[RequestId]: null\n[HostId]: null', '2024-07-17 10:25:20');
-INSERT INTO `sys_oper_log` VALUES (42, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'sys_user', NULL, 1, '导入失败：\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'form_col_num\' in \'field list\'\r\n### The error may exist in file [C:\\item\\vue-system\\service-base\\target\\classes\\com\\jzj\\base\\web\\mapper\\xml\\GenTableMapper.xml]\r\n### The error may involve com.jzj.base.web.mapper.GenTableMapper.insertGenTable-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gen_table (     table_name,      table_comment,      class_name,           package_name,      module_name,      business_name,      function_name,      function_author,      form_col_num,                      create_by,     create_time          )values(     ?,      ?,      ?,           ?,      ?,      ?,      ?,      ?,      ?,                      ?,     sysdate()          )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'form_col_num\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'form_col_num\' in \'field list\'\n[ErrorCode]: null\n[RequestId]: null\n[HostId]: null', '2024-07-17 10:32:27');
-INSERT INTO `sys_oper_log` VALUES (43, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'sys_user', NULL, 1, '导入失败：nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named \'formColNum\' in \'class com.jzj.base.web.pojo.entity.GenTable\'\n[ErrorCode]: null\n[RequestId]: null\n[HostId]: null', '2024-07-17 10:51:17');
-INSERT INTO `sys_oper_log` VALUES (44, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'sys_role', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 10:57:59');
-INSERT INTO `sys_oper_log` VALUES (45, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'sys_user', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 11:01:53');
-INSERT INTO `sys_oper_log` VALUES (46, '代码生成', 3, 'com.jzj.base.web.controller.admin.GenController.remove()', 'DELETE', 1, 'admin', NULL, '/tool/gen/1', '127.0.0.1', '内网IP', '{tableIds=1}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 11:14:05');
-INSERT INTO `sys_oper_log` VALUES (47, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'sys_user', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 11:15:06');
-INSERT INTO `sys_oper_log` VALUES (48, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 1, 'Unable to find resource \'vm/java/domain.java.vm\'', '2024-07-17 15:04:06');
-INSERT INTO `sys_oper_log` VALUES (49, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 1, 'Unable to find resource \'vm/java/domain.java.vm\'', '2024-07-17 15:08:25');
-INSERT INTO `sys_oper_log` VALUES (50, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 1, 'Unable to find resource \'vm/java/domain.java.vm\'', '2024-07-17 15:11:55');
-INSERT INTO `sys_oper_log` VALUES (51, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 15:15:22');
-INSERT INTO `sys_oper_log` VALUES (52, '代码生成', 3, 'com.jzj.base.web.controller.admin.GenController.remove()', 'DELETE', 1, 'admin', NULL, '/tool/gen/2', '127.0.0.1', '内网IP', '{tableIds=2}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 15:35:42');
-INSERT INTO `sys_oper_log` VALUES (53, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'friend_link', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 15:36:04');
-INSERT INTO `sys_oper_log` VALUES (54, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'friend_link', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 15:36:04');
-INSERT INTO `sys_oper_log` VALUES (55, '代码生成', 3, 'com.jzj.base.web.controller.admin.GenController.remove()', 'DELETE', 1, 'admin', NULL, '/tool/gen/4', '127.0.0.1', '内网IP', '{tableIds=4}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 15:36:10');
-INSERT INTO `sys_oper_log` VALUES (56, '代码生成', 3, 'com.jzj.base.web.controller.admin.GenController.remove()', 'DELETE', 1, 'admin', NULL, '/tool/gen/3', '127.0.0.1', '内网IP', '{tableIds=3}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 15:36:12');
-INSERT INTO `sys_oper_log` VALUES (57, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'friend_link', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 15:36:15');
-INSERT INTO `sys_oper_log` VALUES (58, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 15:36:22');
-INSERT INTO `sys_oper_log` VALUES (59, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 15:44:13');
-INSERT INTO `sys_oper_log` VALUES (60, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 15:54:49');
-INSERT INTO `sys_oper_log` VALUES (61, '代码生成', 3, 'com.jzj.base.web.controller.admin.GenController.remove()', 'DELETE', 1, 'admin', NULL, '/tool/gen/5', '127.0.0.1', '内网IP', '{tableIds=5}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 15:58:54');
-INSERT INTO `sys_oper_log` VALUES (62, '代码生成', 6, 'com.jzj.base.web.controller.admin.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', 'friend_link', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 15:58:57');
-INSERT INTO `sys_oper_log` VALUES (63, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 15:59:00');
-INSERT INTO `sys_oper_log` VALUES (64, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 16:11:34');
-INSERT INTO `sys_oper_log` VALUES (65, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 16:20:41');
-INSERT INTO `sys_oper_log` VALUES (66, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 16:21:14');
-INSERT INTO `sys_oper_log` VALUES (67, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 16:28:20');
-INSERT INTO `sys_oper_log` VALUES (68, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 16:35:19');
-INSERT INTO `sys_oper_log` VALUES (69, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 16:38:21');
-INSERT INTO `sys_oper_log` VALUES (70, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 16:42:08');
-INSERT INTO `sys_oper_log` VALUES (71, '菜单表管理', 1, 'com.jzj.base.web.controller.admin.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"el-icon-phone\",\"updateTime\":1721208168756,\"params\":{},\"type\":\"0\",\"parentId\":\"be190c8cd6238ea9119a0befa954cf7a\",\"path\":\"link\",\"sortValue\":1,\"component\":\"link/index\",\"createTime\":1721208168756,\"name\":\"友链\",\"perms\":\"\",\"id\":\"d7f1da49501009bccaa32662587c0c48\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:22:48');
-INSERT INTO `sys_oper_log` VALUES (72, '友情链接', 3, 'com.jzj.base.web.controller.FriendLinkController.remove()', 'DELETE', 1, 'admin', NULL, '/web/link/1c7b5d43e420ad1232f02b144954b560', '127.0.0.1', '内网IP', '{ids=1c7b5d43e420ad1232f02b144954b560}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:25:45');
-INSERT INTO `sys_oper_log` VALUES (73, '友情链接', 1, 'com.jzj.base.web.controller.FriendLinkController.add()', 'POST', 1, 'admin', NULL, '/web/link', '127.0.0.1', '内网IP', '{\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\' at line 1\r\n### The error may exist in file [C:\\item\\vue-system\\service-base\\target\\classes\\com\\jzj\\base\\web\\mapper\\xml\\FriendLinkMapper.xml]\r\n### The error may involve com.jzj.base.web.mapper.FriendLinkMapper.insertFriendLink-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into friend_link\r\n### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\' at line 1\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\' at line 1', '2024-07-17 17:25:51');
-INSERT INTO `sys_oper_log` VALUES (74, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-17 17:38:38');
-INSERT INTO `sys_oper_log` VALUES (75, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/d7f1da49501009bccaa32662587c0c48', '127.0.0.1', '内网IP', '{ids=d7f1da49501009bccaa32662587c0c48}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:51:48');
-INSERT INTO `sys_oper_log` VALUES (76, '菜单表管理', 1, 'com.jzj.base.web.controller.admin.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"el-icon-s-help\",\"updateTime\":1721210018658,\"params\":{},\"type\":\"0\",\"parentId\":\"0\",\"path\":\"/link\",\"sortValue\":1,\"component\":\"Layout\",\"createTime\":1721210018658,\"name\":\"友链管理\",\"perms\":\"\",\"id\":\"05f9cb1198f4275ef723cf86fe36b56b\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:53:38');
-INSERT INTO `sys_oper_log` VALUES (77, '菜单表管理', 2, 'com.jzj.base.web.controller.admin.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"el-icon-s-help\",\"updateTime\":1721210028433,\"params\":{},\"type\":\"0\",\"parentId\":\"0\",\"path\":\"link\",\"sortValue\":1,\"component\":\"Layout\",\"isDeleted\":\"0\",\"children\":[],\"createTime\":1721210019000,\"name\":\"友链管理\",\"perms\":\"\",\"id\":\"05f9cb1198f4275ef723cf86fe36b56b\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:53:48');
-INSERT INTO `sys_oper_log` VALUES (78, '菜单表管理', 1, 'com.jzj.base.web.controller.admin.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"el-icon-tickets\",\"updateTime\":1721210081008,\"params\":{},\"type\":\"1\",\"parentId\":\"05f9cb1198f4275ef723cf86fe36b56b\",\"path\":\"link\",\"sortValue\":1,\"component\":\"web/link/index\",\"createTime\":1721210081008,\"name\":\"友链列表\",\"perms\":\"\",\"id\":\"def17e428347e847f47c0835afc7a886\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:54:41');
-INSERT INTO `sys_oper_log` VALUES (79, '菜单表管理', 1, 'com.jzj.base.web.controller.admin.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"\",\"updateTime\":1721210230540,\"params\":{},\"type\":\"2\",\"parentId\":\"def17e428347e847f47c0835afc7a886\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"createTime\":1721210230540,\"name\":\"列表\",\"perms\":\"web.link.list\",\"id\":\"e964503bf40b10b47f2b2e794bf10894\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:57:10');
-INSERT INTO `sys_oper_log` VALUES (80, '菜单表管理', 1, 'com.jzj.base.web.controller.admin.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"\",\"updateTime\":1721210264659,\"params\":{},\"type\":\"2\",\"parentId\":\"def17e428347e847f47c0835afc7a886\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"createTime\":1721210264659,\"name\":\"删除\",\"perms\":\"web.link.remove\",\"id\":\"cdc0a3f0369755d4d86304b636a83df3\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:57:44');
-INSERT INTO `sys_oper_log` VALUES (81, '菜单表管理', 1, 'com.jzj.base.web.controller.admin.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"\",\"updateTime\":1721210293575,\"params\":{},\"type\":\"2\",\"parentId\":\"def17e428347e847f47c0835afc7a886\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"createTime\":1721210293575,\"name\":\"修改\",\"perms\":\"web.link.edit\",\"id\":\"d878af1edd64a7b3577ff439aab6c101\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:58:13');
-INSERT INTO `sys_oper_log` VALUES (82, '菜单表管理', 1, 'com.jzj.base.web.controller.admin.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"\",\"updateTime\":1721210324083,\"params\":{},\"type\":\"2\",\"parentId\":\"def17e428347e847f47c0835afc7a886\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"createTime\":1721210324083,\"name\":\"新增\",\"perms\":\"web.link.add\",\"id\":\"700db20906c8e440d39243146c1e30a6\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-17 17:58:44');
-INSERT INTO `sys_oper_log` VALUES (83, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/e964503bf40b10b47f2b2e794bf10894', '127.0.0.1', '内网IP', '{ids=e964503bf40b10b47f2b2e794bf10894}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 11:39:57');
-INSERT INTO `sys_oper_log` VALUES (84, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/d878af1edd64a7b3577ff439aab6c101', '127.0.0.1', '内网IP', '{ids=d878af1edd64a7b3577ff439aab6c101}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 11:39:58');
-INSERT INTO `sys_oper_log` VALUES (85, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/cdc0a3f0369755d4d86304b636a83df3', '127.0.0.1', '内网IP', '{ids=cdc0a3f0369755d4d86304b636a83df3}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 11:40:00');
-INSERT INTO `sys_oper_log` VALUES (86, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/700db20906c8e440d39243146c1e30a6', '127.0.0.1', '内网IP', '{ids=700db20906c8e440d39243146c1e30a6}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 11:40:02');
-INSERT INTO `sys_oper_log` VALUES (87, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/def17e428347e847f47c0835afc7a886', '127.0.0.1', '内网IP', '{ids=def17e428347e847f47c0835afc7a886}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 11:40:05');
-INSERT INTO `sys_oper_log` VALUES (88, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/05f9cb1198f4275ef723cf86fe36b56b', '127.0.0.1', '内网IP', '{ids=05f9cb1198f4275ef723cf86fe36b56b}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 11:40:08');
-INSERT INTO `sys_oper_log` VALUES (89, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-18 11:40:15');
-INSERT INTO `sys_oper_log` VALUES (90, '菜单表管理', 2, 'com.jzj.base.web.controller.admin.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"el-icon-s-help\",\"updateTime\":1721274079199,\"params\":{},\"type\":\"0\",\"parentId\":\"0\",\"path\":\"link\",\"sortValue\":1,\"component\":\"Layout\",\"isDeleted\":\"0\",\"children\":[{\"select\":false,\"icon\":\"el-icon-tickets\",\"updateTime\":1721274044000,\"params\":{},\"type\":\"1\",\"parentId\":\"841febcb44b711efbbb8e8808875d329\",\"path\":\"link\",\"sortValue\":1,\"component\":\"web/link/index\",\"isDeleted\":\"0\",\"children\":[{\"select\":false,\"icon\":\"\",\"updateTime\":1721274044000,\"params\":{},\"type\":\"2\",\"parentId\":\"8420504844b711efbbb8e8808875d329\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"isDeleted\":\"0\",\"children\":[],\"createTime\":1721274044000,\"name\":\"删除\",\"perms\":\"web.link.remove\",\"id\":\"842090d344b711efbbb8e8808875d329\",\"status\":\"1\"},{\"select\":false,\"icon\":\"\",\"updateTime\":1721274044000,\"params\":{},\"type\":\"2\",\"parentId\":\"8420504844b711efbbb8e8808875d329\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"isDeleted\":\"0\",\"children\":[],\"createTime\":1721274044000,\"name\":\"修改\",\"perms\":\"web.link.edit\",\"id\":\"8420bb4a44b711efbbb8e8808875d329\",\"status\":\"1\"},{\"select\":false,\"icon\":\"\",\"updateTime\":1721274044000,\"params\":{},\"type\":\"2\",\"parentId\":\"8420504844b711efbbb8e8808875d329\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"isDeleted\":\"0\",\"children\":[],\"createTime\":1721274044000,\"name\":\"新增\",\"perms\":\"web.link.add\",\"id\":\"8420f2ab44b711efbbb8e8808875d329\",\"status\":\"1\"},{\"select\":false,\"icon\":\"\",\"updateTime\":1721274044000,\"params\":{},\"type\":\"2\",\"parentId\":\"8420504844b711efbbb8e8808875d329\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"isDeleted\":\"0\",\"children\":[],\"createTime\":1721274044000,\"name\":\"列表\",\"perms\":\"web.link.list\",\"id\":\"842119c344b711efbbb8e8808875d329\",\"status\":\"1\"}],\"createTime\":1721274044000,\"name\":\"友情链接列表\",\"perms\":\"\",\"id\":\"8420504844b711efbbb8e8808875d329\",\"status\":\"1\"}],\"createTime\":1721274044000,\"name\":\"友链管理\",\"perms\":\"\",\"id\":\"841febcb44b711efbbb8e8808875d329\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 11:41:19');
-INSERT INTO `sys_oper_log` VALUES (91, '菜单表管理', 2, 'com.jzj.base.web.controller.admin.SysMenuController.edit()', 'PUT', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"select\":false,\"icon\":\"el-icon-tickets\",\"updateTime\":1721274089633,\"params\":{},\"type\":\"1\",\"parentId\":\"841febcb44b711efbbb8e8808875d329\",\"path\":\"link\",\"sortValue\":1,\"component\":\"web/link/index\",\"isDeleted\":\"0\",\"children\":[{\"select\":false,\"icon\":\"\",\"updateTime\":1721274044000,\"params\":{},\"type\":\"2\",\"parentId\":\"8420504844b711efbbb8e8808875d329\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"isDeleted\":\"0\",\"children\":[],\"createTime\":1721274044000,\"name\":\"删除\",\"perms\":\"web.link.remove\",\"id\":\"842090d344b711efbbb8e8808875d329\",\"status\":\"1\"},{\"select\":false,\"icon\":\"\",\"updateTime\":1721274044000,\"params\":{},\"type\":\"2\",\"parentId\":\"8420504844b711efbbb8e8808875d329\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"isDeleted\":\"0\",\"children\":[],\"createTime\":1721274044000,\"name\":\"修改\",\"perms\":\"web.link.edit\",\"id\":\"8420bb4a44b711efbbb8e8808875d329\",\"status\":\"1\"},{\"select\":false,\"icon\":\"\",\"updateTime\":1721274044000,\"params\":{},\"type\":\"2\",\"parentId\":\"8420504844b711efbbb8e8808875d329\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"isDeleted\":\"0\",\"children\":[],\"createTime\":1721274044000,\"name\":\"新增\",\"perms\":\"web.link.add\",\"id\":\"8420f2ab44b711efbbb8e8808875d329\",\"status\":\"1\"},{\"select\":false,\"icon\":\"\",\"updateTime\":1721274044000,\"params\":{},\"type\":\"2\",\"parentId\":\"8420504844b711efbbb8e8808875d329\",\"path\":\"\",\"sortValue\":1,\"component\":\"\",\"isDeleted\":\"0\",\"children\":[],\"createTime\":1721274044000,\"name\":\"列表\",\"perms\":\"web.link.list\",\"id\":\"842119c344b711efbbb8e8808875d329\",\"status\":\"1\"}],\"createTime\":1721274044000,\"name\":\"友链列表\",\"perms\":\"\",\"id\":\"8420504844b711efbbb8e8808875d329\",\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 11:41:29');
-INSERT INTO `sys_oper_log` VALUES (92, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-18 11:50:45');
-INSERT INTO `sys_oper_log` VALUES (93, '友情链接', 2, 'com.jzj.base.web.controller.FriendLinkController.edit()', 'PUT', 1, 'admin', NULL, '/web/link', '127.0.0.1', '内网IP', '{\"createTime\":1662742233000,\"link\":\"https://www.jzjzzzz.icu/\",\"name\":\"Jzjzzzz1\",\"updateTime\":1662742233000,\"id\":\"d855c662eddc70853cee7304bb1c1b05\",\"params\":{},\"status\":\"1\"}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 11:52:08');
-INSERT INTO `sys_oper_log` VALUES (94, '友情链接', 1, 'com.jzj.base.web.controller.FriendLinkController.add()', 'POST', 1, 'admin', NULL, '/web/link', '127.0.0.1', '内网IP', '{\"link\":\"22\",\"name\":\"22\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\item\\vue-system\\service-base\\target\\classes\\com\\jzj\\base\\web\\mapper\\xml\\FriendLinkMapper.xml]\r\n### The error may involve com.jzj.base.web.mapper.FriendLinkMapper.insertFriendLink-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into friend_link          ( name,             link )           values ( ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\n; Field \'id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'id\' doesn\'t have a default value', '2024-07-18 11:52:13');
-INSERT INTO `sys_oper_log` VALUES (95, '友情链接', 1, 'com.jzj.base.web.controller.FriendLinkController.add()', 'POST', 1, 'admin', NULL, '/web/link', '127.0.0.1', '内网IP', '{\"createTime\":1721282680621,\"link\":\"测试\",\"name\":\"测试\",\"updateTime\":1721282680621,\"id\":\"1813817142916632577\",\"params\":{}}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 14:04:40');
-INSERT INTO `sys_oper_log` VALUES (96, '友情链接', 3, 'com.jzj.base.web.controller.FriendLinkController.remove()', 'DELETE', 1, 'admin', NULL, '/web/link/1813817142916632577', '127.0.0.1', '内网IP', '{ids=1813817142916632577}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 14:04:51');
-INSERT INTO `sys_oper_log` VALUES (97, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-18 14:11:17');
-INSERT INTO `sys_oper_log` VALUES (98, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-18 14:15:11');
-INSERT INTO `sys_oper_log` VALUES (99, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-18 14:16:43');
-INSERT INTO `sys_oper_log` VALUES (100, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-18 14:19:44');
-INSERT INTO `sys_oper_log` VALUES (101, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-18 14:21:02');
-INSERT INTO `sys_oper_log` VALUES (102, '代码生成', 8, 'com.jzj.base.web.controller.admin.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{}', NULL, 0, NULL, '2024-07-18 14:22:42');
-INSERT INTO `sys_oper_log` VALUES (103, '友情链接', 1, 'com.jzj.base.web.controller.FriendLinkController.add()', 'POST', 1, 'admin', NULL, '/web/link', '127.0.0.1', '内网IP', '{\"createTime\":1721283835276,\"link\":\"测试\",\"name\":\"测试\",\"updateTime\":1721283835276,\"id\":\"1813821985882353666\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\item\\vue-system\\service-base\\target\\classes\\com\\jzj\\base\\web\\mapper\\xml\\FriendLinkMapper.xml]\r\n### The error may involve com.jzj.base.web.mapper.FriendLinkMapper.insertFriendLink-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into friend_link          ( name,             link )           values ( ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\n; Field \'id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'id\' doesn\'t have a default value', '2024-07-18 14:23:55');
-INSERT INTO `sys_oper_log` VALUES (104, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/842119c344b711efbbb8e8808875d329', '127.0.0.1', '内网IP', '{ids=842119c344b711efbbb8e8808875d329}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 14:43:15');
-INSERT INTO `sys_oper_log` VALUES (105, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/8420f2ab44b711efbbb8e8808875d329', '127.0.0.1', '内网IP', '{ids=8420f2ab44b711efbbb8e8808875d329}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 14:43:16');
-INSERT INTO `sys_oper_log` VALUES (106, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/8420bb4a44b711efbbb8e8808875d329', '127.0.0.1', '内网IP', '{ids=8420bb4a44b711efbbb8e8808875d329}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 14:43:18');
-INSERT INTO `sys_oper_log` VALUES (107, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/842090d344b711efbbb8e8808875d329', '127.0.0.1', '内网IP', '{ids=842090d344b711efbbb8e8808875d329}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 14:43:20');
-INSERT INTO `sys_oper_log` VALUES (108, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/8420504844b711efbbb8e8808875d329', '127.0.0.1', '内网IP', '{ids=8420504844b711efbbb8e8808875d329}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 14:43:22');
-INSERT INTO `sys_oper_log` VALUES (109, '菜单表管理', 3, 'com.jzj.base.web.controller.admin.SysMenuController.remove()', 'DELETE', 1, 'admin', NULL, '/system/menu/841febcb44b711efbbb8e8808875d329', '127.0.0.1', '内网IP', '{ids=841febcb44b711efbbb8e8808875d329}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 14:43:26');
-INSERT INTO `sys_oper_log` VALUES (110, '代码生成', 3, 'com.jzj.base.web.controller.admin.GenController.remove()', 'DELETE', 1, 'admin', NULL, '/tool/gen/6', '127.0.0.1', '内网IP', '{tableIds=6}', '{\"code\":20000,\"msg\":\"操作成功\",\"success\":true}', 0, NULL, '2024-07-18 14:43:58');
 
 -- ----------------------------
 -- Table structure for sys_role

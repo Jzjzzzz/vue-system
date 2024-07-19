@@ -122,4 +122,11 @@ public interface GenTableService {
      * @return 数据
      */
     void generatorCode(String tableName);
+
+    /**
+     * 同步数据库
+     *
+     * @param tableName 表名称
+     */
+    void synchDb(String tableName);
 }
