@@ -41,6 +41,7 @@ public class VelocityUtils
         String tplCategory = genTable.getTplCategory();
         String functionName = genTable.getFunctionName();
 
+        JSONObject menuJson = JSONObject.parseObject(genTable.getOptions());
         VelocityContext velocityContext = new VelocityContext();
         velocityContext.put("tplCategory", genTable.getTplCategory());
         velocityContext.put("ormType", genTable.getOrmType());
@@ -61,6 +62,9 @@ public class VelocityUtils
         velocityContext.put("columns", genTable.getColumns());
         velocityContext.put("table", genTable);
         velocityContext.put("dicts", getDicts(genTable));
+        if(menuJson!=null){
+            velocityContext.put("menuId",menuJson.getString("parentMenuId"));
+        }
         setMenuVelocityContext(velocityContext, genTable);
         if (GenConstants.TPL_TREE.equals(tplCategory))
         {

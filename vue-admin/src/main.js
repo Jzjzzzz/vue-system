@@ -30,9 +30,10 @@ import Editor from '@/components/Editor'
 import EleUploadImage from 'vue-ele-upload-image'
 // Markdown
 import mavonEditor from 'mavon-editor'
+
 // 自定义权限判断方法
 import hasBtnPermission from '@/utils/btn-permission'
-
+import directive from './directive' // directive
 
 /**
  * If you don't want to use mock-server
@@ -70,6 +71,7 @@ Vue.component('RightToolbar', RightToolbar)
 Vue.use(ElementUI)
 Vue.use(plugins)
 Vue.use(mavonEditor)
+Vue.use(directive)
 DictData.install()
 
 Vue.config.productionTip = false

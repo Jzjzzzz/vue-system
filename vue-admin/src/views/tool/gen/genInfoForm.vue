@@ -80,24 +80,24 @@
         </el-form-item>
       </el-col>
 
-      <el-col :span="12">
-        <el-form-item>
-          <span slot="label">
-            上级菜单
-            <el-tooltip content="分配到指定菜单下，例如 系统管理" placement="top">
-              <i class="el-icon-question"></i>
-            </el-tooltip>
-          </span>
-          <treeselect
-            :append-to-body="true"
-            v-model="info.parentMenuId"
-            :options="menus"
-            :normalizer="normalizer"
-            :show-count="true"
-            placeholder="请选择系统菜单"
-          />
-        </el-form-item>
-      </el-col>
+<!--      <el-col :span="12">-->
+<!--        <el-form-item>-->
+<!--          <span slot="label">-->
+<!--            上级菜单-->
+<!--            <el-tooltip content="分配到指定菜单下，例如 系统管理" placement="top">-->
+<!--              <i class="el-icon-question"></i>-->
+<!--            </el-tooltip>-->
+<!--          </span>-->
+<!--          <treeselect-->
+<!--            :append-to-body="true"-->
+<!--            v-model="info.parentMenuId"-->
+<!--            :options="menus"-->
+<!--            :normalizer="normalizer"-->
+<!--            :show-count="true"-->
+<!--            placeholder="请选择系统菜单"-->
+<!--          />-->
+<!--        </el-form-item>-->
+<!--      </el-col>-->
 
       <el-col :span="24" v-if="info.genType == '1'">
         <el-form-item prop="genPath">
@@ -280,8 +280,8 @@ export default {
         delete node.children;
       }
       return {
-        id: node.menuId,
-        label: node.menuName,
+        id: node.id,
+        label: node.name,
         children: node.children
       };
     },
