@@ -88,7 +88,7 @@ public class SysDictTypeController extends BaseController {
     @PreAuthorize("hasAuthority('btn.dict.edit')")
     public R refreshCache() {
         dictTypeService.resetDictCache();
-        return R.ok();
+        return success();
     }
 
     @ApiOperation("获取字典选择框列表")

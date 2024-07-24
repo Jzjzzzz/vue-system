@@ -25,8 +25,6 @@ import java.util.Date;
 @ApiModel(value = "SysDictType对象", description = "字典类型表")
 public class SysDictType extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "字典id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

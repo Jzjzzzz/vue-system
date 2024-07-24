@@ -77,23 +77,23 @@
         :show-overflow-tooltip="true"
       />
       <el-table-column label="公告类型" align="center" prop="noticeType" width="100">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.sys_notice_type" :value="scope.row.noticeType" />
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status" width="100">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.currency_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="创建者" align="center" prop="createBy" width="100" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="100">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"
@@ -240,7 +240,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        noticeId: undefined,
+        id: undefined,
         noticeTitle: undefined,
         noticeType: undefined,
         noticeContent: undefined,
@@ -260,7 +260,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.noticeId)
+      this.ids = selection.map(item => item.id)
       this.single = selection.length != 1
       this.multiple = !selection.length
     },
@@ -273,8 +273,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
-      const noticeId = row.noticeId || this.ids
-      getNotice(noticeId).then(response => {
+      const id = row.id || this.ids
+      getNotice(id).then(response => {
         this.form = response.data
         this.open = true
         this.title = '修改公告'
@@ -284,7 +284,7 @@ export default {
     submitForm: function() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          if (this.form.noticeId != undefined) {
+          if (this.form.id != undefined) {
             updateNotice(this.form).then(response => {
               this.$modal.msgSuccess('修改成功')
               this.open = false
@@ -302,9 +302,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const noticeIds = row.noticeId || this.ids
-      this.$modal.confirm('是否确认删除公告编号为"' + noticeIds + '"的数据项？').then(function() {
-        return delNotice(noticeIds)
+      const Ids = row.id || this.ids
+      this.$modal.confirm('是否确认删除公告编号为"' + Ids + '"的数据项？').then(function() {
+        return delNotice(Ids)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess('删除成功')

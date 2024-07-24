@@ -25,8 +25,6 @@ import java.util.Date;
 @ApiModel(value = "SysWebInformation对象", description = "网站基本信息")
 public class SysWebInformation extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -78,6 +76,4 @@ public class SysWebInformation extends BaseEntity {
 
     @ApiModelProperty(value = "备案号")
     private String recordNumber;
-
-
 }

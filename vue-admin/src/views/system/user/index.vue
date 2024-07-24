@@ -14,7 +14,6 @@
           v-model="queryParams.status"
           placeholder="状态"
           clearable
-          style="width: 240px"
         >
           <el-option
             v-for="dict in dict.type.currency_status"
@@ -100,22 +99,22 @@
         prop="phone"
       />
       <el-table-column align="center" label="性别" prop="sex">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.sys_user_sex" :value="scope.row.sex"/>
         </template>
       </el-table-column>
       <el-table-column align="center" label="状态" prop="status">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.currency_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
       <el-table-column align="center" label="创建时间" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="250px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
@@ -161,12 +160,12 @@
     />
 
     <!-- 添加或修改对话框 -->
-    <el-dialog :title="title" :visible.sync="open" append-to-body width="780px">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" append-to-body >
+      <el-form ref="form" :model="form" :rules="rules" >
         <el-row>
           <el-col :span="24">
             <el-form-item label="用户名" prop="username">
-              <el-input v-model="form.username" placeholder="请输入用户名"/>
+              <el-input v-model="form.username" :disabled="form.id!=null" placeholder="请输入用户名"/>
             </el-form-item>
           </el-col>
           <el-col v-if="form.id==null" :span="24">
@@ -216,8 +215,8 @@
       </div>
     </el-dialog>
     <!-- 重置密码对话框 -->
-    <el-dialog :title="title" :visible.sync="openPassword" append-to-body width="780px">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="openPassword" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules">
         <el-row>
           <el-col :span="24">
             <el-form-item label="密码" prop="password">
@@ -232,8 +231,8 @@
       </div>
     </el-dialog>
     <!-- 角色分配对话框 -->
-    <el-dialog :title="title" :visible.sync="openRole" append-to-body width="780px">
-      <el-form ref="form" :model="roleVo" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="openRole" append-to-body>
+      <el-form ref="form" :model="roleVo" :rules="rules" >
         <el-row>
           <el-col :span="24">
             <el-form-item label="角色" prop="role">
@@ -266,8 +265,9 @@
 </template>
 
 <script>
-import {list, get, del, add, update, restPassword,allocationRole} from '@/api/system/user'
-import { listAll } from '@/api/system/role'
+import {list, get, del, add, update, restPassword, allocationRole} from '@/api/system/user'
+import {listAll} from '@/api/system/role'
+
 export default {
   name: 'User',
   dicts: ['sys_user_sex', 'currency_status'],
@@ -307,7 +307,7 @@ export default {
       },
       // 表单参数
       form: {},
-      roleVo:{},
+      roleVo: {},
       // 表单校验
       rules: {
         username: [
@@ -401,8 +401,8 @@ export default {
         }
       })
     },
-    submitRole: function (){
-      allocationRole(this.roleVo).then(response=>{
+    submitRole: function () {
+      allocationRole(this.roleVo).then(response => {
         this.$modal.msgSuccess('分配成功')
         this.openRole = false
         this.getList()
@@ -426,12 +426,12 @@ export default {
       this.openPassword = true
       this.title = '重置密码'
     },
-    handleRole(row){
+    handleRole(row) {
       this.roleVo = {}
       this.roleVo.userId = row.id
       this.openRole = true
       this.title = '角色分配'
-      listAll(row.id).then(response=>{
+      listAll(row.id).then(response => {
         console.log(response)
         this.roleList = response.data.roles
         this.roleVo.roleIds = response.data.ids

@@ -47,7 +47,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         this.setAuthenticationManager(authenticationManager);
         this.setPostOnly(false);
         //指定登录接口及提交方式，可以指定任意路径
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/index/login", "POST"));
+        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/login", "POST"));
         this.redisCache = redisCache;
         this.captchaService = captchaService;
     }
@@ -86,7 +86,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         HashMap<String, String> redisMap = new HashMap<>();
         redisMap.put("token", token);
         redisMap.put("authorities", JSON.toJSONString(customUser.getAuthorities()));
-        redisCache.setCacheMap(CacheConstants.LOGIN_TOKEN_KEY + customUser.getSysUser().getId(), redisMap, 2, TimeUnit.HOURS);
+        redisCache.setCacheMap(CacheConstants.LOGIN_TOKEN_KEY + customUser.getSysUser().getId(), redisMap, 24, TimeUnit.HOURS);
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
         ResponseUtil.out(response, R.ok(map));

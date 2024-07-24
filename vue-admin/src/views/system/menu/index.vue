@@ -23,7 +23,7 @@
 
       <el-table-column prop="name" label="菜单名称" width="160"/>
       <el-table-column label="图标">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <i :class="scope.row.icon"></i>
         </template>
       </el-table-column>
@@ -32,17 +32,17 @@
       <el-table-column prop="component" label="组件路径" width="160"/>
       <el-table-column prop="sortValue" label="排序" width="60"/>
       <el-table-column label="状态" width="80">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.currency_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="210" align="center" fixed="right">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             type="text"
             plain
@@ -70,7 +70,7 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="40%" >
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" >
       <el-form ref="dataForm" :model="sysMenu" label-width="150px" size="small" style="padding-right: 40px;">
         <el-form-item label="上级部门" v-if="sysMenu.id === ''">
           <el-input v-model="sysMenu.parentName" :disabled="true"/>

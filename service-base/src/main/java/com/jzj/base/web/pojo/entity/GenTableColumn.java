@@ -20,7 +20,6 @@ import java.util.Date;
 @Data
 @ApiModel(value = "GenTableColumn对象", description = "代码生成表字段")
 public class GenTableColumn extends BaseEntity {
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "编号")
     private Long columnId;

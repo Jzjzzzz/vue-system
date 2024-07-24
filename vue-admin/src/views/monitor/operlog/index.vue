@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
+    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" >
       <el-form-item label="系统模块" prop="title">
         <el-input
           v-model="queryParams.title"
@@ -87,15 +87,6 @@
           :disabled="$hasBP('btn.operlog.del')  === false"
         >清空</el-button>
       </el-col>
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="warning"-->
-<!--          plain-->
-<!--          icon="el-icon-download"-->
-<!--          size="mini"-->
-<!--          @click="handleExport"-->
-<!--        >导出</el-button>-->
-<!--      </el-col>-->
       <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
     </el-row>
 
@@ -104,7 +95,7 @@
       <el-table-column label="序号" align="center" type="index" />
       <el-table-column label="系统模块" align="center" prop="title" />
       <el-table-column label="操作类型" align="center" prop="businessType">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.sys_oper_type" :value="scope.row.businessType" />
         </template>
       </el-table-column>
@@ -113,17 +104,17 @@
       <el-table-column label="操作地址" align="center" prop="operIp" width="130" :show-overflow-tooltip="true" />
       <el-table-column label="操作地点" align="center" prop="operLocation" :show-overflow-tooltip="true" />
       <el-table-column label="操作状态" align="center" prop="status">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.sys_common_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="操作日期" align="center" prop="operTime" sortable="custom" :sort-orders="['descending', 'ascending']" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.operTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"
@@ -143,8 +134,8 @@
     />
 
     <!-- 操作日志详细 -->
-    <el-dialog title="操作日志详细" :visible.sync="open" width="700px" append-to-body>
-      <el-form ref="form" :model="form" label-width="100px" size="mini">
+    <el-dialog title="操作日志详细" :visible.sync="open" append-to-body>
+      <el-form ref="form" :model="form" size="mini">
         <el-row>
           <el-col :span="12">
             <el-form-item label="操作模块：">{{ form.title }} / {{ typeFormat(form) }}</el-form-item>

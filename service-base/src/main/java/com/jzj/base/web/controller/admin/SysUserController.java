@@ -31,6 +31,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController {
+
     @Autowired
     private SysUserService sysUserService;
 

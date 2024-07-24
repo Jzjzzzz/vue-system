@@ -49,7 +49,7 @@ public class SysOperLogController extends BaseController {
     @PreAuthorize("hasAuthority('btn.operlog.del')")
     public R clean() {
         operLogService.cleanOperLog();
-        return R.ok();
+        return success();
     }
 }
 

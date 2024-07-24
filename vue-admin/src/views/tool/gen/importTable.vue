@@ -29,12 +29,12 @@
         <el-table-column prop="tableName" label="表名称" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="tableComment" label="表描述" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createTime" label="创建时间">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="updateTime" label="更新时间">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <span>{{ parseTime(scope.row.updateTime) }}</span>
           </template>
         </el-table-column>

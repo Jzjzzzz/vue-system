@@ -49,7 +49,7 @@
       <el-table-column label="时区" align="center" prop="timeZoneId"/>
       <el-table-column label="状态" align="center" prop="triggerState"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"

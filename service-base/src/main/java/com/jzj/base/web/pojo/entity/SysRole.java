@@ -19,8 +19,6 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value="SysRole对象", description="角色")
 public class SysRole extends CommonEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "角色名称")
     private String roleName;
 

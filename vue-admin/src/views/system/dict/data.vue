@@ -94,7 +94,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column type="index" label="序号" align="center" :index="getIndex" />
       <el-table-column label="字典标签" align="center" prop="dictLabel">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span v-if="scope.row.listClass == '' || scope.row.listClass == 'default'">{{ scope.row.dictLabel }}</span>
           <el-tag v-else :type="scope.row.listClass == 'primary' ? '' : scope.row.listClass">{{ scope.row.dictLabel }}</el-tag>
         </template>
@@ -102,18 +102,18 @@
       <el-table-column label="字典键值" align="center" prop="dictValue" />
       <el-table-column label="字典排序" align="center" prop="dictSort" />
       <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"

@@ -19,8 +19,6 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value="SysUser对象", description="用户表")
 public class SysUser extends CommonEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "用户名")
     private String username;
 
@@ -53,6 +51,5 @@ public class SysUser extends CommonEntity {
 
     @ApiModelProperty(value = "删除标记（0:不可用 1:可用）")
     private String isDeleted;
-
 
 }

@@ -25,8 +25,6 @@ import java.util.Date;
 @ApiModel(value="SysUserRole对象", description="用户角色")
 public class SysUserRole extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "主键id")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;

@@ -26,8 +26,6 @@ import java.util.Date;
 @ApiModel(value = "SysDictData对象", description = "字典数据表")
 public class SysDictData extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

@@ -13,9 +13,11 @@ import java.util.Map;
  * @Version 1.0
  * @Message: Entity基类
  */
-
 @ApiModel(value = "Entity基类", description = "Entity基类")
 public class BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 搜索值
      */
@@ -32,10 +34,6 @@ public class BaseEntity implements Serializable {
         return searchValue;
     }
 
-    public void setSearchValue(String searchValue) {
-        this.searchValue = searchValue;
-    }
-
     public Map<String, Object> getParams() {
         if (params == null) {
             params = new HashMap<>();
@@ -43,7 +41,4 @@ public class BaseEntity implements Serializable {
         return params;
     }
 
-    public void setParams(Map<String, Object> params) {
-        this.params = params;
-    }
 }

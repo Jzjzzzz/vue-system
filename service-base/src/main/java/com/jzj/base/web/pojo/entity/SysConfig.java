@@ -25,8 +25,6 @@ import java.util.Date;
 @ApiModel(value = "SysConfig对象", description = "参数配置表")
 public class SysConfig extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "参数主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

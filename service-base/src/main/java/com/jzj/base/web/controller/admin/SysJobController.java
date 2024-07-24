@@ -32,8 +32,6 @@ public class SysJobController extends BaseController {
     @Autowired
     private JobService jobService;
 
-
-
     @ApiOperation("定时计划列表")
     @GetMapping
     @PreAuthorize("hasAuthority('btn.job.list')")

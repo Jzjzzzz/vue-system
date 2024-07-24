@@ -112,25 +112,25 @@
       <el-table-column type="index" label="序号" align="center" :index="getIndex" />
       <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
       <el-table-column label="字典类型" align="center" :show-overflow-tooltip="true">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <router-link :to="'/system/data/' + scope.row.id" class="link-type" >
             <span>{{ scope.row.dictType }}</span>
           </router-link>
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"

@@ -23,8 +23,6 @@ import java.util.Date;
 @ApiModel(value = "SysOperLog对象", description = "操作日志记录")
 public class SysOperLog extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "日志主键")
     @TableId(value = "oper_id", type = IdType.AUTO)
     private Long operId;

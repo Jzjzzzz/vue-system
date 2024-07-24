@@ -107,18 +107,18 @@
       <el-table-column label="参数键名" align="center" prop="configKey" :show-overflow-tooltip="true" />
       <el-table-column label="参数键值" align="center" prop="configValue" />
       <el-table-column label="系统内置" align="center" prop="configType">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.configType" />
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"

@@ -26,8 +26,6 @@ import java.util.List;
 @ApiModel(value = "GenTable对象", description = "代码生成业务表")
 public class GenTable extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "编号")
     private Long tableId;
 

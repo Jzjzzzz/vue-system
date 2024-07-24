@@ -22,8 +22,6 @@ import java.util.List;
 @ApiModel(value="SysMenu对象", description="菜单表")
 public class SysMenu extends CommonEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "所属上级")
     private String parentId;
 

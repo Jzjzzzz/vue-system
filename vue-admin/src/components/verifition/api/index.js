@@ -6,7 +6,7 @@ import request from '@/utils/request'
 // 获取验证图片  以及token
 export function reqGet(data) {
   return request({
-    url: '/admin/index/get',
+    url: '/admin/login/get',
     method: 'post',
     data
   })
@@ -15,7 +15,7 @@ export function reqGet(data) {
 // 滑动或者点选验证
 export function reqCheck(data) {
   return request({
-    url: '/admin/index/check',
+    url: '/admin/login/check',
     method: 'post',
     data
   })

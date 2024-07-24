@@ -91,17 +91,17 @@
         :show-overflow-tooltip="true"
       />
       <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <dict-tag :options="dict.type.currency_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="200px" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"
@@ -136,8 +136,8 @@
     />
 
     <!-- 添加或修改对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="780px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" >
         <el-row>
           <el-col :span="24">
             <el-form-item label="角色名" prop="roleName">
@@ -174,9 +174,8 @@
     </el-dialog>
 
     <!-- 权限分配对话框 -->
-    <el-dialog :title="titlePre" :visible.sync="openPre" width="780px" append-to-body>
+    <el-dialog :title="titlePre" :visible.sync="openPre" append-to-body>
       <el-tree
-        style="margin: 20px 0"
         ref="tree"
         :data="sysMenuList"
         node-key="id"

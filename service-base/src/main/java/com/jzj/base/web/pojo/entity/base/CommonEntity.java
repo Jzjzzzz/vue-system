@@ -27,6 +27,14 @@ public class CommonEntity extends BaseEntity {
     @ApiModelProperty(value = "状态")
     private String status;
 
+    @ApiModelProperty(value = "创建人")
+    @TableField(fill = FieldFill.INSERT)
+    private String createBy;
+
+    @ApiModelProperty(value = "修改人")
+    @TableField(fill = FieldFill.UPDATE)
+    private String updateBy;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
@@ -34,4 +42,5 @@ public class CommonEntity extends BaseEntity {
     @ApiModelProperty(value = "修改时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
+
 }

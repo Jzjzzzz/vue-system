@@ -25,8 +25,6 @@ import java.util.Date;
 @ApiModel(value="SysCount对象", description="统计归档")
 public class SysCount extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "id")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;

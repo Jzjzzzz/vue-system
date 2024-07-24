@@ -23,8 +23,6 @@ import java.util.Date;
 @ApiModel(value = "SysLogininfor对象", description = "系统访问记录")
 public class SysLogininfor extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "访问ID")
     @TableId(value = "info_id", type = IdType.AUTO)
     private Long infoId;

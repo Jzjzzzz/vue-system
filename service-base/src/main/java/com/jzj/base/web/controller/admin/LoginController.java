@@ -28,8 +28,8 @@ import java.util.Map;
  */
 @Api(tags = "后台管理用户登录相关")
 @RestController
-@RequestMapping("/admin/index")
-public class AdminIndexController extends BaseController {
+@RequestMapping("/admin/login")
+public class LoginController extends BaseController {
 
     @Autowired
     private CaptchaService captchaService;

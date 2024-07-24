@@ -25,8 +25,6 @@ import java.util.Date;
 @ApiModel(value = "SysTodo对象", description = "备忘录")
 public class SysTodo extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "id")
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;

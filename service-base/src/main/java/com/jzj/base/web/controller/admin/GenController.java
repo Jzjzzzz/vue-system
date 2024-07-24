@@ -61,7 +61,7 @@ public class GenController extends BaseController {
     @ApiOperation("查询数据库列表")
     @GetMapping("/db/list")
     @ResponseBody
-    public TableDataInfo dataList(GenTable genTable){
+    public TableDataInfo dataList(GenTable genTable) {
         startPage();
         List<GenTable> list = genTableService.selectDbTableList(genTable);
         return getDataTable(list);
@@ -83,7 +83,7 @@ public class GenController extends BaseController {
     @ApiOperation("删除代码生成")
     @Log(title = "代码生成", businessType = BusinessType.DELETE)
     @DeleteMapping("/{tableIds}")
-    public R remove(@PathVariable Long [] tableIds){
+    public R remove(@PathVariable Long[] tableIds) {
         genTableService.deleteGenTableByIds(tableIds);
         return success();
     }
@@ -92,8 +92,8 @@ public class GenController extends BaseController {
     @ApiOperation("生成代码（zip）")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/download/{tableName}")
-    public void download(HttpServletResponse response,@PathVariable("tableName") String tableName) {
-        byte [] data =genTableService.downloadCode(tableName);
+    public void download(HttpServletResponse response, @PathVariable("tableName") String tableName) {
+        byte[] data = genTableService.downloadCode(tableName);
         genCode(response, data);
     }
 
@@ -101,8 +101,7 @@ public class GenController extends BaseController {
     @ApiOperation("生成代码（自定义路径）")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/genCode/{tableName}")
-    public R genCode(@PathVariable("tableName") String tableName)
-    {
+    public R genCode(@PathVariable("tableName") String tableName) {
         genTableService.generatorCode(tableName);
         return success();
     }
@@ -122,18 +121,14 @@ public class GenController extends BaseController {
     @Log(title = "创建表", businessType = BusinessType.OTHER)
     @PostMapping("/createTable")
     public R createTableSave(String sql) {
-        try
-        {
+        try {
             SqlUtil.filterKeyword(sql);
             List<SQLStatement> sqlStatements = SQLUtils.parseStatements(sql, DbType.mysql);
             List<String> tableNames = new ArrayList<>();
-            for (SQLStatement sqlStatement : sqlStatements)
-            {
-                if (sqlStatement instanceof MySqlCreateTableStatement)
-                {
+            for (SQLStatement sqlStatement : sqlStatements) {
+                if (sqlStatement instanceof MySqlCreateTableStatement) {
                     MySqlCreateTableStatement createTableStatement = (MySqlCreateTableStatement) sqlStatement;
-                    if (genTableService.createTable(createTableStatement.toString()))
-                    {
+                    if (genTableService.createTable(createTableStatement.toString())) {
                         String tableName = createTableStatement.getTableName().replaceAll("`", "");
                         tableNames.add(tableName);
                     }
@@ -143,9 +138,7 @@ public class GenController extends BaseController {
             String operName = getUsername();
             genTableService.importGenTable(tableList, operName);
             return R.ok();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
             return R.error("创建表结构异常");
         }
@@ -166,7 +159,7 @@ public class GenController extends BaseController {
         GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTable> tables = genTableService.selectGenTableAll();
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("info", table);
         map.put("rows", list);
         map.put("tables", tables);
@@ -187,8 +180,7 @@ public class GenController extends BaseController {
     @ApiOperation("同步数据库")
     @Log(title = "代码生成", businessType = BusinessType.UPDATE)
     @GetMapping("/synchDb/{tableName}")
-    public R synchDb(@PathVariable("tableName") String tableName)
-    {
+    public R syncDb(@PathVariable("tableName") String tableName) {
         genTableService.synchDb(tableName);
         return success();
     }
@@ -205,8 +197,8 @@ public class GenController extends BaseController {
             response.addHeader("Content-Length", "" + data.length);
             response.setContentType("application/octet-stream; charset=UTF-8");
             IOUtils.write(data, response.getOutputStream());
-        } catch (IOException e){
-            log.error("生成代码压缩错误:",e);
+        } catch (IOException e) {
+            log.error("生成代码压缩错误:", e);
         }
     }
 }

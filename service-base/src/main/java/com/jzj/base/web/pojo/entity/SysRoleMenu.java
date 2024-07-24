@@ -25,8 +25,6 @@ import java.util.Date;
 @ApiModel(value="SysRoleMenu对象", description="角色菜单")
 public class SysRoleMenu extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
