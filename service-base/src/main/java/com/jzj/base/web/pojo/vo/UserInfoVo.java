@@ -3,7 +3,9 @@ package com.jzj.base.web.pojo.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +16,10 @@ import java.util.List;
  */
 @ApiModel("用户信息实体")
 @Data
-public class UserInfoVo {
+@EqualsAndHashCode
+public class UserInfoVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("id")
     private Long id;

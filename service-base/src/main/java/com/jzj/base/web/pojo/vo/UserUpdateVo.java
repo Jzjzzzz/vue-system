@@ -1,6 +1,9 @@
 package com.jzj.base.web.pojo.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * @Author Jzj
@@ -9,7 +12,10 @@ import lombok.Data;
  * @Message: 个人信息修改vo
  */
 @Data
-public class UserUpdateVo {
+@EqualsAndHashCode
+public class UserUpdateVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String avatar;
 

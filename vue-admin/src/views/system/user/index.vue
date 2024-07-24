@@ -85,6 +85,7 @@
         align="center"
         label="用户名"
         prop="username"
+        width="200px"
       />
       <el-table-column
         :show-overflow-tooltip="true"
@@ -101,6 +102,18 @@
       <el-table-column align="center" label="性别" prop="sex">
         <template v-slot="scope">
           <dict-tag :options="dict.type.sys_user_sex" :value="scope.row.sex"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        align="center"
+        label="登录状态"
+        prop="onLine"
+        width="150px"
+      >
+        <template v-slot="scope">
+          <el-button type="primary" @click="handleOffLine(scope.row)" v-if="scope.row.onLine" size="mini" round>在线</el-button>
+          <el-button type="info" v-else size="mini" disabled round>离线</el-button>
         </template>
       </el-table-column>
       <el-table-column align="center" label="状态" prop="status">
@@ -265,7 +278,7 @@
 </template>
 
 <script>
-import {list, get, del, add, update, restPassword, allocationRole} from '@/api/system/user'
+import {list, get, del, add, update, restPassword, allocationRole,offLine} from '@/api/system/user'
 import {listAll} from '@/api/system/role'
 
 export default {
@@ -435,6 +448,16 @@ export default {
         console.log(response)
         this.roleList = response.data.roles
         this.roleVo.roleIds = response.data.ids
+      })
+    },
+    /** 下线按钮操作 */
+    handleOffLine(row){
+      this.$modal.confirm('是否强制下线"' + row.username + '"？').then(function () {
+        return offLine(row.id)
+      }).then(() => {
+        this.getList()
+        this.$modal.msgSuccess('下线成功')
+      }).catch(() => {
       })
     },
     /** 删除按钮操作 */

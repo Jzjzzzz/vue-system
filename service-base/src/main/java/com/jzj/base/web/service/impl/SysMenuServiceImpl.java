@@ -6,8 +6,10 @@ import com.jzj.base.utils.constant.UserConstants;
 import com.jzj.base.utils.sign.MenuUtils;
 import com.jzj.base.web.mapper.SysMenuMapper;
 import com.jzj.base.web.mapper.SysRoleMenuMapper;
+import com.jzj.base.web.mapper.SysUserMapper;
 import com.jzj.base.web.pojo.entity.SysMenu;
 import com.jzj.base.web.pojo.entity.SysRoleMenu;
+import com.jzj.base.web.pojo.entity.SysUser;
 import com.jzj.base.web.pojo.vo.AssignMenuVo;
 import com.jzj.base.web.pojo.vo.MetaVo;
 import com.jzj.base.web.pojo.vo.RouterVo;
@@ -39,6 +41,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Autowired
     private SysRoleMenuMapper sysRoleMenuMapper;
+
+    @Autowired
+    private SysUserMapper sysUserMapper;
 
     @Override
     public List<SysMenu> pageList(SysMenu sysMenu) {
@@ -115,7 +120,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<RouterVo> findUserMenuList(String userId) {
         List<SysMenu> sysMenuList = null;
         //超级管理员
-        if (UserConstants.SYS_ADMIN_ID.equals(userId)) {
+        SysUser user = sysUserMapper.selectById(userId);
+
+        if(UserConstants.IS_SUPER.equals(user.getIsSuper())) {
             sysMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, 1).orderByAsc(SysMenu::getSortValue));
         } else {
             sysMenuList = sysMenuMapper.findListByUserId(userId);
@@ -171,7 +178,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<String> findUserPermsList(String userId) {
         List<SysMenu> sysMenuList = null;
         //超级管理员
-        if (UserConstants.SYS_ADMIN_ID.equals(userId)) {
+        //超级管理员
+        SysUser user = sysUserMapper.selectById(userId);
+
+        if(UserConstants.IS_SUPER.equals(user.getIsSuper())) {
             sysMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, 1));
         } else {
             sysMenuList = sysMenuMapper.findListByUserId(userId);

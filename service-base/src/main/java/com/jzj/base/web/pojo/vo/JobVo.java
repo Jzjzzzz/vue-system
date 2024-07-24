@@ -1,8 +1,12 @@
 package com.jzj.base.web.pojo.vo;
 
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -14,7 +18,12 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class JobVo {
+@EqualsAndHashCode
+@ApiModel("定时任务详情")
+public class JobVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 定时任务全类名
      */

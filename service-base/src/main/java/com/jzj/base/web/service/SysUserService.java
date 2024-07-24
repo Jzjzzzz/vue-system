@@ -2,6 +2,7 @@ package com.jzj.base.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.base.web.pojo.entity.SysUser;
+import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserUpdateVo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,7 +28,7 @@ public interface SysUserService extends IService<SysUser>, UserDetailsService {
      * @param sysUser 查询参数
      * @return 列表
      */
-    List<SysUser> pageList(SysUser sysUser);
+    List<User> pageList(User sysUser);
 
     /**
      * 新增用户表
@@ -71,4 +72,11 @@ public interface SysUserService extends IService<SysUser>, UserDetailsService {
     Map<String, Object> info(String username);
 
     int updateUser(UserUpdateVo vo);
+
+    /**
+     * 强制下线用户
+     * @param id
+     * @return
+     */
+    boolean offLine(String id);
 }

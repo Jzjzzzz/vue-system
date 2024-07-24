@@ -1,8 +1,11 @@
 package com.jzj.base.web.pojo.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +15,10 @@ import java.util.List;
  * @Message: 获取七日统计vo
  */
 @Data
-public class BeforeDayCountVo {
+@EqualsAndHashCode
+@ApiModel("获取七日统计vo")
+public class BeforeDayCountVo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "日点击数列表")
     private List<Long> clickDayCounts;

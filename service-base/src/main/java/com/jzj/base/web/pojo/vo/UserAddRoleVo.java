@@ -1,6 +1,10 @@
 package com.jzj.base.web.pojo.vo;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * @Author Jzj
@@ -9,7 +13,11 @@ import lombok.Data;
  * @Message: 用户分配角色Vo
  */
 @Data
-public class UserAddRoleVo {
+@EqualsAndHashCode
+@ApiModel("用户分配角色Vo")
+public class UserAddRoleVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String userId;
 

@@ -425,6 +425,7 @@ export default {
     };
   },
   created() {
+    this.isPreList('${moduleName}.${businessName}.list')
     this.getList();
   },
   methods: {

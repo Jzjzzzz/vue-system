@@ -3,13 +3,16 @@ package com.jzj.base.web.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.base.security.custom.CustomUser;
+import com.jzj.base.utils.constant.CacheConstants;
 import com.jzj.base.utils.constant.UserConstants;
+import com.jzj.base.utils.redis.RedisCache;
 import com.jzj.base.utils.result.BusinessException;
 import com.jzj.base.utils.sign.MD5Utils;
 import com.jzj.base.web.mapper.SysUserMapper;
 import com.jzj.base.web.mapper.SysUserRoleMapper;
 import com.jzj.base.web.pojo.entity.SysUser;
 import com.jzj.base.web.pojo.vo.RouterVo;
+import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserUpdateVo;
 import com.jzj.base.web.service.SysMenuService;
 import com.jzj.base.web.service.SysRoleService;
@@ -29,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -53,9 +57,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;
 
+    @Autowired
+    private RedisCache redisCache;
+
     @Override
-    public List<SysUser> pageList(SysUser sysUser) {
-        return sysUserMapper.getPageList(sysUser);
+    public List<User> pageList(User sysUser) {
+        List<User> list = sysUserMapper.getPageList(sysUser);
+        return list.stream().peek(s-> s.setOnLine(redisCache.hasKey(CacheConstants.LOGIN_TOKEN_KEY + s.getId()))).collect(Collectors.toList());
     }
 
     @Override
@@ -74,6 +82,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public int modify(SysUser sysUser) {
+        //用户名不允许修改
+        sysUser.setUsername(null);
+        if("0".equals(sysUser.getStatus())){
+            if (UserConstants.IS_SUPER.equals(sysUser.getIsSuper())) throw new BusinessException("超级管理不允许停用!");
+        }
         return sysUserMapper.updateById(sysUser);
     }
 
@@ -81,7 +94,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public int deleteByIds(List<String> ids, HttpServletRequest request) {
         ids.forEach(id -> {
-            if (UserConstants.SYS_ADMIN_ID.equals(id)) throw new BusinessException("不允许删除超级管理员!");
+            SysUser user = sysUserMapper.selectById(id);
+            if (UserConstants.IS_SUPER.equals(user.getIsSuper())) throw new BusinessException("不允许删除超级管理员!");
             //删除用户之前先去删除用户角色关联表数据
             sysUserRoleMapper.deleteBatchByUserId(id);
         });
@@ -140,5 +154,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             return baseMapper.updateById(user);
         }
         return 0;
+    }
+
+    @Override
+    public boolean offLine(String id) {
+        return redisCache.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + id);
     }
 }

@@ -28,7 +28,7 @@
         FROM sys_user
     </sql>
 
-    <select id="getPageList" resultType="com.jzj.base.web.pojo.entity.SysUser">
+    <select id="getPageList" resultType="com.jzj.base.web.pojo.vo.User">
         <include refid="Base_Column_List"/>
         <where>
             <if test="username != null and username != ''">

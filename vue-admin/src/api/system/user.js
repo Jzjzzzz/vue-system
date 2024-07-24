@@ -58,3 +58,10 @@ export function del(id) {
     method: 'delete'
   })
 }
+// 下线
+export function offLine(id) {
+  return request({
+    url: `/system/user/offLine/${id}`,
+    method: 'get'
+  })
+}

@@ -1,14 +1,22 @@
 package com.jzj.base.web.pojo.vo;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * 路由显示信息
  *
  */
 @Data
-public class MetaVo
-{
+@EqualsAndHashCode
+@ApiModel("路由显示信息")
+public class MetaVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 设置该路由在侧边栏和面包屑中展示的名字
      */

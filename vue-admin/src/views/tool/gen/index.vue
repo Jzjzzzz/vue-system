@@ -251,6 +251,7 @@ export default {
     if(num != null) {
       this.queryParams.pageNum = Number(num);
     }
+    this.isPreList('btn.gen.list')
     this.getList();
   },
   activated() {

@@ -29,7 +29,6 @@ import com.ruoyi.common.core.domain.TreeEntity;
 @ApiModel(value = "${functionName}对象", description = "${functionName}")
 public class ${ClassName} extends ${Entity}
 {
-    private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
 #if(!$table.isSuperColumn($column.javaField))

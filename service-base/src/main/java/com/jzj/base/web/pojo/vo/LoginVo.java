@@ -3,6 +3,9 @@ package com.jzj.base.web.pojo.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * @Author Jzj
@@ -12,7 +15,10 @@ import lombok.Data;
  */
 @Data
 @ApiModel(description="登录表单提交对象")
-public class LoginVo {
+@EqualsAndHashCode
+public class LoginVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "用户账号")
     private String username;

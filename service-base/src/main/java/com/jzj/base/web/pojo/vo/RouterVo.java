@@ -1,7 +1,10 @@
 package com.jzj.base.web.pojo.vo;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,8 +12,12 @@ import java.util.List;
  *
  */
 @Data
-public class RouterVo
-{
+@EqualsAndHashCode
+@ApiModel("路由配置信息")
+public class RouterVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 路由名字
      */

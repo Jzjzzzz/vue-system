@@ -2,6 +2,7 @@ package com.jzj.base.web.pojo.entity.base;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @Message: Entity基类
  */
 @ApiModel(value = "Entity基类", description = "Entity基类")
+@Data
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

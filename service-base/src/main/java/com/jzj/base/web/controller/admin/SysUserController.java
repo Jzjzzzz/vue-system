@@ -8,6 +8,7 @@ import com.jzj.base.web.controller.BaseController;
 import com.jzj.base.web.pojo.entity.SysUser;
 import com.jzj.base.web.pojo.enums.BusinessType;
 import com.jzj.base.web.pojo.page.TableDataInfo;
+import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserAddRoleVo;
 import com.jzj.base.web.service.SysUserRoleService;
 import com.jzj.base.web.service.SysUserService;
@@ -41,9 +42,9 @@ public class SysUserController extends BaseController {
     @ApiOperation("分页列表")
     @GetMapping
     @PreAuthorize("hasAuthority('btn.user.list')")
-    public TableDataInfo pageList(SysUser sysUser) {
+    public TableDataInfo pageList(User sysUser) {
         startPage();
-        List<SysUser> list = sysUserService.pageList(sysUser);
+        List<User> list = sysUserService.pageList(sysUser);
         return getDataTable(list);
     }
 
@@ -93,6 +94,14 @@ public class SysUserController extends BaseController {
     @PreAuthorize("hasAuthority('btn.user.edit')")
     public R allocationRole(@RequestBody UserAddRoleVo vo) {
         return toAjax(sysUserRoleService.allocationRole(vo));
+    }
+
+    @ApiOperation("强制下线")
+    @Log(title = "用户表管理", businessType = BusinessType.UPDATE)
+    @GetMapping("/offLine/{id}")
+    @PreAuthorize("hasAuthority('btn.user.edit')")
+    public R offLine(@PathVariable("id") String id){
+        return toAjax(sysUserService.offLine(id));
     }
 }
 

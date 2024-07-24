@@ -14,9 +14,10 @@ import lombok.EqualsAndHashCode;
  * @author Jzj
  * @since 2024-04-30
  */
-@Data
+
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="SysUser对象", description="用户表")
+@Data
 public class SysUser extends CommonEntity {
 
     @ApiModelProperty(value = "用户名")
@@ -51,5 +52,8 @@ public class SysUser extends CommonEntity {
 
     @ApiModelProperty(value = "删除标记（0:不可用 1:可用）")
     private String isDeleted;
+
+    @ApiModelProperty(value = "是否是超级管理员")
+    private String isSuper;
 
 }

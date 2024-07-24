@@ -2,6 +2,7 @@ package com.jzj.base.web.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jzj.base.web.pojo.entity.SysUser;
+import com.jzj.base.web.pojo.vo.User;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ import java.util.List;
  * @since 2024-04-30
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
-    List<SysUser> getPageList(SysUser sysUser);
+    List<User> getPageList(User sysUser);
 }
