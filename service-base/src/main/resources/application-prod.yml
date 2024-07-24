@@ -131,7 +131,7 @@ aj:
     # local定时清除过期缓存(单位秒),设置为0代表不执行
     timing-clear: 180
     type: default
-    water-mark: V-Blog
+    water-mark: vue-system
     slip-offset: 5 # 校验滑动拼图允许误差偏移量(默认5像素)
     aes-status: true # aes加密坐标开启或者禁用(true|false)
     interference-options: 2 # 滑动干扰项(0/1/2)
@@ -159,3 +159,5 @@ gen:
   autoRemovePre: false
   # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
   tablePrefix: sys_
+  # 持久层框架(0-mybatis,1-mybatis-plus)
+  ormType: 1
