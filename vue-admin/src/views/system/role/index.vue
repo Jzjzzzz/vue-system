@@ -137,7 +137,7 @@
 
     <!-- 添加或修改对话框 -->
     <el-dialog :title="title" :visible.sync="open" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" >
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="24">
             <el-form-item label="角色名" prop="roleName">
@@ -156,13 +156,14 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="角色状态" prop="status">
-              <el-radio-group v-model="form.status">
-                <el-radio
+              <el-select v-model="form.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
+                <el-option
                   v-for="dict in dict.type.currency_status"
                   :key="dict.value"
-                  :label="dict.value"
-                >{{ dict.label }}</el-radio>
-              </el-radio-group>
+                  :label="dict.label"
+                  :value="dict.value"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>

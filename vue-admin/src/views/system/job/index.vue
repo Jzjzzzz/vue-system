@@ -104,7 +104,7 @@
       @pagination="getList"
     />
     <!--示例对话框-->
-    <el-dialog :title="title" :visible.sync="dialogExample" width="700px" append-to-body>
+    <el-dialog :title="title" :visible.sync="dialogExample" append-to-body>
       <el-table
         :data="cronData"
         border
@@ -124,7 +124,7 @@
       </div>
     </el-dialog>
     <!-- 添加对话框 -->
-    <el-dialog :title="title" :visible.sync="dialogFormVisible" width="700px" append-to-body>
+    <el-dialog :title="title" :visible.sync="dialogFormVisible" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="任务名称" prop="configName">
           <el-input v-model="form.jobClassName" placeholder="请输入任务名称"/>
