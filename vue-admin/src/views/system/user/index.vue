@@ -174,7 +174,7 @@
 
     <!-- 添加或修改对话框 -->
     <el-dialog :title="title" :visible.sync="open" append-to-body >
-      <el-form ref="form" :model="form" :rules="rules" >
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px" >
         <el-row>
           <el-col :span="24">
             <el-form-item label="用户名" prop="username">
@@ -196,28 +196,28 @@
               <el-input v-model="form.phone" placeholder="请输入手机号"/>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item label="性别" prop="sex">
-              <el-radio-group v-model="form.sex">
-                <el-radio
+              <el-select v-model="form.sex" placeholder="请选择性别" clearable :style="{width: '100%'}">
+                <el-option
                   v-for="dict in dict.type.sys_user_sex"
                   :key="dict.value"
-                  :label="dict.value"
-                >{{ dict.label }}
-                </el-radio>
-              </el-radio-group>
+                  :label="dict.label"
+                  :value="dict.value"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item label="状态" prop="status">
-              <el-radio-group v-model="form.status">
-                <el-radio
+              <el-select v-model="form.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
+                <el-option
                   v-for="dict in dict.type.currency_status"
                   :key="dict.value"
-                  :label="dict.value"
-                >{{ dict.label }}
-                </el-radio>
-              </el-radio-group>
+                  :label="dict.label"
+                  :value="dict.value"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>

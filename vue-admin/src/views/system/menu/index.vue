@@ -71,7 +71,7 @@
     </el-table>
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" >
-      <el-form ref="dataForm" :model="sysMenu" label-width="150px" size="small" style="padding-right: 40px;">
+      <el-form ref="dataForm" :model="sysMenu" label-width="100px" size="small" style="padding-right: 40px;">
         <el-form-item label="上级部门" v-if="sysMenu.id === ''">
           <el-input v-model="sysMenu.parentName" :disabled="true"/>
         </el-form-item>
