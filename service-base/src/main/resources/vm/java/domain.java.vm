@@ -3,10 +3,10 @@ package ${packageName}.pojo.entity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import io.swagger.annotations.ApiModelProperty;
 #foreach ($import in $importList)
 import ${import};
 #end
-
 #if($table.crud || $table.sub)
 import com.jzj.base.web.pojo.entity.base.CommonEntity;
 #elseif($table.tree)
@@ -27,12 +27,11 @@ import com.ruoyi.common.core.domain.TreeEntity;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "${functionName}对象", description = "${functionName}")
-public class ${ClassName} extends ${Entity}
-{
+public class ${ClassName} extends ${Entity}{
 
 #foreach ($column in $columns)
 #if(!$table.isSuperColumn($column.javaField))
-    /** $column.columnComment */
+    @ApiModelProperty(value = "$column.columnComment ")
 #if($column.list)
 #set($parentheseIndex=$column.columnComment.indexOf("（"))
 #if($parentheseIndex != -1)
