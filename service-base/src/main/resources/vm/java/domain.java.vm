@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import io.swagger.annotations.ApiModelProperty;
+import com.baomidou.mybatisplus.annotation.TableName;
 #foreach ($import in $importList)
 import ${import};
 #end
@@ -25,11 +26,14 @@ import com.ruoyi.common.core.domain.TreeEntity;
 #set($Entity="TreeEntity")
 #end
 @Data
+@TableName("${tableName}")
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "${functionName}对象", description = "${functionName}")
 public class ${ClassName} extends ${Entity}{
 
 #foreach ($column in $columns)
+#if($column.javaField != "id")
+#if($column.javaField != "status")
 #if(!$table.isSuperColumn($column.javaField))
     @ApiModelProperty(value = "$column.columnComment ")
 #if($column.list)
@@ -48,6 +52,8 @@ public class ${ClassName} extends ${Entity}{
 #end
     private $column.javaType $column.javaField;
 
+#end
+#end
 #end
 #end
 #if($table.sub)

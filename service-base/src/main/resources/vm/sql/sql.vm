@@ -1,10 +1,15 @@
+#if(!$menuId)
 -- 插入第一层菜单
 INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `type`, `path`, `component`, `perms`, `icon`, `sort_value`, `status`, `create_time`, `update_time`, `is_deleted`) VALUES (REPLACE(UUID(),'-',''), '0', '${functionName}', 0, '${businessName}', 'Layout', '', 'el-icon-s-help', 1, '1', NOW(), NOW(), '0');
 
 SET @parent_id = (SELECT `id` FROM `sys_menu` WHERE `name` = '${functionName}' ORDER BY `create_time` DESC LIMIT 1);
-
+#end
 -- 插入第二层菜单
-INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `type`, `path`, `component`, `perms`, `icon`, `sort_value`, `status`, `create_time`, `update_time`, `is_deleted`) VALUES (REPLACE(UUID(),'-',''), @parent_id, '${functionName}列表', 1, '${businessName}', '${moduleName}/${businessName}/index', '', 'el-icon-tickets', 1, '1', NOW(), NOW(), '0');
+#set($parentIdValue = "@parent_id")
+#if($menuId)
+    #set($parentIdValue = "'$menuId'")
+#end
+INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `type`, `path`, `component`, `perms`, `icon`, `sort_value`, `status`, `create_time`, `update_time`, `is_deleted`) VALUES (REPLACE(UUID(),'-',''), $parentIdValue, '${functionName}列表', 1, '${businessName}', '${moduleName}/${businessName}/index', '', 'el-icon-tickets', 1, '1', NOW(), NOW(), '0');
 
 SET @btn_parent_id = (SELECT `id` FROM `sys_menu` WHERE `name` = '${functionName}列表' ORDER BY `create_time` DESC LIMIT 1);
 
