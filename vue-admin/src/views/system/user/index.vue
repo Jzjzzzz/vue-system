@@ -74,6 +74,15 @@
         >删除
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="info"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+        >导出</el-button>
+      </el-col>
       <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
     </el-row>
 
@@ -112,7 +121,7 @@
         width="150px"
       >
         <template v-slot="scope">
-          <el-button type="primary" @click="handleOffLine(scope.row)" v-if="scope.row.onLine" size="mini" round>在线</el-button>
+          <el-button :disabled="$hasBP('btn.user.off')  === false" type="primary" @click="handleOffLine(scope.row)" v-if="scope.row.onLine" size="mini" round>在线</el-button>
           <el-button type="info" v-else size="mini" disabled round>离线</el-button>
         </template>
       </el-table-column>
@@ -278,9 +287,8 @@
 </template>
 
 <script>
-import {list, get, del, add, update, restPassword, allocationRole,offLine} from '@/api/system/user'
+import {list, get, del, add, update, restPassword, allocationRole, offLine} from '@/api/system/user'
 import {listAll} from '@/api/system/role'
-
 export default {
   name: 'User',
   dicts: ['sys_user_sex', 'currency_status'],
@@ -470,6 +478,12 @@ export default {
         this.$modal.msgSuccess('删除成功')
       }).catch(() => {
       })
+    },
+    /** 导出按钮操作 */
+    handleExport(){
+      this.download('system/user/export', {
+        ...this.queryParams
+      }, `user_${new Date().getTime()}.xlsx`)
     }
   }
 }

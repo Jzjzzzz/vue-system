@@ -2,6 +2,7 @@ package com.jzj.base.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.base.web.pojo.entity.SysUser;
+import com.jzj.base.web.pojo.excel.UserExcel;
 import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserUpdateVo;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +29,7 @@ public interface SysUserService extends IService<SysUser>, UserDetailsService {
      * @param sysUser 查询参数
      * @return 列表
      */
-    List<User> pageList(User sysUser);
+    List<User> pageList(SysUser sysUser);
 
     /**
      * 新增用户表
@@ -79,4 +80,6 @@ public interface SysUserService extends IService<SysUser>, UserDetailsService {
      * @return
      */
     boolean offLine(String id);
+
+    List<UserExcel> export(SysUser sysUser);
 }

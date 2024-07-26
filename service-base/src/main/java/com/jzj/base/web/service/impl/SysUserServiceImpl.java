@@ -11,6 +11,7 @@ import com.jzj.base.utils.sign.MD5Utils;
 import com.jzj.base.web.mapper.SysUserMapper;
 import com.jzj.base.web.mapper.SysUserRoleMapper;
 import com.jzj.base.web.pojo.entity.SysUser;
+import com.jzj.base.web.pojo.excel.UserExcel;
 import com.jzj.base.web.pojo.vo.RouterVo;
 import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserUpdateVo;
@@ -28,10 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -61,7 +59,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private RedisCache redisCache;
 
     @Override
-    public List<User> pageList(User sysUser) {
+    public List<User> pageList(SysUser sysUser) {
         List<User> list = sysUserMapper.getPageList(sysUser);
         return list.stream().peek(s-> s.setOnLine(redisCache.hasKey(CacheConstants.LOGIN_TOKEN_KEY + s.getId()))).collect(Collectors.toList());
     }
@@ -159,5 +157,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public boolean offLine(String id) {
         return redisCache.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + id);
+    }
+
+    @Override
+    public List<UserExcel> export(SysUser sysUser) {
+        return baseMapper.getList(sysUser);
     }
 }

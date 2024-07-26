@@ -1,21 +1,26 @@
 import Vue from 'vue'
+
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss' // global css
-import App from './App'
-import store from './store'
-import router from './router'
-import { addDateRange, handleTree, parseTime, resetForm,isPerList, selectDictLabel, selectDictLabels } from '@/utils/vblog'
 import '@/icons' // icon
 import '@/permission' // permission control
-import { getDicts } from '@/api/system/dict/data'
-import plugins from './plugins' // plugins
 import './assets/styles/element-variables.scss'
 import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/vblog.scss' // vblog css
 import 'mavon-editor/dist/css/index.css'
 import './assets/fonts/index.css'
+
+import App from './App'
+import store from './store'
+import router from './router'
+
+import { addDateRange, handleTree, parseTime, resetForm,isPerList, selectDictLabel, selectDictLabels } from '@/utils/vblog'
+import { getDicts } from '@/api/system/dict/data'
+import { download } from '@/utils/request'
+
+import plugins from './plugins' // plugins
 // 分页组件
 import Pagination from '@/components/Pagination'
 // 字典数据组件
@@ -58,9 +63,9 @@ Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.handleTree = handleTree
 Vue.prototype.$hasBP = hasBtnPermission
+Vue.prototype.download = download
 Vue.component('Editor', Editor)
 Vue.component(EleUploadImage.name, EleUploadImage)
-
 Vue.component('DictTag', DictTag)
 Vue.component('Pagination', Pagination)
 Vue.component('RightToolbar', RightToolbar)

@@ -3,10 +3,12 @@ package com.jzj.base.web.controller.admin;
 
 import com.jzj.base.annotation.Log;
 import com.jzj.base.utils.result.R;
+import com.jzj.base.utils.sign.EasyExcelUtils;
 import com.jzj.base.utils.sign.MD5Utils;
 import com.jzj.base.web.controller.BaseController;
 import com.jzj.base.web.pojo.entity.SysUser;
 import com.jzj.base.web.pojo.enums.BusinessType;
+import com.jzj.base.web.pojo.excel.UserExcel;
 import com.jzj.base.web.pojo.page.TableDataInfo;
 import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserAddRoleVo;
@@ -19,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -42,7 +45,7 @@ public class SysUserController extends BaseController {
     @ApiOperation("分页列表")
     @GetMapping
     @PreAuthorize("hasAuthority('btn.user.list')")
-    public TableDataInfo pageList(User sysUser) {
+    public TableDataInfo pageList(SysUser sysUser) {
         startPage();
         List<User> list = sysUserService.pageList(sysUser);
         return getDataTable(list);
@@ -99,9 +102,16 @@ public class SysUserController extends BaseController {
     @ApiOperation("强制下线")
     @Log(title = "用户表管理", businessType = BusinessType.UPDATE)
     @GetMapping("/offLine/{id}")
-    @PreAuthorize("hasAuthority('btn.user.edit')")
+    @PreAuthorize("hasAuthority('btn.user.off')")
     public R offLine(@PathVariable("id") String id){
         return toAjax(sysUserService.offLine(id));
+    }
+
+    @ApiOperation("导出Excel")
+    @PostMapping("/export")
+    public void export(SysUser sysUser,HttpServletResponse response){
+        List<UserExcel> list = sysUserService.export(sysUser);
+        EasyExcelUtils.export("用户表",list , UserExcel.class, response);
     }
 }
 

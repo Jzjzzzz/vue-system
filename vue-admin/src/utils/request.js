@@ -1,9 +1,11 @@
 import axios from 'axios'
-import {Message, MessageBox} from 'element-ui'
+import {Loading, Message, MessageBox} from 'element-ui'
 import store from '@/store'
 import {getToken} from '@/utils/auth'
-import {tansParams} from "@/utils/vblog";
-
+import {blobValidate, tansParams} from "@/utils/vblog";
+import { saveAs } from 'file-saver'
+import errorCode from "@/utils/errorCode";
+let downloadLoadingInstance;
 // 创建一个axios实例
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -48,6 +50,11 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
+    // 如果响应类型是文件流，直接返回响应
+    // 二进制数据则直接返回
+    if (response.request.responseType ===  'blob' || response.request.responseType ===  'arraybuffer') {
+      return response
+    }
     // 如果自定义代码不是20000，则判断为错误。
     if (res.code !== 20000) {
       Message({
@@ -84,5 +91,32 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+// 通用下载方法
+export function download(url, params, filename, config) {
+  downloadLoadingInstance = Loading.service({ text: "正在下载数据，请稍候", spinner: "el-icon-loading", background: "rgba(0, 0, 0, 0.7)", })
+  return service.post(url, params, {
+    transformRequest: [(params) => { return tansParams(params) }],
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    responseType: 'blob',
+    ...config
+  }).then(async (res) => {
+    const isBlob = blobValidate(res.data);
+    if (isBlob) {
+      const blob = new Blob([res.data])
+      saveAs(blob, filename)
+    } else {
+      const resText = await res.data.text();
+      const rspObj = JSON.parse(resText);
+      const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode['default']
+      Message.error(errMsg);
+    }
+    downloadLoadingInstance.close();
+  }).catch((r) => {
+    console.error(r)
+    Message.error('下载文件出现错误，请联系管理员！')
+    downloadLoadingInstance.close();
+  })
+}
 
 export default service
