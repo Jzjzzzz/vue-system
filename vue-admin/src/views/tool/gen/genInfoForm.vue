@@ -80,24 +80,39 @@
         </el-form-item>
       </el-col>
 
-<!--      <el-col :span="12">-->
-<!--        <el-form-item>-->
-<!--          <span slot="label">-->
-<!--            上级菜单-->
-<!--            <el-tooltip content="分配到指定菜单下，例如 系统管理" placement="top">-->
-<!--              <i class="el-icon-question"></i>-->
-<!--            </el-tooltip>-->
-<!--          </span>-->
-<!--          <treeselect-->
-<!--            :append-to-body="true"-->
-<!--            v-model="info.parentMenuId"-->
-<!--            :options="menus"-->
-<!--            :normalizer="normalizer"-->
-<!--            :show-count="true"-->
-<!--            placeholder="请选择系统菜单"-->
-<!--          />-->
-<!--        </el-form-item>-->
-<!--      </el-col>-->
+      <el-col :span="12">
+        <el-form-item>
+          <span slot="label">
+            上级菜单
+            <el-tooltip content="分配到指定菜单下，例如 系统管理" placement="top">
+              <i class="el-icon-question"></i>
+            </el-tooltip>
+          </span>
+          <treeselect
+            :append-to-body="true"
+            v-model="info.parentMenuId"
+            :options="menus"
+            :normalizer="normalizer"
+            :show-count="true"
+            placeholder="请选择系统菜单"
+          />
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="12">
+        <el-form-item>
+          <span slot="label">
+            是否生成导出
+             <el-tooltip content="插拔式功能-导出" placement="top">
+              <i class="el-icon-question"></i>
+            </el-tooltip>
+          </span>
+          <el-select v-model="info.genExport" >
+            <el-option label="是" value="1" />
+            <el-option label="否" value="0" />
+          </el-select>
+        </el-form-item>
+      </el-col>
 
       <el-col :span="24" v-if="info.genType == '1'">
         <el-form-item prop="genPath">

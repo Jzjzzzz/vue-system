@@ -42,7 +42,7 @@ public class SysUserController extends BaseController {
     @ApiOperation("分页列表")
     @GetMapping
     @PreAuthorize("hasAuthority('btn.user.list')")
-    public TableDataInfo pageList(User sysUser) {
+    public TableDataInfo pageList(SysUser sysUser) {
         startPage();
         List<User> list = sysUserService.pageList(sysUser);
         return getDataTable(list);
@@ -99,7 +99,7 @@ public class SysUserController extends BaseController {
     @ApiOperation("强制下线")
     @Log(title = "用户表管理", businessType = BusinessType.UPDATE)
     @GetMapping("/offLine/{id}")
-    @PreAuthorize("hasAuthority('btn.user.edit')")
+    @PreAuthorize("hasAuthority('btn.user.off')")
     public R offLine(@PathVariable("id") String id){
         return toAjax(sysUserService.offLine(id));
     }

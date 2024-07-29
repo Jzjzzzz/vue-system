@@ -50,4 +50,5 @@ public interface SysOperLogService extends IService<SysOperLog> {
      * 清空操作日志
      */
     void cleanOperLog();
+
 }

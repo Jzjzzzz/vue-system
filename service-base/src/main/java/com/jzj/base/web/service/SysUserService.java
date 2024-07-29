@@ -28,7 +28,7 @@ public interface SysUserService extends IService<SysUser>, UserDetailsService {
      * @param sysUser 查询参数
      * @return 列表
      */
-    List<User> pageList(User sysUser);
+    List<User> pageList(SysUser sysUser);
 
     /**
      * 新增用户表

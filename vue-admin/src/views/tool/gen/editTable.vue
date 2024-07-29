@@ -63,6 +63,12 @@
               <el-checkbox true-label="1" false-label="0" v-model="scope.row.isQuery"></el-checkbox>
             </template>
           </el-table-column>
+          <el-table-column label="导出" min-width="5%" v-if="this.info.genExport ==='1'" >
+            <template slot-scope="scope">
+              <el-checkbox true-label="1" false-label="0" v-model="scope.row.isExport"
+              v-if="!['id','create_time','update_time','create_by','update_by','status'].includes(scope.row.columnName)"></el-checkbox>
+            </template>
+          </el-table-column>
           <el-table-column label="查询方式" min-width="10%">
             <template slot-scope="scope">
               <el-select v-model="scope.row.queryType">

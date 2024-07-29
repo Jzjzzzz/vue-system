@@ -27,6 +27,7 @@ public class GenUtils {
         genTable.setFunctionName(replaceText(genTable.getTableComment()));
         genTable.setFunctionAuthor(GenProperties.AUTHOR);
         genTable.setOrmType(GenProperties.ORM_TYPE);
+        genTable.setGenExport("0");
         genTable.setCreateBy(operName);
     }
 

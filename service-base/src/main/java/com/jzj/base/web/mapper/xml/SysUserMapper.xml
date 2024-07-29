@@ -28,8 +28,8 @@
         FROM sys_user
     </sql>
 
-    <select id="getPageList" resultType="com.jzj.base.web.pojo.vo.User">
-        <include refid="Base_Column_List"/>
+    <!-- 通用查询条件 -->
+    <sql id="Common_Where_Clause">
         <where>
             <if test="username != null and username != ''">
                 AND username like concat('%',#{username},'%')
@@ -44,6 +44,11 @@
                 and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
+    </sql>
+
+    <select id="getPageList" resultType="com.jzj.base.web.pojo.vo.User">
+        <include refid="Base_Column_List"/>
+        <include refid="Common_Where_Clause"/>
         ORDER BY create_time DESC
     </select>
 </mapper>

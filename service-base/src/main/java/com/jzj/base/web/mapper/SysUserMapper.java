@@ -15,5 +15,5 @@ import java.util.List;
  * @since 2024-04-30
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
-    List<User> getPageList(User sysUser);
+    List<User> getPageList(SysUser sysUser);
 }

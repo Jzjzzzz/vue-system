@@ -111,6 +111,9 @@ public class GenTable extends BaseEntity {
     @ApiModelProperty(value = "持久层框架(0-mybatis,1-mybatis-plus)")
     private String ormType;
 
+    @ApiModelProperty(value = "是否生成导出(0-不生成,1-生成)")
+    private String genExport;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;

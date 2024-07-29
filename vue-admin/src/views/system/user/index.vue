@@ -112,7 +112,7 @@
         width="150px"
       >
         <template v-slot="scope">
-          <el-button type="primary" @click="handleOffLine(scope.row)" v-if="scope.row.onLine" size="mini" round>在线</el-button>
+          <el-button :disabled="$hasBP('btn.user.off')  === false" type="primary" @click="handleOffLine(scope.row)" v-if="scope.row.onLine" size="mini" round>在线</el-button>
           <el-button type="info" v-else size="mini" disabled round>离线</el-button>
         </template>
       </el-table-column>
@@ -278,9 +278,8 @@
 </template>
 
 <script>
-import {list, get, del, add, update, restPassword, allocationRole,offLine} from '@/api/system/user'
+import {list, get, del, add, update, restPassword, allocationRole, offLine} from '@/api/system/user'
 import {listAll} from '@/api/system/role'
-
 export default {
   name: 'User',
   dicts: ['sys_user_sex', 'currency_status'],

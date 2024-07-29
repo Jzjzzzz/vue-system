@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -61,9 +60,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private RedisCache redisCache;
 
     @Override
-    public List<User> pageList(User sysUser) {
+    public List<User> pageList(SysUser sysUser) {
         List<User> list = sysUserMapper.getPageList(sysUser);
-        return list.stream().peek(s-> s.setOnLine(redisCache.hasKey(CacheConstants.LOGIN_TOKEN_KEY + s.getId()))).collect(Collectors.toList());
+        list.forEach(s->s.setOnLine(redisCache.hasKey(CacheConstants.LOGIN_TOKEN_KEY + s.getId())));
+        return list;
     }
 
     @Override
