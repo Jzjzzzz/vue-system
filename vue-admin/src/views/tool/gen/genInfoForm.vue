@@ -99,6 +99,21 @@
         </el-form-item>
       </el-col>
 
+      <el-col :span="12">
+        <el-form-item>
+          <span slot="label">
+            是否生成导出
+             <el-tooltip content="插拔式功能-导出" placement="top">
+              <i class="el-icon-question"></i>
+            </el-tooltip>
+          </span>
+          <el-select v-model="info.genExport" >
+            <el-option label="是" value="1" />
+            <el-option label="否" value="0" />
+          </el-select>
+        </el-form-item>
+      </el-col>
+
       <el-col :span="24" v-if="info.genType == '1'">
         <el-form-item prop="genPath">
           <span slot="label">

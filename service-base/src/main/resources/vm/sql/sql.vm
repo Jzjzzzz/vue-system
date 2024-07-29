@@ -14,6 +14,8 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `type`, `path`, `component`, 
 SET @btn_parent_id = (SELECT `id` FROM `sys_menu` WHERE `name` = '${functionName}列表' ORDER BY `create_time` DESC LIMIT 1);
 
 -- 插入第三层菜单
+INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `type`, `path`, `component`, `perms`, `icon`, `sort_value`, `status`, `create_time`, `update_time`, `is_deleted`) VALUES (REPLACE(UUID(),'-',''), @btn_parent_id, '导出', 2, '', '', '${permissionPrefix}.export', '', 1, '1', NOW(), NOW(), '0');
+
 INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `type`, `path`, `component`, `perms`, `icon`, `sort_value`, `status`, `create_time`, `update_time`, `is_deleted`) VALUES (REPLACE(UUID(),'-',''), @btn_parent_id, '删除', 2, '', '', '${permissionPrefix}.remove', '', 1, '1', NOW(), NOW(), '0');
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `type`, `path`, `component`, `perms`, `icon`, `sort_value`, `status`, `create_time`, `update_time`, `is_deleted`) VALUES (REPLACE(UUID(),'-',''), @btn_parent_id, '修改', 2, '', '', '${permissionPrefix}.edit', '', 1, '1', NOW(), NOW(), '0');

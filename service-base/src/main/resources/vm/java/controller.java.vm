@@ -22,6 +22,11 @@ import ${packageName}.service.${ClassName}Service;
 import com.jzj.base.web.pojo.page.TableDataInfo;
 #elseif($table.tree)
 #end
+#if($genExport == '1')
+import com.jzj.base.utils.sign.EasyExcelUtils;
+import javax.servlet.http.HttpServletResponse;
+#end
+
 
 /**
  * ${functionName}Controller
@@ -32,6 +37,7 @@ import com.jzj.base.web.pojo.page.TableDataInfo;
 @RestController
 @RequestMapping("/${moduleName}/${businessName}")
 public class ${ClassName}Controller extends BaseController {
+
     @Autowired
     private ${ClassName}Service ${className}Service;
 
@@ -77,8 +83,18 @@ public class ${ClassName}Controller extends BaseController {
     @ApiOperation("删除")
     @PreAuthorize("hasAuthority('${permissionPrefix}.remove')")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{${pkColumn.javaField}s}")
+    @DeleteMapping("/{${pkColumn.javaField}s}")
     public R remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
         return toAjax(${className}Service.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s));
     }
+
+#if($genExport == '1')
+    @ApiOperation("导出")
+    @PreAuthorize("hasAuthority('${permissionPrefix}.export')")
+    @Log(title = "${functionName}", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public void export(${ClassName} ${className}, HttpServletResponse response){
+        EasyExcelUtils.export("${functionName}",${className}Service.select${ClassName}List(${className}), ${ClassName}.class, response);
+    }
+#end
 }

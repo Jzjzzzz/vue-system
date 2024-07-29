@@ -55,8 +55,10 @@ public class SysOperLogController extends BaseController {
         return success();
     }
 
-    @ApiOperation("导出Excel")
+    @Log(title = "操作日志", businessType = BusinessType.EXPORT)
+    @ApiOperation("导出")
     @PostMapping("/export")
+    @PreAuthorize("hasAuthority('btn.operlog.export')")
     public void export(SysOperLog operLog, HttpServletResponse response){
         EasyExcelUtils.export("操作日志",operLogService.selectOperLogList(operLog), SysOperLog.class, response);
     }

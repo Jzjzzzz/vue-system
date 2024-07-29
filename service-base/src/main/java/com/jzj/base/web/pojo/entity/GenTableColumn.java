@@ -64,6 +64,9 @@ public class GenTableColumn extends BaseEntity {
     @ApiModelProperty(value = "是否查询字段（1是）")
     private String isQuery;
 
+    @ApiModelProperty(value = "是否生成导出(0-不生成,1-生成)")
+    private String isExport;
+
     /** 查询方式（EQ等于、NE不等于、GT大于、LT小于、LIKE模糊、BETWEEN范围） */
     @ApiModelProperty(value = "查询方式")
     private String queryType;

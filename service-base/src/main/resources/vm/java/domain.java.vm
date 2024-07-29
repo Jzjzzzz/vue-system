@@ -5,6 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import io.swagger.annotations.ApiModelProperty;
 import com.baomidou.mybatisplus.annotation.TableName;
+#if($genExport == '1')
+import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
+import com.alibaba.excel.annotation.ExcelProperty;
+#end
+
 #foreach ($import in $importList)
 import ${import};
 #end
@@ -27,6 +32,9 @@ import com.ruoyi.common.core.domain.TreeEntity;
 #end
 @Data
 @TableName("${tableName}")
+#if($genExport == '1')
+@ExcelIgnoreUnannotated
+#end
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "${functionName}对象", description = "${functionName}")
 public class ${ClassName} extends ${Entity}{
@@ -36,6 +44,11 @@ public class ${ClassName} extends ${Entity}{
 #if($column.javaField != "status")
 #if(!$table.isSuperColumn($column.javaField))
     @ApiModelProperty(value = "$column.columnComment ")
+#if($genExport == '1')
+#if($column.isExport == '1')
+    @ExcelProperty(value = "$column.columnComment")
+#end
+#end
 #if($column.list)
 #set($parentheseIndex=$column.columnComment.indexOf("（"))
 #if($parentheseIndex != -1)
