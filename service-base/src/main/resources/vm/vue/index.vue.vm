@@ -98,6 +98,7 @@
           :disabled="multiple || $hasBP('${moduleName}.${businessName}.remove')  === false"
         >删除</el-button>
       </el-col>
+#if($genExport == '1')
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -108,6 +109,7 @@
           :disabled="$hasBP('${moduleName}.${businessName}.export')  === false"
         >导出</el-button>
       </el-col>
+#end
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -591,12 +593,14 @@ export default {
       this.checked${subClassName} = selection.map(item => item.index)
     },
 #end
+#if($genExport == '1')
     /** 导出按钮操作 */
     handleExport() {
       this.download('${moduleName}/${businessName}/export', {
         ...this.queryParams
       }, `${businessName}_#[[${new Date().getTime()}]]#.xlsx`)
     }
+#end
   }
 };
 </script>
