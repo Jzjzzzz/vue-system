@@ -51,9 +51,4 @@
         <include refid="Common_Where_Clause"/>
         ORDER BY create_time DESC
     </select>
-    <select id="getList" resultType="com.jzj.base.web.pojo.excel.UserExcel">
-        <include refid="Base_Column_List"/>
-        <include refid="Common_Where_Clause"/>
-        ORDER BY create_time DESC
-    </select>
 </mapper>

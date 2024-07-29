@@ -74,15 +74,6 @@
         >删除
         </el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="info"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-        >导出</el-button>
-      </el-col>
       <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
     </el-row>
 
@@ -478,12 +469,6 @@ export default {
         this.$modal.msgSuccess('删除成功')
       }).catch(() => {
       })
-    },
-    /** 导出按钮操作 */
-    handleExport(){
-      this.download('system/user/export', {
-        ...this.queryParams
-      }, `user_${new Date().getTime()}.xlsx`)
     }
   }
 }

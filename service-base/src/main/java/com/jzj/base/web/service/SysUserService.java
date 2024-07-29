@@ -2,7 +2,6 @@ package com.jzj.base.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.base.web.pojo.entity.SysUser;
-import com.jzj.base.web.pojo.excel.UserExcel;
 import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserUpdateVo;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -80,6 +79,4 @@ public interface SysUserService extends IService<SysUser>, UserDetailsService {
      * @return
      */
     boolean offLine(String id);
-
-    List<UserExcel> export(SysUser sysUser);
 }

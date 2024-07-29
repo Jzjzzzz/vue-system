@@ -1,5 +1,7 @@
 package com.jzj.base.web.pojo.entity;
 
+import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.jzj.base.web.pojo.entity.base.BaseEntity;
@@ -21,12 +23,14 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "SysOperLog对象", description = "操作日志记录")
+@ExcelIgnoreUnannotated
 public class SysOperLog extends BaseEntity {
 
     @ApiModelProperty(value = "日志主键")
     @TableId(value = "oper_id", type = IdType.AUTO)
     private Long operId;
 
+    @ExcelProperty(value = "模块标题")
     @ApiModelProperty(value = "模块标题")
     private String title;
 

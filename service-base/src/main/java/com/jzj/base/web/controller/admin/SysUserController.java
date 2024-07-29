@@ -3,12 +3,10 @@ package com.jzj.base.web.controller.admin;
 
 import com.jzj.base.annotation.Log;
 import com.jzj.base.utils.result.R;
-import com.jzj.base.utils.sign.EasyExcelUtils;
 import com.jzj.base.utils.sign.MD5Utils;
 import com.jzj.base.web.controller.BaseController;
 import com.jzj.base.web.pojo.entity.SysUser;
 import com.jzj.base.web.pojo.enums.BusinessType;
-import com.jzj.base.web.pojo.excel.UserExcel;
 import com.jzj.base.web.pojo.page.TableDataInfo;
 import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserAddRoleVo;
@@ -21,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -105,13 +102,6 @@ public class SysUserController extends BaseController {
     @PreAuthorize("hasAuthority('btn.user.off')")
     public R offLine(@PathVariable("id") String id){
         return toAjax(sysUserService.offLine(id));
-    }
-
-    @ApiOperation("导出Excel")
-    @PostMapping("/export")
-    public void export(SysUser sysUser,HttpServletResponse response){
-        List<UserExcel> list = sysUserService.export(sysUser);
-        EasyExcelUtils.export("用户表",list , UserExcel.class, response);
     }
 }
 
