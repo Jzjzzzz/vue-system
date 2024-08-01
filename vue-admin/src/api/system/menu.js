@@ -62,7 +62,7 @@ export function toAssign(roleId) {
 export function doAssign(assignMenuVo) {
   return request({
     url: `/system/menu/doAssign`,
-    method: "post",
+    method: 'post',
     data: assignMenuVo
   })
 }
