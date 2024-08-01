@@ -19,10 +19,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
         <result property="isDeleted"    column="is_deleted"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
     </resultMap>
 
     <sql id="selectProcessTemplateVo">
-        select id, name, icon_url, process_type, form_props, form_options, process_definition_key, process_definition_path, process_model_id, description, status, create_time, update_time, is_deleted from oa_process_template
+        select id, name, icon_url, process_type, form_props, form_options, process_definition_key, process_definition_path, process_model_id, description, status, create_time, update_time,create_by,update_by, is_deleted from oa_process_template
     </sql>
 
     <select id="selectProcessTemplateList" parameterType="com.jzj.base.web.pojo.entity.ProcessTemplate" resultMap="ProcessTemplateResult">

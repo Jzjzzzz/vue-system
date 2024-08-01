@@ -57,7 +57,7 @@
       <el-upload
         class="upload-demo"
         drag
-        action="/dev-api/admin/process/processType/uploadProcessDefinition"
+        :action=uploadUrl
         :headers="uploadHeaders"
         :multiple="false"
         :before-upload="beforeUpload"
@@ -125,7 +125,8 @@ export default {
       uploadHeaders: {
         'token': store.getters.token
       },
-      fileList: []
+      fileList: [],
+      uploadUrl: process.env.VUE_APP_BASE_API+'oa/template/uploadProcessDefinition',
     }
   },
 
@@ -211,7 +212,6 @@ export default {
       this.processTemplate.processDefinitionPath = res.data.processDefinitionPath
       this.processTemplate.processDefinitionKey = res.data.processDefinitionKey
     },
-
     back() {
       this.$router.push('/processSet/processTemplate')
     }

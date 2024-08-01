@@ -50,5 +50,4 @@ public class ProcessTemplate extends CommonEntity{
     @ApiModelProperty(value = "删除标记（0:不可用 1:可用） ")
     private Integer isDeleted;
 
-
 }

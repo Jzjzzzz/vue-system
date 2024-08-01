@@ -42,3 +42,11 @@ export function delTemplate(id) {
     method: 'delete'
   })
 }
+
+//发布
+export function publish(id) {
+  return request({
+    url: `/oa/template/${id}`,
+    method: 'get'
+  })
+}

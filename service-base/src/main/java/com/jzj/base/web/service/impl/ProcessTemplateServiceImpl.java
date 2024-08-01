@@ -1,13 +1,15 @@
 package com.jzj.base.web.service.impl;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import java.util.Arrays;
 import com.jzj.base.web.mapper.ProcessTemplateMapper;
 import com.jzj.base.web.pojo.entity.ProcessTemplate;
 import com.jzj.base.web.service.ProcessTemplateService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 审批模板Service业务层处理
@@ -85,5 +87,19 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
     @Override
     public int deleteProcessTemplateById(String id) {
         return processTemplateMapper.deleteById(id);
+    }
+
+    /**
+     * 发布
+     * @param id 模板id
+     */
+    @Transactional
+    @Override
+    public void publish(String id) {
+        ProcessTemplate processTemplate  = processTemplateMapper.selectById(id);
+        processTemplate.setStatus("1");
+        processTemplateMapper.updateById(processTemplate);
+        //部署流程定义
+
     }
 }

@@ -22,7 +22,7 @@
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
           <el-option
-            v-for="dict in dict.type.currency_status"
+            v-for="dict in dict.type.oa_template_status"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
@@ -47,16 +47,6 @@
           >新增
           </el-button>
         </router-link>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          @click="handleUpdate"
-          :disabled="single || $hasBP('oa.template.edit')  === false"
-        >修改</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -89,7 +79,7 @@
       <el-table-column label="描述" align="center" prop="description" />
       <el-table-column label="状态" align="center" prop="status">
         <template v-slot="scope">
-          <dict-tag :options="dict.type.currency_status" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.oa_template_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -97,15 +87,21 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="180px" class-name="small-padding fixed-width">
         <template v-slot="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
+            @click="show(scope.row)"
             :disabled="$hasBP('oa.template.edit')  === false"
-          >修改</el-button>
+          >查看</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-s-promotion"
+            @click="publish(scope.row.id)"
+          >发布</el-button>
           <el-button
             size="mini"
             type="text"
@@ -124,68 +120,46 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-
-    <!-- 添加或修改审批模板对话框 -->
-    <el-dialog :title="title" :visible.sync="open" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="审批名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入审批名称" />
-        </el-form-item>
-        <el-form-item label="图标路径" prop="iconUrl">
-          <el-input v-model="form.iconUrl" placeholder="请输入图标路径" />
-        </el-form-item>
-        <el-form-item label="审批类型" prop="processType">
-          <el-select v-model="form.processType" placeholder="请选择审批类型">
+    <!--  查看审批设置  -->
+    <el-dialog title="查看审批设置" :visible.sync="formDialogVisible">
+      <h3>基本信息</h3>
+      <el-divider/>
+      <el-form ref="flashPromotionForm" label-width="80px" size="small" style="padding-right: 40px;">
+        <el-form-item label="审批类型" prop="sex">
+          <el-select disabled v-model="processTemplate.processType" clearable :style="{width: '100%'}">
             <el-option
               v-for="dict in dict.type.sys_oa_type"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
-        <el-form-item label="表单属性" prop="formProps">
-          <el-input v-model="form.formProps" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="表单选项" prop="formOptions">
-          <el-input v-model="form.formOptions" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="流程定义key" prop="processDefinitionKey">
-          <el-input v-model="form.processDefinitionKey" placeholder="请输入流程定义key" />
-        </el-form-item>
-        <el-form-item label="流程定义上传路径" prop="processDefinitionPath">
-          <el-input v-model="form.processDefinitionPath" placeholder="请输入流程定义上传路径" />
-        </el-form-item>
-        <el-form-item label="流程定义模型id" prop="processModelId">
-          <el-input v-model="form.processModelId" placeholder="请输入流程定义模型id" />
-        </el-form-item>
-        <el-form-item label="描述" prop="description">
-          <el-input v-model="form.description" placeholder="请输入描述" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="form.status">
-            <el-radio
-              v-for="dict in dict.type.currency_status"
-              :key="dict.value"
-              :label="parseInt(dict.value)"
-            >{{dict.label}}</el-radio>
-          </el-radio-group>
+        <el-form-item label="审批名称" prop="phone">
+          <el-input v-model="processTemplate.name" disabled/>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+      <h3>表单信息</h3>
+      <el-divider/>
+      <div>
+        <form-create
+          :rule="rule"
+          :option="option"
+        ></form-create>
       </div>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="formDialogVisible = false" size="small">取 消</el-button>
+  </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listTemplate, getTemplate, delTemplate, addTemplate, updateTemplate } from "@/api/oa/template";
+import {listTemplate, delTemplate, publish} from "@/api/oa/template";
 
 export default {
   name: "Template",
-  dicts: ['sys_oa_type', 'currency_status'],
+  dicts: ['sys_oa_type', 'oa_template_status'],
   data() {
     return {
       // 遮罩层
@@ -202,10 +176,6 @@ export default {
       total: 0,
       // 审批模板表格数据
       templateList: [],
-      // 弹出层标题
-      title: "",
-      // 是否显示弹出层
-      open: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -214,6 +184,10 @@ export default {
         processType: null,
         status: null,
       },
+      rule: [],
+      option: {},
+      processTemplate: {},
+      formDialogVisible: false,
       // 表单参数
       form: {},
       // 表单校验
@@ -241,6 +215,12 @@ export default {
     this.getList();
   },
   methods: {
+    publish(id) {
+      publish(id).then(response => {
+        this.$message.success('发布成功')
+        this.fetchData(this.page)
+      })
+    },
     /** 查询审批模板列表 */
     getList() {
       this.loading = true;
@@ -250,10 +230,11 @@ export default {
         this.loading = false;
       });
     },
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
+    show(row) {
+      this.rule = JSON.parse(row.formProps)
+      this.option = JSON.parse(row.formOptions)
+      this.processTemplate = row
+      this.formDialogVisible = true
     },
     // 表单重置
     reset() {
@@ -290,40 +271,6 @@ export default {
       this.ids = selection.map(item => item.id)
       this.single = selection.length!==1
       this.multiple = !selection.length
-    },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.$router.push('/oa/template/templateSet')
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getTemplate(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改审批模板";
-      });
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateTemplate(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addTemplate(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
-      });
     },
     /** 删除按钮操作 */
     handleDelete(row) {

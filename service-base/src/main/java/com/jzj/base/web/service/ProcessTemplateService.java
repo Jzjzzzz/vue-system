@@ -1,8 +1,9 @@
 package com.jzj.base.web.service;
 
-import java.util.List;
-import com.jzj.base.web.pojo.entity.ProcessTemplate;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jzj.base.web.pojo.entity.ProcessTemplate;
+
+import java.util.List;
 /**
  * 审批模板Service接口
  * 
@@ -58,4 +59,10 @@ public interface ProcessTemplateService extends IService<ProcessTemplate>
      * @return 结果
      */
     int deleteProcessTemplateById(String id);
+
+    /**
+     * 发布
+     * @param id 模板id
+     */
+    void publish(String id);
 }
