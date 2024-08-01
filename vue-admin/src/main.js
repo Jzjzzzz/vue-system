@@ -36,6 +36,9 @@ import EleUploadImage from 'vue-ele-upload-image'
 // Markdown
 import mavonEditor from 'mavon-editor'
 
+import FcDesigner from '@form-create/designer'
+import formCreate from '@form-create/element-ui'
+
 // 自定义权限判断方法
 import hasBtnPermission from '@/utils/btn-permission'
 import directive from './directive' // directive
@@ -77,6 +80,8 @@ Vue.use(ElementUI)
 Vue.use(plugins)
 Vue.use(mavonEditor)
 Vue.use(directive)
+Vue.use(FcDesigner)
+Vue.use(formCreate)
 DictData.install()
 
 Vue.config.productionTip = false
