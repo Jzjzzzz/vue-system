@@ -106,5 +106,4 @@ public class ProcessTemplateController extends BaseController {
         processTemplateService.publish(id);
         return success();
     }
-
 }

@@ -3,7 +3,10 @@ package com.jzj.base.web.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.base.web.mapper.ProcessTemplateMapper;
 import com.jzj.base.web.pojo.entity.ProcessTemplate;
+import com.jzj.base.web.pojo.vo.ProcessFormVo;
+import com.jzj.base.web.service.ProcessService;
 import com.jzj.base.web.service.ProcessTemplateService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +21,12 @@ import java.util.List;
  * @date 2024-07-30
  */
 @Service
-public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMapper,ProcessTemplate> implements ProcessTemplateService
-{
+public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMapper,ProcessTemplate> implements ProcessTemplateService {
     @Autowired
     private ProcessTemplateMapper processTemplateMapper;
+
+    @Autowired
+    private ProcessService processService;
 
     /**
      * 查询审批模板
@@ -99,7 +104,18 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
         ProcessTemplate processTemplate  = processTemplateMapper.selectById(id);
         processTemplate.setStatus("1");
         processTemplateMapper.updateById(processTemplate);
-        //部署流程定义
+        //优先发布在线流程设计
+        if(!StringUtils.isEmpty(processTemplate.getProcessDefinitionPath())) {
+            processService.deployByZip(processTemplate.getProcessDefinitionPath());
+        }
+    }
+
+    /**
+     * 开启流程控制
+     * @param form 提交表单
+     */
+    @Override
+    public void startUp(ProcessFormVo form) {
 
     }
 }

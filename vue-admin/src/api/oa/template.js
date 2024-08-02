@@ -12,7 +12,7 @@ export function listTemplate(query) {
 // 查询审批模板详细
 export function getTemplate(id) {
   return request({
-    url: '/oa/template/' + id,
+    url: `/oa/template/${id}`,
     method: 'get'
   })
 }
@@ -46,7 +46,7 @@ export function delTemplate(id) {
 //发布
 export function publish(id) {
   return request({
-    url: `/oa/template/${id}`,
+    url: `/oa/template/publish/${id}`,
     method: 'get'
   })
 }
