@@ -1,6 +1,7 @@
 package com.jzj.base.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.base.security.custom.CustomUser;
 import com.jzj.base.utils.constant.CacheConstants;
@@ -77,6 +78,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public SysUser selectById(String id) {
         return sysUserMapper.selectById(id);
+    }
+
+    @Override
+    public SysUser selectByUserName(String username) {
+        return sysUserMapper.selectOne(new QueryWrapper<SysUser>().eq("username",username));
     }
 
     @Override
