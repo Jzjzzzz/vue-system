@@ -1,9 +1,8 @@
 package com.jzj.base.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.jzj.base.utils.sign.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -32,10 +31,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     }
 
     private String getUserName(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth!=null){
-            return auth.getName();
-        }
-        return "";
+        return SecurityUtils.getUserName();
     }
 }
