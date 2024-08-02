@@ -2,7 +2,6 @@ package com.jzj.base.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.base.web.pojo.entity.ProcessTemplate;
-import com.jzj.base.web.pojo.vo.ProcessFormVo;
 
 import java.util.List;
 /**
@@ -11,8 +10,7 @@ import java.util.List;
  * @author Jzj
  * @date 2024-07-30
  */
-public interface ProcessTemplateService extends IService<ProcessTemplate>
-{
+public interface ProcessTemplateService extends IService<ProcessTemplate> {
     /**
      * 查询审批模板
      * 
@@ -54,22 +52,9 @@ public interface ProcessTemplateService extends IService<ProcessTemplate>
     int deleteProcessTemplateByIds(String[] ids);
 
     /**
-     * 删除审批模板信息
-     * 
-     * @param id 审批模板主键
-     * @return 结果
-     */
-    int deleteProcessTemplateById(String id);
-
-    /**
      * 发布
      * @param id 模板id
      */
     void publish(String id);
 
-    /**
-     * 开启流程控制
-     * @param form 提交表单
-     */
-    void startUp(ProcessFormVo form);
 }

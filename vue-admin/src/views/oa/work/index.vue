@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import {findProcessType} from '@/api/oa/process'
+import {findProcessType,startUp} from '@/api/oa/process'
 import {getTemplate} from '@/api/oa/template'
 export default {
   data() {
@@ -70,6 +70,11 @@ export default {
         "processType": this.template.processType,
         "formValues": JSON.stringify(data)
       }
+      startUp(processFormVo).then(()=>{
+        this.$message.success('开启流程成功')
+      }).catch(res=>{
+        this.$message.error(res.data.msg)
+      })
     },
     init() {
       findProcessType().then(res => {

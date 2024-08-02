@@ -2,6 +2,7 @@ package com.jzj.base.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.base.web.pojo.entity.Process;
+import com.jzj.base.web.pojo.vo.ProcessFormVo;
 import com.jzj.base.web.pojo.vo.ProcessTypeVo;
 
 import java.util.List;
@@ -57,6 +58,9 @@ public interface ProcessService extends IService<Process>
      */
     Map<String, List<ProcessTypeVo>> findProcessType();
 
-
-
+    /**
+     * 开启流程控制
+     * @param form 提交表单
+     */
+    void startUp(ProcessFormVo form);
 }

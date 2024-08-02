@@ -21,10 +21,10 @@ public class ProcessFormVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "审批模板id")
-    private Long processTemplateId;
+    private String processTemplateId;
 
     @ApiModelProperty(value = "审批类型id")
-    private Long processTypeId;
+    private String processTypeId;
 
     @ApiModelProperty(value = "表单值")
     private String formValues;

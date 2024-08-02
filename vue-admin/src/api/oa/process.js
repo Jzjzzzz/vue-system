@@ -40,3 +40,11 @@ export function findProcessType(){
     method: 'get'
   })
 }
+// 启动流程
+export function startUp(data){
+  return request({
+    url: `/oa/process/startUp`,
+    method: 'post',
+    data: data
+  })
+}

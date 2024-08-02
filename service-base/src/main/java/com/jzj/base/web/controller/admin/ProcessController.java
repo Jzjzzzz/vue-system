@@ -6,6 +6,7 @@ import com.jzj.base.web.controller.BaseController;
 import com.jzj.base.web.pojo.entity.Process;
 import com.jzj.base.web.pojo.enums.BusinessType;
 import com.jzj.base.web.pojo.page.TableDataInfo;
+import com.jzj.base.web.pojo.vo.ProcessFormVo;
 import com.jzj.base.web.service.ProcessService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,13 @@ public class ProcessController extends BaseController {
     @GetMapping("findProcessType")
     public R findProcessType() {
         return R.ok(processService.findProcessType());
+    }
+
+
+    @ApiOperation(value = "启动流程")
+    @PostMapping("/startUp")
+    public R start(@RequestBody ProcessFormVo form){
+        processService.startUp(form);
+        return success();
     }
 }

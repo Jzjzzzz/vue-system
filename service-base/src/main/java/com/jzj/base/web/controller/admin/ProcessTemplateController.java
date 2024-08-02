@@ -1,6 +1,7 @@
 package com.jzj.base.web.controller.admin;
 
 import com.jzj.base.annotation.Log;
+import com.jzj.base.utils.result.BusinessException;
 import com.jzj.base.utils.result.R;
 import com.jzj.base.web.controller.BaseController;
 import com.jzj.base.web.pojo.entity.ProcessTemplate;
@@ -92,7 +93,9 @@ public class ProcessTemplateController extends BaseController {
             Map<String, Object> map = new HashMap<>();
             map.put("processDefinitionPath", "processes/" + fileName);
             if (fileName != null) {
-                map.put("processDefinitionKey", fileName.substring(0, fileName.lastIndexOf(".")));
+                String suffix = ".bpmn20.zip";
+                if(!fileName.endsWith(suffix)) throw new BusinessException("文件名称格式出错！(实例名称:xx.bpmn20.zip)");
+                map.put("processDefinitionKey", fileName.substring(0, fileName.length() - suffix.length()));
             }
             return R.ok(map);
         } catch (IOException e) {

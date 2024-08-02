@@ -146,7 +146,6 @@ export default {
       if (this.stepIndex === 2) {
         this.processTemplate.formProps = JSON.stringify(this.$refs.designer.getRule())
         this.processTemplate.formOptions = JSON.stringify(this.$refs.designer.getOption())
-        console.log(JSON.stringify(this.processTemplate))
       }
       if (this.stepIndex === 3) {
         this.saveOrUpdate()
