@@ -8,6 +8,7 @@ import com.jzj.base.utils.constant.UserConstants;
 import com.jzj.base.utils.redis.RedisCache;
 import com.jzj.base.utils.result.BusinessException;
 import com.jzj.base.utils.sign.MD5Utils;
+import com.jzj.base.utils.sign.SecurityUtils;
 import com.jzj.base.web.mapper.SysUserMapper;
 import com.jzj.base.web.mapper.SysUserRoleMapper;
 import com.jzj.base.web.pojo.entity.SysUser;
@@ -19,9 +20,7 @@ import com.jzj.base.web.service.SysRoleService;
 import com.jzj.base.web.service.SysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -141,8 +140,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public int updateUser(UserUpdateVo vo) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SysUser user = baseMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, authentication.getName()));
+        SysUser user = baseMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, SecurityUtils.getUserName()));
         if (null == user) throw new BusinessException("用户不存在!");
         if (StringUtils.isNotEmpty(vo.getNewpassword1())) {
             if (!vo.getNewpassword1().equals(vo.getNewpassword2()))

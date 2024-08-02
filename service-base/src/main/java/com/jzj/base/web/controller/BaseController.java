@@ -6,12 +6,12 @@ import com.jzj.base.utils.result.R;
 import com.jzj.base.utils.result.ResultCode;
 import com.jzj.base.utils.sign.DateUtils;
 import com.jzj.base.utils.sign.PageUtils;
+import com.jzj.base.utils.sign.SecurityUtils;
 import com.jzj.base.utils.sign.SqlUtil;
 import com.jzj.base.web.pojo.page.PageDomain;
 import com.jzj.base.web.pojo.page.TableDataInfo;
 import com.jzj.base.web.pojo.page.TableSupport;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -117,6 +117,6 @@ public class BaseController {
      * 获取登录用户名
      */
     public String getUsername() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+        return SecurityUtils.getUserName();
     }
 }

@@ -5,6 +5,7 @@ import com.jzj.base.annotation.Log;
 import com.jzj.base.aspectj.manager.AsyncFactory;
 import com.jzj.base.aspectj.manager.AsyncManager;
 import com.jzj.base.utils.sign.IpUtils;
+import com.jzj.base.utils.sign.SecurityUtils;
 import com.jzj.base.utils.sign.ServletUtils;
 import com.jzj.base.utils.sign.StringUtils;
 import com.jzj.base.web.pojo.entity.SysOperLog;
@@ -16,7 +17,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,7 +66,7 @@ public class LogAspect {
         try
         {
             // 获取当前的用户
-            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            String username = SecurityUtils.getUserName();
             // *========数据库日志=========*//
             SysOperLog operLog = new SysOperLog();
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
