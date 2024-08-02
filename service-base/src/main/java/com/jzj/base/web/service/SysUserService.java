@@ -46,6 +46,12 @@ public interface SysUserService extends IService<SysUser>, UserDetailsService {
     SysUser selectById(String id);
 
     /**
+     * 根据用户名查询单挑记录
+     * @param username 用户名
+     */
+    SysUser selectByUserName(String username);
+
+    /**
      * 修改用户表
      *
      * @param sysUser 实体
