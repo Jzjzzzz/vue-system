@@ -121,7 +121,6 @@ export default {
         {iconUrl: 'https://gw.alicdn.com/tfs/TB1bHOWCSzqK1RjSZFjXXblCFXa-112-112.png', tag: '北京科技园车证审批'},
         {iconUrl: 'https://gw.alicdn.com/tfs/TB1e76lCOLaK1RjSZFxXXamPFXa-112-112.png', tag: '魔点访客提前预约审批'}
       ],
-
       uploadHeaders: {
         'token': store.getters.token
       },
@@ -129,19 +128,17 @@ export default {
       uploadUrl: process.env.VUE_APP_BASE_API+'oa/template/uploadProcessDefinition',
     }
   },
-
   created() {
+    this.processTemplate = {}
     let id = this.$route.query.id
-    if (id > 0) {
+    if (id != null) {
       this.fetchDataById(id)
     }
   },
-
   methods: {
     pre() {
       this.stepIndex -= 1
     },
-
     next() {
       if (this.stepIndex === 2) {
         this.processTemplate.formProps = JSON.stringify(this.$refs.designer.getRule())
@@ -165,7 +162,6 @@ export default {
         }]
       })
     },
-
     saveOrUpdate() {
       this.saveBtnDisabled = true // 防止表单重复提交
       if (!this.processTemplate.id) {
@@ -178,14 +174,14 @@ export default {
     // 新增
     saveData() {
       addTemplate(this.processTemplate).then(response => {
-        this.$router.push('/processSet/processTemplate')
+        this.$router.push('/oa/template')
       })
     },
 
     // 根据id更新记录
     updateData() {
       updateTemplate(this.processTemplate).then(response => {
-        this.$router.push('/processSet/processTemplate')
+        this.$router.push('/oa/template')
       })
     },
 
@@ -204,15 +200,14 @@ export default {
       }
       return true
     },
-
-    // 上传成功的回调
+    // 上传成功回调
     onUploadSuccess(res, file) {
       // 填充上传文件列表
       this.processTemplate.processDefinitionPath = res.data.processDefinitionPath
       this.processTemplate.processDefinitionKey = res.data.processDefinitionKey
     },
     back() {
-      this.$router.push('/processSet/processTemplate')
+      this.$router.push('/oa/template')
     }
   }
 }

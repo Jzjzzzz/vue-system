@@ -6,7 +6,9 @@ import com.jzj.base.web.controller.BaseController;
 import com.jzj.base.web.pojo.entity.Process;
 import com.jzj.base.web.pojo.enums.BusinessType;
 import com.jzj.base.web.pojo.page.TableDataInfo;
+import com.jzj.base.web.pojo.vo.ApprovalVo;
 import com.jzj.base.web.pojo.vo.ProcessFormVo;
+import com.jzj.base.web.pojo.vo.ProcessQuery;
 import com.jzj.base.web.service.ProcessService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,12 @@ public class ProcessController extends BaseController {
         return getDataTable(list);
     }
 
+    @ApiOperation(value = "待处理")
+    @GetMapping("/find")
+    public R find(ProcessQuery query) {
+        return R.ok(processService.find(query));
+    }
+
     @ApiOperation("根据id获取详细信息")
     @PreAuthorize("hasAuthority('oa.process.list')")
     @GetMapping(value = "/{id}")
@@ -63,6 +71,7 @@ public class ProcessController extends BaseController {
 
     @ApiOperation(value = "获取全部审批分类及模板")
     @GetMapping("findProcessType")
+    @PreAuthorize("hasAuthority('oa.work.list')")
     public R findProcessType() {
         return R.ok(processService.findProcessType());
     }
@@ -70,8 +79,22 @@ public class ProcessController extends BaseController {
 
     @ApiOperation(value = "启动流程")
     @PostMapping("/startUp")
+    @PreAuthorize("hasAuthority('oa.work.apply')")
     public R start(@RequestBody ProcessFormVo form){
         processService.startUp(form);
+        return success();
+    }
+
+    @ApiOperation(value = "获取审批详情")
+    @GetMapping("/show/{id}")
+    public R show(@PathVariable String id) {
+        return R.ok(processService.show(id));
+    }
+
+    @ApiOperation(value = "审批")
+    @PostMapping("/approve")
+    public R approve(@RequestBody ApprovalVo approvalVo) {
+        processService.approve(approvalVo);
         return success();
     }
 }

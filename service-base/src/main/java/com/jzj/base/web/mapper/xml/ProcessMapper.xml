@@ -22,16 +22,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="isDeleted"    column="is_deleted"    />
         <result property="createBy"    column="create_by"    />
         <result property="updateBy"    column="update_by"    />
+        <result property="processTemplateName"    column="process_template_name"    />
     </resultMap>
 
     <sql id="selectProcessVo">
-        select id, process_code, title, user_name, user_id, process_type, process_template_id, description, form_values, process_instance_id, current_auditor, status, create_time, update_time, is_deleted, create_by, update_by from oa_process
+        select id, process_code, title, user_name, user_id, process_type, process_template_id, description, form_values, process_instance_id, current_auditor, status, create_time, update_time, is_deleted, create_by, update_by,process_template_name from oa_process
     </sql>
 
     <select id="selectProcessList" parameterType="com.jzj.base.web.pojo.entity.Process" resultMap="ProcessResult">
         <include refid="selectProcessVo"/>
         <where>  
             <if test="status != null "> and status = #{status}</if>
+            <if test="userName != null and userName != ''"> and user_name = #{userName}</if>
             <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
         </where>
     </select>
@@ -44,7 +46,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM
             sys_dict_data dict
                 LEFT JOIN oa_process_template oa ON dict.dict_value = oa.process_type
+                AND oa.`status` = '1'
         WHERE
             dict.dict_type = 'sys_oa_type'
+    </select>
+    <select id="findInit" resultType="com.jzj.base.web.pojo.vo.ProcessVo">
+        SELECT
+            a.id,
+            a.title,
+            a.process_template_name,
+            a.description,
+            a.`status`,
+            a.create_time,
+            '0' task_id
+        FROM
+            `oa_process` a
+        <where>
+            <if test="vo.userName != null and vo.userName !='' ">
+                and a.user_name = #{vo.userName}
+            </if>
+        </where>
+        ORDER BY
+            create_time DESC
     </select>
 </mapper>

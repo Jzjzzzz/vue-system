@@ -1,9 +1,10 @@
 package com.jzj.base.web.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.base.web.pojo.entity.Process;
-import com.jzj.base.web.pojo.vo.ProcessFormVo;
-import com.jzj.base.web.pojo.vo.ProcessTypeVo;
+import com.jzj.base.web.pojo.entity.ProcessTemplate;
+import com.jzj.base.web.pojo.vo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public interface ProcessService extends IService<Process>
     /**
      * 部署流程定义
      */
-    void deployByZip(String deployPath);
+    void deployByZip(ProcessTemplate processTemplate);
 
     /**
      * 查询所有分类和对应模板
@@ -63,4 +64,21 @@ public interface ProcessService extends IService<Process>
      * @param form 提交表单
      */
     void startUp(ProcessFormVo form);
+
+    /**
+     * 审批详情
+     * @param id
+     * @return
+     */
+    Map<String, Object> show(String id);
+
+    /**
+     * 审核列表
+     */
+    IPage<ProcessVo> find(ProcessQuery pageParam);
+
+    /**
+     * 审核
+     */
+    void approve(ApprovalVo approvalVo);
 }

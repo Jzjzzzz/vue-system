@@ -64,6 +64,9 @@ public class ProcessTemplateController extends BaseController {
     @Log(title = "审批模板", businessType = BusinessType.UPDATE)
     @PutMapping
     public R edit(@RequestBody ProcessTemplate processTemplate) {
+        if(processTemplate.getStatus().equals("1")){
+            throw new BusinessException("发布模板后无法修改!");
+        }
         return toAjax(processTemplateService.updateProcessTemplate(processTemplate));
     }
 
@@ -77,6 +80,7 @@ public class ProcessTemplateController extends BaseController {
 
     @Log(title = "审批模板", businessType = BusinessType.UPLOAD)
     @ApiOperation("上传流程定义")
+    @PreAuthorize("hasAuthority('oa.template.edit')")
     @PostMapping("/uploadProcessDefinition")
     public R uploadProcessDefinition(MultipartFile file){
         try {
@@ -105,6 +109,8 @@ public class ProcessTemplateController extends BaseController {
 
     @ApiOperation(value = "发布")
     @GetMapping("/publish/{id}")
+    @Log(title = "审批模板", businessType = BusinessType.UPDATE)
+    @PreAuthorize("hasAuthority('oa.template.publish')")
     public R publish(@PathVariable String id){
         processTemplateService.publish(id);
         return success();

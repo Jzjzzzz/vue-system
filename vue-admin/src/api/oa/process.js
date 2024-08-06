@@ -48,3 +48,26 @@ export function startUp(data){
     data: data
   })
 }
+
+export function show(id){
+  return request({
+    url: `/oa/process/show/${id}`,
+    method: 'get'
+  })
+}
+
+export function find(query){
+  return request({
+    url: `/oa/process/find`,
+    method: 'get',
+    params: query
+  })
+}
+
+export function approve(approvalVo){
+  return request({
+    url: `/oa/process/approve`,
+    method: 'post',
+    data: approvalVo
+  })
+}

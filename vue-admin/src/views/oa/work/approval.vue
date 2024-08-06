@@ -1,59 +1,20 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
-          <el-option
-            v-for="dict in dict.type.oa_approval_status"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="创建时间">
-        <el-date-picker
-          v-model="daterangeCreateTime"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane name="pending">
+        <span slot="label"><i class="el-icon-chat-dot-round"></i> 待处理</span>
+      </el-tab-pane>
+      <el-tab-pane name="process">
+        <span slot="label"><i class="el-icon-check"></i> 已处理</span>
+      </el-tab-pane>
+      <el-tab-pane name="init">
+        <span slot="label"><i class="el-icon-paperclip"></i> 已发起</span>
+      </el-tab-pane>
+    </el-tabs>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          @click="handleDelete"
-          :disabled="multiple || $hasBP('oa.process.remove')  === false"
-        >删除</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-
-    <el-table v-loading="loading" :data="processList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
+    <el-table v-loading="loading" :data="processList">
       <el-table-column type="index" label="序号" align="center"/>
-
-      <el-table-column label="审批编号" align="center" width="130px" prop="processCode" />
       <el-table-column label="标题" align="center" prop="title"  />
-      <el-table-column label="用户" align="center" prop="userName" />
-      <el-table-column label="审批类型" align="center" prop="processType">
-        <template v-slot="scope">
-          <dict-tag :options="dict.type.sys_oa_type" :value="scope.row.processType"/>
-        </template>
-      </el-table-column>
       <el-table-column label="审批模板" align="center" prop="processTemplateName" />
       <el-table-column label="描述" align="center" prop="description" />
       <el-table-column label="状态" align="center" prop="status">
@@ -73,14 +34,16 @@
             type="text"
             icon="el-icon-edit"
             @click="btnShow(scope.row)"
-          >查看</el-button>
+          >
+            {{activeName === 'process' || activeName === 'init' ? '查看' : '审批'}}
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            :disabled="$hasBP('oa.process.remove')  === false"
-          >删除</el-button>
+            v-if="activeName === 'init'"
+          >取消</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -114,10 +77,15 @@
           <div style="float: right">
             <img class="sh_img_tg" v-if="this.process.status ==='2'" src="@/assets/image/shtg.png">
             <img class="sh_img_bh" v-if="this.process.status ==='-1'" src="@/assets/image/bh.png">
+            <div style="padding: 20px" v-if="activeName === 'pending'" >
+              <el-button size="small" type="primary" @click="btnApprove(1)" >通 过</el-button>
+              <el-button type="danger" size="small" @click="btnApprove(-1)">驳 回</el-button>
+            </div>
           </div>
         </div>
       </el-card>
     </el-dialog>
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -129,19 +97,22 @@
 </template>
 
 <script>
-import {listProcess, delProcess, show} from "@/api/oa/process";
+import {show, approve, find, delProcess} from "@/api/oa/process";
 
 export default {
   name: "Process",
   dicts: ['oa_approval_status', 'sys_oa_type'],
   data() {
     return {
+      reverse: true,
       // 遮罩层
       loading: true,
+      activeName: 'pending',
       // 选中数组
       ids: [],
       // 非单个禁用
       single: true,
+      open: false,
       // 非多个禁用
       multiple: true,
       // 显示搜索条件
@@ -149,7 +120,6 @@ export default {
       processList:[],
       // 总条数
       total: 0,
-      open: false,
       // 修改人时间范围
       daterangeCreateTime: [],
       // 查询参数
@@ -158,6 +128,7 @@ export default {
         pageSize: 10,
         status: null,
         createTime: null,
+        type: 'pending'
       },
       taskId: 0,
       process: { },
@@ -171,6 +142,32 @@ export default {
     this.getList();
   },
   methods: {
+    handleClick() {
+      this.queryParams.type = this.activeName;
+      this.getList()
+    },
+    btnApprove(status){
+      let approvalVo = {
+        processId: this.process.id,
+        taskId: this.taskId,
+        status: status
+      }
+      approve(approvalVo).then(response => {
+        this.$message.success('审批成功');
+        this.open = false;
+        this.getList();
+      })
+    },
+    /** 删除按钮操作 */
+    handleDelete(row) {
+      const ids = row.id;
+      this.$modal.confirm('是否确认取消编号为"' + ids + '"的审批？').then(function() {
+        return delProcess(ids);
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("取消成功");
+      });
+    },
     btnShow(row){
       this.open = true;
       show(row.id).then(res=>{
@@ -189,16 +186,11 @@ export default {
         this.queryParams.params["beginCreateTime"] = this.daterangeCreateTime[0];
         this.queryParams.params["endCreateTime"] = this.daterangeCreateTime[1];
       }
-      listProcess(this.queryParams).then(response => {
-        this.processList = response.rows;
-        this.total = response.total;
+      find(this.queryParams).then(response => {
+        this.processList = response.data.records;
+        this.total = response.data.total;
         this.loading = false;
       });
-    },
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
     },
     // 表单重置
     reset() {
@@ -234,22 +226,7 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
-    },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除审批类型编号为"' + ids + '"的数据项？').then(function() {
-        return delProcess(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      });
-    },
+
   }
 };
 </script>

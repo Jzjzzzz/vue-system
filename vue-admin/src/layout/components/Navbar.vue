@@ -1,5 +1,6 @@
 <template>
   <div class="navbar">
+
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
@@ -19,11 +20,11 @@
           <el-dropdown-item  @click.native="dialogFormVisible = true">
             <span style="display:block;">个人资料</span>
           </el-dropdown-item>
+          <el-dropdown-item>
+            消息<el-badge class="mark" :value="12" />
+          </el-dropdown-item>
           <a target="_blank" href="https://github.com/Jzjzzzz/vblog">
             <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>文档</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">退出</span>
@@ -31,7 +32,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <!--  dialog  -->
+    <!--  个人资料修改  -->
     <el-dialog title="个人资料" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -54,7 +55,7 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
       </div>
     </el-dialog>
-    <!--  dialog  -->
+    <!--  个人资料修改  -->
   </div>
 
 </template>
@@ -65,7 +66,6 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import {deleteImg} from "@/api/upload";
 import {updateUser} from "@/api/user"
-
 export default {
   data(){
     return{
@@ -85,6 +85,7 @@ export default {
       //文件上传类型
       imgType:['png', 'jpg', 'jpeg']
     }
+
   },
   components: {
     Breadcrumb,

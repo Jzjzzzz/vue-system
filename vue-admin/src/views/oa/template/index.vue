@@ -68,7 +68,7 @@
       <el-table-column label="审批名称" align="center" prop="name" />
       <el-table-column label="图标">
         <template slot-scope="scope">
-          <img :src="scope.row.iconUrl" style="width: 30px;height: 30px;vertical-align: text-bottom;">
+          <img :src="scope.row.iconUrl" style="width: 30px;height: 30px;vertical-align: text-bottom;" alt="模板图标">
         </template>
       </el-table-column>
       <el-table-column label="审批类型" align="center" prop="processType">
@@ -94,13 +94,14 @@
             type="text"
             icon="el-icon-edit"
             @click="show(scope.row)"
-            :disabled="$hasBP('oa.template.edit')  === false"
-          >查看</el-button>
+            :disabled="$hasBP('oa.template.edit')  === false || scope.row.status === '1'"
+          >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-s-promotion"
             @click="publish(scope.row.id)"
+            :disabled="scope.row.status === '1' || $hasBP('oa.template.publish')  === false"
           >发布</el-button>
           <el-button
             size="mini"
@@ -120,37 +121,6 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-    <!--  查看审批设置  -->
-    <el-dialog title="查看审批设置" :visible.sync="formDialogVisible">
-      <h3>基本信息</h3>
-      <el-divider/>
-      <el-form ref="flashPromotionForm" label-width="80px" size="small" style="padding-right: 40px;">
-        <el-form-item label="审批类型" prop="sex">
-          <el-select disabled v-model="processTemplate.processType" clearable :style="{width: '100%'}">
-            <el-option
-              v-for="dict in dict.type.sys_oa_type"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="审批名称" prop="phone">
-          <el-input v-model="processTemplate.name" disabled/>
-        </el-form-item>
-      </el-form>
-      <h3>表单信息</h3>
-      <el-divider/>
-      <div>
-        <form-create
-          :rule="rule"
-          :option="option"
-        ></form-create>
-      </div>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="formDialogVisible = false" size="small">取 消</el-button>
-  </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -183,30 +153,6 @@ export default {
         name: null,
         processType: null,
         status: null,
-      },
-      rule: [],
-      option: {},
-      processTemplate: {},
-      formDialogVisible: false,
-      // 表单参数
-      form: {},
-      // 表单校验
-      rules: {
-        name: [
-          { required: true, message: "审批名称不能为空", trigger: "blur" }
-        ],
-        status: [
-          { required: true, message: "状态不能为空", trigger: "change" }
-        ],
-        createTime: [
-          { required: true, message: "创建时间不能为空", trigger: "blur" }
-        ],
-        updateTime: [
-          { required: true, message: "更新时间不能为空", trigger: "blur" }
-        ],
-        isDeleted: [
-          { required: true, message: "删除标记不能为空", trigger: "blur" }
-        ]
       }
     };
   },
@@ -215,10 +161,11 @@ export default {
     this.getList();
   },
   methods: {
+    /** 发布 */
     publish(id) {
-      publish(id).then(response => {
+      publish(id).then(() => {
         this.$message.success('发布成功')
-        this.fetchData(this.page)
+        this.getList();
       })
     },
     /** 查询审批模板列表 */
@@ -231,10 +178,7 @@ export default {
       });
     },
     show(row) {
-      this.rule = JSON.parse(row.formProps)
-      this.option = JSON.parse(row.formOptions)
-      this.processTemplate = row
-      this.formDialogVisible = true
+      this.$router.push({path:'/oa/templateSet',query:{id:row.id}})
     },
     // 表单重置
     reset() {
@@ -280,7 +224,7 @@ export default {
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      });
     },
   }
 };

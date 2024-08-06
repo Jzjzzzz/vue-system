@@ -12,7 +12,7 @@
                       v-if="item.id!=null"
                       :key="item.id"
                       :span="3">
-                <div class="container" @click="handleClick(item.id)">
+                <div class="container" @click="handleClick(item.id)" >
                   <el-image  class="img" fit="scale-down" :src="item.iconUrl"></el-image>
                   <div class="title">{{ item.name }}</div>
                 </div>
@@ -72,8 +72,7 @@ export default {
       }
       startUp(processFormVo).then(()=>{
         this.$message.success('开启流程成功')
-      }).catch(res=>{
-        this.$message.error(res.data.msg)
+        this.open = false
       })
     },
     init() {
@@ -105,7 +104,8 @@ export default {
 .img {
   width: 50px;
   border-radius: 10px;
-  margin-top: 10px
+  margin-top: 10px;
+  cursor:pointer;
 }
 
 .title {

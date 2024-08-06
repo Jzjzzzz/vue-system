@@ -1,10 +1,15 @@
 package com.jzj.base.web.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.base.utils.result.BusinessException;
+import com.jzj.base.web.mapper.ProcessMapper;
 import com.jzj.base.web.mapper.ProcessTemplateMapper;
+import com.jzj.base.web.pojo.entity.Process;
 import com.jzj.base.web.pojo.entity.ProcessTemplate;
 import com.jzj.base.web.service.ProcessService;
 import com.jzj.base.web.service.ProcessTemplateService;
+import org.activiti.engine.RepositoryService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * 审批模板Service业务层处理
@@ -27,6 +33,11 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
 
     @Autowired
     private ProcessService processService;
+
+    @Autowired
+    private RepositoryService repositoryService;
+    @Autowired
+    private ProcessMapper processMapper;
 
     /**
      * 查询审批模板
@@ -80,6 +91,17 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
      */
     @Override
     public int deleteProcessTemplateByIds(String[] ids) {
+        //这里需要去删除已发布的流程模板
+        List<ProcessTemplate> list = processTemplateMapper.selectBatchIds(Arrays.asList(ids));
+        Stream<ProcessTemplate> pubList = list.stream().filter(s -> s.getStatus().equals("1"));
+        pubList.forEach(s->{
+            if(s.getProcessModelId()!=null){
+                //级联删除流程相关表信息
+                repositoryService.deleteDeployment(s.getProcessModelId(),true);
+                QueryWrapper<Process> wrapper = new QueryWrapper<Process>().eq("process_template_id", s.getId());
+                processMapper.delete(wrapper);
+            }
+        });
         return processTemplateMapper.deleteBatchIds(Arrays.asList(ids));
     }
 
@@ -91,11 +113,13 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
     @Override
     public void publish(String id) {
         ProcessTemplate processTemplate  = processTemplateMapper.selectById(id);
-        processTemplate.setStatus("1");
-        processTemplateMapper.updateById(processTemplate);
-        //优先发布在线流程设计
-        if(!StringUtils.isEmpty(processTemplate.getProcessDefinitionPath())) {
-            processService.deployByZip(processTemplate.getProcessDefinitionPath());
+        if(processTemplate.getStatus().equals("1")){
+            throw new BusinessException("无法重复发布!");
         }
+        if(StringUtils.isEmpty(processTemplate.getProcessDefinitionPath())) {
+            throw new BusinessException("请先上传流程设计文件!");
+        }
+        //发布
+        processService.deployByZip(processTemplate);
     }
 }

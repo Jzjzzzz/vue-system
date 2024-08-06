@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.base.web.mapper.ProcessRecordMapper">
+    
+    <resultMap type="com.jzj.base.web.pojo.entity.ProcessRecord" id="ProcessRecordResult">
+        <result property="id"    column="id"    />
+        <result property="processId"    column="process_id"    />
+        <result property="description"    column="description"    />
+        <result property="status"    column="status"    />
+        <result property="operateUserId"    column="operate_user_id"    />
+        <result property="operateUser"    column="operate_user"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectProcessRecordVo">
+        select id, process_id, description, status, operate_user_id, operate_user, create_time, update_time, is_deleted from oa_process_record
+    </sql>
+
+</mapper>

@@ -1,12 +1,11 @@
 package com.jzj.base.web.pojo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.jzj.base.web.pojo.entity.base.CommonEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import io.swagger.annotations.ApiModelProperty;
-import com.baomidou.mybatisplus.annotation.TableName;
-
-import com.jzj.base.web.pojo.entity.base.CommonEntity;
 
 /**
  * 审批类型对象 oa_process
@@ -50,8 +49,10 @@ public class Process extends CommonEntity{
     @ApiModelProperty(value = "当前审批人 ")
     private String currentAuditor;
 
-    @ApiModelProperty(value = "删除标记（0:不可用 1:可用） ")
+    @ApiModelProperty(value = "删除标记（0:不可用 1:可用）")
     private Integer isDeleted;
 
+    @ApiModelProperty(value = "审批模板名称")
+    private String processTemplateName;
 
 }
