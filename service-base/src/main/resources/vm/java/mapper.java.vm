@@ -13,8 +13,7 @@ import ${packageName}.pojo.entity.${subClassName};
  * @author ${author}
  * @date ${datetime}
  */
-public interface ${ClassName}Mapper extends BaseMapper<${ClassName}>
-{
+public interface ${ClassName}Mapper extends BaseMapper<${ClassName}> {
     /**
      * 查询${functionName}列表
      * 
