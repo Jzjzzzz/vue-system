@@ -1,24 +1,24 @@
 package com.jzj.base.web.service;
 
-
 import com.jzj.base.web.pojo.entity.GenTableColumn;
-
 import java.util.List;
 
 /**
+ * <p>
  * 业务字段 服务层
- * 
- * @author ruoyi
+ * </p>
+ *
+ * @author Jzj
+ * @since 2024-04-30
  */
-public interface GenTableColumnService
-{
+public interface GenTableColumnService {
     /**
      * 查询业务字段列表
      * 
      * @param tableId 业务字段编号
      * @return 业务字段集合
      */
-    public List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId);
+    List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId);
 
     /**
      * 新增业务字段
@@ -26,7 +26,7 @@ public interface GenTableColumnService
      * @param genTableColumn 业务字段信息
      * @return 结果
      */
-    public int insertGenTableColumn(GenTableColumn genTableColumn);
+    int insertGenTableColumn(GenTableColumn genTableColumn);
 
     /**
      * 修改业务字段
@@ -34,7 +34,7 @@ public interface GenTableColumnService
      * @param genTableColumn 业务字段信息
      * @return 结果
      */
-    public int updateGenTableColumn(GenTableColumn genTableColumn);
+    int updateGenTableColumn(GenTableColumn genTableColumn);
 
     /**
      * 删除业务字段信息
@@ -42,5 +42,5 @@ public interface GenTableColumnService
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    public int deleteGenTableColumnByIds(String ids);
+    int deleteGenTableColumnByIds(String ids);
 }

@@ -1,9 +1,12 @@
 package com.jzj.base.utils.uuid;
 
 /**
+ * <p>
  * ID生成器工具类
- * 
+ * </p>
+ *
  * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class IdUtils
 {

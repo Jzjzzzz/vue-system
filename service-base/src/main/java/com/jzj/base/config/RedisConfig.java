@@ -23,9 +23,12 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
+ * <p>
  * redis配置
+ * </p>
  *
  * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Configuration
 @EnableCaching

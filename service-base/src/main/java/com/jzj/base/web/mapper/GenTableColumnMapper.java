@@ -6,9 +6,12 @@ import com.jzj.base.web.pojo.entity.GenTableColumn;
 import java.util.List;
 
 /**
+ * <p>
  * 业务字段 数据层
- * 
- * @author ruoyi
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022-07-22
  */
 public interface GenTableColumnMapper
 {

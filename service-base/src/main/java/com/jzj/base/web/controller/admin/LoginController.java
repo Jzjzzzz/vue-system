@@ -3,12 +3,12 @@ package com.jzj.base.web.controller.admin;
 import com.anji.captcha.model.common.ResponseModel;
 import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;
-import com.jzj.base.annotation.Log;
-import com.jzj.base.utils.result.R;
+import com.jzj.common.annotation.Log;
+import com.jzj.common.utils.result.R;
 import com.jzj.base.utils.sign.JwtUtils;
 import com.jzj.base.utils.sign.VerifyCodeUtils;
-import com.jzj.base.web.controller.BaseController;
-import com.jzj.base.web.pojo.enums.BusinessType;
+import com.jzj.common.controller.BaseController;
+import com.jzj.common.pojo.enums.BusinessType;
 import com.jzj.base.web.pojo.vo.UserUpdateVo;
 import com.jzj.base.web.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -21,10 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 下午4:38
- * @Version 1.0
- * @Message: 后台管理用户登录相关控制器
+ * <p>
+ * 后台管理用户登录相关控制器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/27 17:13
  */
 @Api(tags = "后台管理用户登录相关")
 @RestController

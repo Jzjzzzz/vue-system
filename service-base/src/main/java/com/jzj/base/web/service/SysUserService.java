@@ -22,6 +22,9 @@ import java.util.Map;
  */
 public interface SysUserService extends IService<SysUser>, UserDetailsService {
 
+    @Override
+    UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;
+
     /**
      * 分页查询
      *
@@ -66,9 +69,6 @@ public interface SysUserService extends IService<SysUser>, UserDetailsService {
      * @return 成功条数
      */
     int deleteByIds(List<String> ids, HttpServletRequest request);
-
-    @Override
-    UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;
 
     /**
      * 获取用户信息

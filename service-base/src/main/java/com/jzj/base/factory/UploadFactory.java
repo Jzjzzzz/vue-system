@@ -13,9 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * <p>
  * 文件上传工厂类
+ * </p>
  *
  * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Component
 public class UploadFactory implements ApplicationContextAware {

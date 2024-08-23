@@ -3,10 +3,12 @@ package com.jzj.base.utils.sign;
 import java.util.regex.Pattern;
 
 /**
- * @Author Jzj
- * @Date 2022/9/16 15:24
- * @Version 1.0
- * @Message: 邮箱工具类
+ * <p>
+ * 邮箱工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class EmailUtil {
     /**

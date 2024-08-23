@@ -10,10 +10,12 @@ import java.net.URLEncoder;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2024/7/26 下午2:35
- * @Version 1.0
- * @Message: EasyExcel工具类
+ * <p>
+ * EasyExcel工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Slf4j
 public class EasyExcelUtils {

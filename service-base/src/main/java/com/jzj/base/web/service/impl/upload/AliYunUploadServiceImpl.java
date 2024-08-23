@@ -5,8 +5,8 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.jzj.base.utils.properties.AliYunOssProperties;
-import com.jzj.base.utils.result.BusinessException;
-import com.jzj.base.utils.result.ResponseEnum;
+import com.jzj.common.utils.result.BusinessException;
+import com.jzj.common.utils.result.ResponseEnum;
 import com.jzj.base.utils.uuid.IdUtils;
 import com.jzj.base.web.pojo.enums.UploadCode;
 import com.jzj.base.web.service.UploadService;
@@ -23,10 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/7/27 17:14
- * @Version 1.0
- * @Message: 阿里云文件存储实现类
+ * <p>
+ * 阿里云文件存储实现类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022-07-22
  */
 @Slf4j
 @Service

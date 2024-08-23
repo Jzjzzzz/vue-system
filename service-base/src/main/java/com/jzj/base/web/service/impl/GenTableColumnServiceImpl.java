@@ -1,7 +1,7 @@
 package com.jzj.base.web.service.impl;
 
 
-import com.jzj.base.utils.text.Convert;
+import com.jzj.common.utils.text.Convert;
 import com.jzj.base.web.mapper.GenTableColumnMapper;
 import com.jzj.base.web.pojo.entity.GenTableColumn;
 import com.jzj.base.web.service.GenTableColumnService;
@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * <p>
  * 业务字段 服务层实现
- * 
- * @author ruoyi
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022-07-22
  */
 @Service
 public class GenTableColumnServiceImpl implements GenTableColumnService {

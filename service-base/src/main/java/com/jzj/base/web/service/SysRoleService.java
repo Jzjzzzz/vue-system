@@ -56,6 +56,11 @@ public interface SysRoleService extends IService<SysRole> {
      */
     int deleteByIds(List<String> ids, HttpServletRequest request);
 
+    /**
+     * 按用户id获取角色列表
+     * @param userId 用户id
+     * @return 角色列表
+     */
     Map<String, Object> getRoleListByUserId(String userId);
 
     /**

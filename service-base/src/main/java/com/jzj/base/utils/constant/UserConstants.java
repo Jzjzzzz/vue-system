@@ -1,10 +1,12 @@
 package com.jzj.base.utils.constant;
 
 /**
- * @Author Jzj
- * @Date 2022/7/19 15:27
- * @Version 1.0
- * @Message: 用户常量信息
+ * <p>
+ * 用户常量信息
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class UserConstants {
 

@@ -1,5 +1,6 @@
 package com.jzj.base.utils.sign;
 
+import com.jzj.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
@@ -15,10 +16,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:05
- * @Version 1.0
- * @Message: 获取IP方法
+ * <p>
+ * 获取IP方法
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Slf4j
 public class IpUtils {

@@ -1,17 +1,20 @@
 package com.jzj.base.utils.sign;
 
-import com.jzj.base.utils.constant.Constants;
+import com.jzj.common.utils.constant.Constants;
 import com.jzj.base.utils.redis.RedisCache;
 import com.jzj.base.web.pojo.entity.SysDictData;
+import com.jzj.common.utils.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/7/19 11:21
- * @Version 1.0
- * @Message: 字典工具类
+ * <p>
+ * 字典工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class DictUtils {
     /**

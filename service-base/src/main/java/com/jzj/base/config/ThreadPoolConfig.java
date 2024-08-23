@@ -11,10 +11,12 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 13:57
- * @Version 1.0
- * @Message: 线程池配置
+ * <p>
+ * 线程池配置
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Configuration
 public class ThreadPoolConfig {

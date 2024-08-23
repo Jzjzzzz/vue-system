@@ -4,15 +4,18 @@ import com.jzj.base.utils.constant.GenConstants;
 import com.jzj.base.utils.properties.GenProperties;
 import com.jzj.base.web.pojo.entity.GenTable;
 import com.jzj.base.web.pojo.entity.GenTableColumn;
+import com.jzj.common.utils.StringUtils;
 import org.apache.commons.lang3.RegExUtils;
 
 import java.util.Arrays;
 
 /**
- * @Author Jzj
- * @Date 2024/7/16 下午6:03
- * @Version 1.0
- * @Message: 代码生成器 工具类
+ * <p>
+ * 代码生成器 工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class GenUtils {
     /**

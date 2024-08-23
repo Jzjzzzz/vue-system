@@ -1,7 +1,7 @@
 package com.jzj.base.utils.sign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jzj.base.utils.result.R;
+import com.jzj.common.utils.result.R;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 下午2:23
- * @Version 1.0
- * @Message:
+ * <p>
+ * 响应体工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class ResponseUtil {
     public static void out(HttpServletResponse response, R r) {

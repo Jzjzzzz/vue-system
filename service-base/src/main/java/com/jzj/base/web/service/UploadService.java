@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/7/27 17:13
- * @Version 1.0
- * @Message:
+ * <p>
+ * 文件上传 服务层
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/27 17:13
  */
 public interface UploadService {
 

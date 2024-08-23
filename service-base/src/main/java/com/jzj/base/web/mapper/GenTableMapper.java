@@ -5,10 +5,12 @@ import com.jzj.base.web.pojo.entity.GenTable;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2024/7/16 下午3:21
- * @Version 1.0
- * @Message:
+ * <p>
+ * 代码生成 数据层
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022-07-22
  */
 public interface GenTableMapper {
 

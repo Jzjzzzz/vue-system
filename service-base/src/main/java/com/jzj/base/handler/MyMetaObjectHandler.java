@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- * @Author Jzj
- * @Date 2022/6/6 16:46
- * @Version 1.0
- * @Message: 时间自动填充拦截器
+ * <p>
+ * 时间自动填充拦截器
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {

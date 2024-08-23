@@ -4,15 +4,15 @@ import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlCreateTableStatement;
-import com.jzj.base.annotation.Log;
-import com.jzj.base.utils.result.R;
-import com.jzj.base.utils.sign.SqlUtil;
-import com.jzj.base.utils.text.Convert;
-import com.jzj.base.web.controller.BaseController;
+import com.jzj.common.annotation.Log;
+import com.jzj.common.utils.result.R;
+import com.jzj.common.utils.SqlUtil;
+import com.jzj.common.utils.text.Convert;
+import com.jzj.common.controller.BaseController;
 import com.jzj.base.web.pojo.entity.GenTable;
 import com.jzj.base.web.pojo.entity.GenTableColumn;
-import com.jzj.base.web.pojo.enums.BusinessType;
-import com.jzj.base.web.pojo.page.TableDataInfo;
+import com.jzj.common.pojo.enums.BusinessType;
+import com.jzj.common.pojo.page.TableDataInfo;
 import com.jzj.base.web.service.GenTableColumnService;
 import com.jzj.base.web.service.GenTableService;
 import io.swagger.annotations.ApiOperation;
@@ -31,10 +31,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2024/7/16 下午2:59
- * @Version 1.0
- * @Message: 代码生成器控制器
+ * <p>
+ * 代码生成器 控制器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/27 17:13
  */
 @RestController
 @RequestMapping("/tool/gen")

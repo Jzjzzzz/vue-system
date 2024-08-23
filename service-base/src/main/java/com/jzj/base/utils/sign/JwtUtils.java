@@ -1,7 +1,8 @@
 package com.jzj.base.utils.sign;
 
 import com.jzj.base.security.custom.CustomUser;
-import com.jzj.base.utils.result.BusinessException;
+import com.jzj.common.utils.StringUtils;
+import com.jzj.common.utils.result.BusinessException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -12,9 +13,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 
 /**
+ * <p>
+ * Jwt工具类
+ * </p>
+ *
  * @author Jzj
- * @version 1.0
- * @date 2021/7/24 21:57
+ * @since  2022/7/22 11:12
  */
 public class JwtUtils {
 

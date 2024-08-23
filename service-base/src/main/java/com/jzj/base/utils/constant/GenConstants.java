@@ -1,10 +1,12 @@
 package com.jzj.base.utils.constant;
 
 /**
- * @Author Jzj
- * @Date 2024/7/16 下午3:17
- * @Version 1.0
- * @Message: 代码生成通用常量
+ * <p>
+ * 代码生成通用常量
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class GenConstants
 {

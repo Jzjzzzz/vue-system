@@ -4,10 +4,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
- * @Author Jzj
- * @Date 2024/8/2 下午2:38
- * @Version 1.0
- * @Message: security工具类
+ * <p>
+ * security工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class SecurityUtils {
 

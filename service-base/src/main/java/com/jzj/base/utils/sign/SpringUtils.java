@@ -1,5 +1,6 @@
 package com.jzj.base.utils.sign;
 
+import com.jzj.common.utils.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -10,10 +11,12 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author Jzj
- * @Date 2022/7/19 11:22
- * @Version 1.0
- * @Message: spring工具类 方便在非spring管理环境中获取bean
+ * <p>
+ * spring工具类 方便在非spring管理环境中获取bean
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Component
 public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware

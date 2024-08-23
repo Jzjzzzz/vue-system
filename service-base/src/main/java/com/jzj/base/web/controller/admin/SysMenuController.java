@@ -1,11 +1,11 @@
 package com.jzj.base.web.controller.admin;
 
 
-import com.jzj.base.annotation.Log;
-import com.jzj.base.utils.result.R;
-import com.jzj.base.web.controller.BaseController;
+import com.jzj.common.annotation.Log;
+import com.jzj.common.utils.result.R;
+import com.jzj.common.controller.BaseController;
 import com.jzj.base.web.pojo.entity.SysMenu;
-import com.jzj.base.web.pojo.enums.BusinessType;
+import com.jzj.common.pojo.enums.BusinessType;
 import com.jzj.base.web.pojo.vo.AssignMenuVo;
 import com.jzj.base.web.service.SysMenuService;
 import io.swagger.annotations.ApiOperation;

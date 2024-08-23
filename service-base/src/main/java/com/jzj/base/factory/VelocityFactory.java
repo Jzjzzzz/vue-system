@@ -1,15 +1,17 @@
 package com.jzj.base.factory;
 
-import com.jzj.base.utils.constant.Constants;
+import com.jzj.common.utils.constant.Constants;
 import org.apache.velocity.app.Velocity;
 
 import java.util.Properties;
 
 /**
- * @Author Jzj
- * @Date 2024/7/17 上午11:35
- * @Version 1.0
- * @Message: VelocityEngine工厂
+ * <p>
+ * VelocityEngine工厂
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class VelocityFactory {
     /**

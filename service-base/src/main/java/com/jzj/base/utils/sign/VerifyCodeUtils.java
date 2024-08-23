@@ -5,10 +5,12 @@ import com.anji.captcha.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Author Jzj
- * @Date 2022/8/24 15:23
- * @Version 1.0
- * @Message: 验证码工具类
+ * <p>
+ * 验证码工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class VerifyCodeUtils {
 

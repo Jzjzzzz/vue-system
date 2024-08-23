@@ -1,13 +1,13 @@
 package com.jzj.base.web.controller.admin;
 
 
-import com.jzj.base.annotation.Log;
-import com.jzj.base.utils.result.R;
+import com.jzj.common.annotation.Log;
+import com.jzj.common.utils.result.R;
 import com.jzj.base.utils.sign.MD5Utils;
-import com.jzj.base.web.controller.BaseController;
+import com.jzj.common.controller.BaseController;
 import com.jzj.base.web.pojo.entity.SysUser;
-import com.jzj.base.web.pojo.enums.BusinessType;
-import com.jzj.base.web.pojo.page.TableDataInfo;
+import com.jzj.common.pojo.enums.BusinessType;
+import com.jzj.common.pojo.page.TableDataInfo;
 import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserAddRoleVo;
 import com.jzj.base.web.service.SysUserRoleService;

@@ -4,12 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.oss.ServiceException;
 import com.jzj.base.factory.VelocityFactory;
-import com.jzj.base.utils.constant.Constants;
+import com.jzj.common.utils.constant.Constants;
 import com.jzj.base.utils.constant.GenConstants;
 import com.jzj.base.utils.sign.GenUtils;
-import com.jzj.base.utils.sign.StringUtils;
+import com.jzj.common.utils.StringUtils;
 import com.jzj.base.utils.sign.VelocityUtils;
-import com.jzj.base.utils.text.CharsetKit;
+import com.jzj.common.utils.text.CharsetKit;
 import com.jzj.base.web.mapper.GenTableColumnMapper;
 import com.jzj.base.web.mapper.GenTableMapper;
 import com.jzj.base.web.pojo.entity.GenTable;
@@ -38,10 +38,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * @Author Jzj
- * @Date 2024/7/16 下午3:20
- * @Version 1.0
- * @Message:
+ * <p>
+ * 代码生成 服务层实现
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022-07-22
  */
 @Service
 @Slf4j

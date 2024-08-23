@@ -19,5 +19,4 @@ public interface SysLogininforService extends IService<SysLogininfor> {
      * @param logininfor 访问日志对象
      */
     void insertLogininfor(SysLogininfor logininfor);
-
 }
