@@ -1,10 +1,12 @@
 package com.jzj.base.web.pojo.enums;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:05
- * @Version 1.0
- * @Message: 操作状态
+ * <p>
+ * 操作状态
+ * </p>
+ *
+ * @author Jzj
+ * @since 2023/1/16 15:32
  */
 public enum BusinessStatus {
     /**

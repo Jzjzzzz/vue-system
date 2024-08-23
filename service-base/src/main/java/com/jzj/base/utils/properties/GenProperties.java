@@ -6,10 +6,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author Jzj
- * @Date 2024/7/16 下午6:05
- * @Version 1.0
- * @Message: 代码生成相关配置
+ * <p>
+ * 代码生成相关配置
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Component
 @Data

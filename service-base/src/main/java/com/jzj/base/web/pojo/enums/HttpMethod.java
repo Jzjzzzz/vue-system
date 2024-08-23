@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:08
- * @Version 1.0
- * @Message: 请求方式
+ * <p>
+ * 请求方式
+ * </p>
+ *
+ * @author Jzj
+ * @since 2023/1/16 15:32
  */
 @SuppressWarnings("AlibabaEnumConstantsMustHaveComment")
 public enum HttpMethod {

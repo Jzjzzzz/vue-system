@@ -6,10 +6,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author Jzj
- * @Date 2022/7/27 17:08
- * @Version 1.0
- * @Message: 阿里云OSS配置参数类
+ * <p>
+ * 阿里云OSS配置参数类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Data
 @Component

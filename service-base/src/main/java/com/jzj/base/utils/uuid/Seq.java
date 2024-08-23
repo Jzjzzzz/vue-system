@@ -1,12 +1,17 @@
 package com.jzj.base.utils.uuid;
 
-import com.jzj.base.utils.sign.DateUtils;
-import com.jzj.base.utils.sign.StringUtils;
+import com.jzj.common.utils.DateUtils;
+import com.jzj.common.utils.StringUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author Jzj 序列生成类
+ * <p>
+ * 序列生成类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class Seq
 {

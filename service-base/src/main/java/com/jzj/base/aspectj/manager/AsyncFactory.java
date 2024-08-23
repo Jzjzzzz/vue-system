@@ -14,10 +14,12 @@ import java.util.List;
 import java.util.TimerTask;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:12
- * @Version 1.0
- * @Message: 异步工厂（产生任务用）
+ * <p>
+ * 异步工厂（产生任务用）
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class AsyncFactory {
 

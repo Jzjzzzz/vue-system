@@ -3,7 +3,7 @@ package com.jzj.base.security.filter;
 import com.alibaba.fastjson.JSON;
 import com.jzj.base.utils.constant.CacheConstants;
 import com.jzj.base.utils.redis.RedisCache;
-import com.jzj.base.utils.result.BusinessException;
+import com.jzj.common.utils.result.BusinessException;
 import com.jzj.base.utils.sign.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,10 +21,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2024/5/8 下午2:33
- * @Version 1.0
- * @Message: 认证解析token过滤器
+ * <p>
+ * 认证解析token过滤器
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 

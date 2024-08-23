@@ -1,7 +1,7 @@
 package com.jzj.base.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jzj.base.utils.sign.DateUtils;
+import com.jzj.common.utils.DateUtils;
 import com.jzj.base.web.mapper.SysCountMapper;
 import com.jzj.base.web.pojo.entity.SysCount;
 import com.jzj.base.web.pojo.vo.BeforeDayCountVo;

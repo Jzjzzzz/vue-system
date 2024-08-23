@@ -1,12 +1,12 @@
 package com.jzj.base.web.controller.admin;
 
 
-import com.jzj.base.annotation.Log;
-import com.jzj.base.utils.result.R;
-import com.jzj.base.web.controller.BaseController;
+import com.jzj.common.annotation.Log;
+import com.jzj.common.utils.result.R;
+import com.jzj.common.controller.BaseController;
 import com.jzj.base.web.pojo.entity.SysRole;
-import com.jzj.base.web.pojo.enums.BusinessType;
-import com.jzj.base.web.pojo.page.TableDataInfo;
+import com.jzj.common.pojo.enums.BusinessType;
+import com.jzj.common.pojo.page.TableDataInfo;
 import com.jzj.base.web.service.SysRoleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

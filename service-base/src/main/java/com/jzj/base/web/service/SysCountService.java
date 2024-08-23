@@ -21,9 +21,8 @@ public interface SysCountService extends IService<SysCount> {
      */
     SysCount getCount();
 
-
     /**
-     * 获取过去七天日统计数据
+     * 获取过去七日统计数据
      *
      * @return 实体
      */

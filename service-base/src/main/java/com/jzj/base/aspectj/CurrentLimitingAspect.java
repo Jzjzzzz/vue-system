@@ -1,8 +1,8 @@
 package com.jzj.base.aspectj;
 
-import com.jzj.base.annotation.CurrentLimiting;
-import com.jzj.base.utils.result.BusinessException;
-import com.jzj.base.utils.result.ResponseEnum;
+import com.jzj.common.annotation.CurrentLimiting;
+import com.jzj.common.utils.result.BusinessException;
+import com.jzj.common.utils.result.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import net.jodah.expiringmap.ExpirationPolicy;
 import net.jodah.expiringmap.ExpiringMap;
@@ -20,10 +20,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author Jzj
- * @Date 2022/9/16 16:52
- * @Version 1.0
- * @Message: 接口限制ip访问次数切面
+ * <p>
+ * 接口限制ip访问次数切面
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Aspect
 @Component

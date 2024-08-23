@@ -18,7 +18,14 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
-
+/**
+ * <p>
+ * 邮箱发送实现类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022-07-22
+ */
 @Service
 @Slf4j
 public class EmailServiceImpl implements EmailService {

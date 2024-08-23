@@ -1,7 +1,7 @@
 package com.jzj.base.web.service.impl.upload;
 
-import com.jzj.base.utils.result.BusinessException;
-import com.jzj.base.utils.result.ResponseEnum;
+import com.jzj.common.utils.result.BusinessException;
+import com.jzj.common.utils.result.ResponseEnum;
 import com.jzj.base.utils.uuid.IdUtils;
 import com.jzj.base.web.pojo.enums.UploadCode;
 import com.jzj.base.web.service.UploadService;
@@ -17,10 +17,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * @Author Jzj
- * @Date 2022/7/27 17:14
- * @Version 1.0
- * @Message: 本地文件存储实现类
+ * <p>
+ * 本地文件存储实现类
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022-07-22
  */
 @Service
 public class LocalUploadServiceImpl implements UploadService {

@@ -104,7 +104,7 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #日志输出配置
-  mapper-locations: classpath:com/jzj/base/web/mapper/xml/*.xml  #xml文件位置
+  mapper-locations: classpath*:com/jzj/**/mapper/xml/*.xml  #xml文件位置
 
 #分页插件PageHelper配置
 pagehelper:

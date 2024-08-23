@@ -8,10 +8,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.retry.annotation.EnableRetry;
 
 /**
- * @Author Jzj
- * @Date 2024/7/5 上午11:20
- * @Version 1.0
- * @Message:
+ * <p>
+ * 启动类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2024/7/5 11:20
  */
 @SpringBootApplication
 @EnableRetry

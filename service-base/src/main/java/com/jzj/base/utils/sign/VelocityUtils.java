@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.jzj.base.utils.constant.GenConstants;
 import com.jzj.base.web.pojo.entity.GenTable;
 import com.jzj.base.web.pojo.entity.GenTableColumn;
+import com.jzj.common.utils.DateUtils;
+import com.jzj.common.utils.StringUtils;
 import org.apache.velocity.VelocityContext;
 
 import java.util.ArrayList;
@@ -13,10 +15,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @Author Jzj
- * @Date 2024/7/17 上午11:38
- * @Version 1.0
- * @Message: 模板处理工具类
+ * <p>
+ * 模板处理工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class VelocityUtils
 {

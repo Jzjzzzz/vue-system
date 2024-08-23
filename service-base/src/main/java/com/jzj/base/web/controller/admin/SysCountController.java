@@ -1,7 +1,7 @@
 package com.jzj.base.web.controller.admin;
 
 
-import com.jzj.base.utils.result.R;
+import com.jzj.common.utils.result.R;
 import com.jzj.base.web.service.SysCountService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

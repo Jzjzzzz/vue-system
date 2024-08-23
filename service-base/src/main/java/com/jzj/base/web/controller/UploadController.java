@@ -1,9 +1,9 @@
 package com.jzj.base.web.controller;
 
-import com.jzj.base.annotation.Log;
+import com.jzj.common.annotation.Log;
 import com.jzj.base.factory.UploadFactory;
-import com.jzj.base.utils.result.R;
-import com.jzj.base.web.pojo.enums.BusinessType;
+import com.jzj.common.utils.result.R;
+import com.jzj.common.pojo.enums.BusinessType;
 import com.jzj.base.web.service.SysConfigService;
 import com.jzj.base.web.service.UploadService;
 import io.swagger.annotations.Api;
@@ -14,10 +14,12 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Author Jzj
- * @Date 2022/7/26 16:17
- * @Version 1.0
- * @Message: 图片上传控制器
+ * <p>
+ * 图片上传控制器
+ * </p>
+ *
+ * @author Jzj
+ * @since 2022/7/27 17:13
  */
 @RestController
 @RequestMapping("/api/upload")

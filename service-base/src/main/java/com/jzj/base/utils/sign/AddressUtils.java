@@ -2,15 +2,18 @@ package com.jzj.base.utils.sign;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.jzj.base.utils.constant.Constants;
+import com.jzj.common.utils.constant.Constants;
+import com.jzj.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:14
- * @Version 1.0
- * @Message: 获取地址类
+ * <p>
+ * 获取地址类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class AddressUtils {
 

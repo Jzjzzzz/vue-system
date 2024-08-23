@@ -8,14 +8,17 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author Jzj
- * @Date 2022/7/19 11:23
- * @Version 1.0
- * @Message: spring redis 工具类
+ * <p>
+ * redis 工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
 public class RedisCache {
+
     @Autowired
     public RedisTemplate redisTemplate;
 

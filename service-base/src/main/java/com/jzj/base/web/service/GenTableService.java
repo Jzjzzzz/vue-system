@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2024/7/16 下午3:19
- * @Version 1.0
- * @Message:
+ * <p>
+ * 代码生成 服务层
+ * </p>
+ *
+ * @author Jzj
+ * @since 2024-04-30
  */
 public interface GenTableService {
 

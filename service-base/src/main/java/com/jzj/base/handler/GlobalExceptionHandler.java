@@ -1,8 +1,8 @@
 package com.jzj.base.handler;
 
-import com.jzj.base.utils.result.BusinessException;
-import com.jzj.base.utils.result.ExceptionUtil;
-import com.jzj.base.utils.result.R;
+import com.jzj.common.utils.result.BusinessException;
+import com.jzj.common.utils.result.ExceptionUtil;
+import com.jzj.common.utils.result.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @Author Jzj
- * @Date 2022/6/6 16:49
- * @Version 1.0
- * @Message: 异常处理拦截器
+ * <p>
+ * 异常处理拦截器
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @ControllerAdvice
 @Slf4j
@@ -22,8 +24,6 @@ public class GlobalExceptionHandler {
     /**
      * 全局异常处理
      *
-     * @param e
-     * @return
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody

@@ -16,10 +16,12 @@ import javax.sql.DataSource;
 import java.io.IOException;
 
 /**
- * @Author Jzj
- * @Date 2022/8/9 14:16
- * @Version 1.0
- * @Message: 连接池配置
+ * <p>
+ * 连接池配置
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Configuration
 public class DruidConfig {

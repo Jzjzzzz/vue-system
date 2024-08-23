@@ -3,7 +3,7 @@ package com.jzj.base.web.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.base.utils.constant.UserConstants;
 import com.jzj.base.utils.sign.DictUtils;
-import com.jzj.base.utils.sign.StringUtils;
+import com.jzj.common.utils.StringUtils;
 import com.jzj.base.web.mapper.SysDictDataMapper;
 import com.jzj.base.web.pojo.entity.SysDictData;
 import com.jzj.base.web.service.SysDictDataService;

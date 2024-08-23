@@ -3,7 +3,7 @@ package com.jzj.base.web.pojo.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.jzj.base.utils.constant.GenConstants;
-import com.jzj.base.utils.sign.StringUtils;
+import com.jzj.common.utils.StringUtils;
 import com.jzj.base.web.pojo.entity.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,12 +15,13 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
-
 /**
- * @Author Jzj
- * @Date 2024/7/16 下午3:02
- * @Version 1.0
- * @Message: 代码生成业务表
+ * <p>
+ * 代码生成业务表
+ * </p>
+ *
+ * @author Jzj
+ * @since 2023/1/16 15:32
  */
 @Data
 @ApiModel(value = "GenTable对象", description = "代码生成业务表")

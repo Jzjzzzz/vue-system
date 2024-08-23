@@ -2,7 +2,7 @@ package com.jzj.base.security.custom;
 
 import com.jzj.base.utils.constant.CacheConstants;
 import com.jzj.base.utils.redis.RedisCache;
-import com.jzj.base.utils.result.R;
+import com.jzj.common.utils.result.R;
 import com.jzj.base.utils.sign.JwtUtils;
 import com.jzj.base.utils.sign.ResponseUtil;
 import org.springframework.security.core.Authentication;
@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author Jzj
- * @Date 2024/5/11 下午1:58
- * @Version 1.0
- * @Message: 自定义退出登录处理器
+ * <p>
+ * 自定义退出登录处理器
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class CustomLogoutHandler implements LogoutHandler {
     private RedisCache redisCache;

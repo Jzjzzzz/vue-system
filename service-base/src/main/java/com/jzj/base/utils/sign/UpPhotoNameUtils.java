@@ -3,10 +3,12 @@ package com.jzj.base.utils.sign;
 import java.util.Calendar;
 
 /**
- * @Author Jzj
- * @Date 2022/7/26 16:18
- * @Version 1.0
- * @Message: 图片上传工具类
+ * <p>
+ * 图片上传工具类
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class UpPhotoNameUtils {
     public static String getPhotoName(String name,String imageFileName){

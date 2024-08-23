@@ -1,6 +1,7 @@
 package com.jzj.base.utils.sign;
 
-import com.jzj.base.utils.constant.Constants;
+import com.jzj.common.utils.constant.Constants;
+import com.jzj.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,10 +15,12 @@ import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 11:15
- * @Version 1.0
- * @Message: 通用http发送方法
+ * <p>
+ * 通用http发送方法
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 public class HttpUtils {
     private static final Logger log = LoggerFactory.getLogger(HttpUtils.class);

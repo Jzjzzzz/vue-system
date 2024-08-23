@@ -1,13 +1,13 @@
 package com.jzj.base.aspectj;
 
 import com.alibaba.fastjson.JSON;
-import com.jzj.base.annotation.Log;
+import com.jzj.common.annotation.Log;
 import com.jzj.base.aspectj.manager.AsyncFactory;
 import com.jzj.base.aspectj.manager.AsyncManager;
 import com.jzj.base.utils.sign.IpUtils;
 import com.jzj.base.utils.sign.SecurityUtils;
-import com.jzj.base.utils.sign.ServletUtils;
-import com.jzj.base.utils.sign.StringUtils;
+import com.jzj.common.utils.ServletUtils;
+import com.jzj.common.utils.StringUtils;
 import com.jzj.base.web.pojo.entity.SysOperLog;
 import com.jzj.base.web.pojo.enums.BusinessStatus;
 import com.jzj.base.web.pojo.enums.HttpMethod;
@@ -28,10 +28,12 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * @Author Jzj
- * @Date 2022/7/22 10:50
- * @Version 1.0
- * @Message: 操作日志记录处理
+ * <p>
+ * 操作日志记录处理
+ * </p>
+ *
+ * @author Jzj
+ * @since  2022/7/22 11:12
  */
 @Aspect
 @Component
