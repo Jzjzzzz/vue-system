@@ -2,7 +2,7 @@ package com.jzj.base.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jzj.base.utils.result.BusinessException;
+import com.jzj.common.utils.result.BusinessException;
 import com.jzj.base.web.mapper.ProcessMapper;
 import com.jzj.base.web.mapper.ProcessTemplateMapper;
 import com.jzj.base.web.pojo.entity.Process;

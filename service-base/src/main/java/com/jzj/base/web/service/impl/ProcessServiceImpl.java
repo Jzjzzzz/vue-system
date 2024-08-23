@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jzj.base.utils.result.BusinessException;
+import com.jzj.common.utils.result.BusinessException;
 import com.jzj.base.utils.sign.SecurityUtils;
 import com.jzj.base.web.mapper.ProcessMapper;
 import com.jzj.base.web.mapper.ProcessRecordMapper;
