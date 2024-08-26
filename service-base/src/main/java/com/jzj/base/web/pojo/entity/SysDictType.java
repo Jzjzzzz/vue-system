@@ -55,6 +55,4 @@ public class SysDictType extends BaseEntity {
     @ApiModelProperty(value = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
-
-
 }

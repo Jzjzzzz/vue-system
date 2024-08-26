@@ -16,10 +16,12 @@ import ${packageName}.pojo.entity.${ClassName};
 import ${packageName}.service.${ClassName}Service;
 
 /**
+ * <p>
  * ${functionName}Service业务层处理
- * 
+ * </p>
+ *
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 @Service
 public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${ClassName}> implements ${ClassName}Service {

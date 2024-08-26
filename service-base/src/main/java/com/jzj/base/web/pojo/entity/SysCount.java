@@ -53,6 +53,4 @@ public class SysCount extends BaseEntity {
 
     @ApiModelProperty(value = "日点赞数")
     private Long likeDayCount;
-
-
 }

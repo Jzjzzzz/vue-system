@@ -50,6 +50,4 @@ public class SysLogininfor extends BaseEntity {
 
     @ApiModelProperty(value = "访问时间")
     private Date loginTime;
-
-
 }

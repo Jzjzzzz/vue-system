@@ -3,11 +3,14 @@ package ${packageName}.service;
 import java.util.List;
 import ${packageName}.pojo.entity.${ClassName};
 import com.baomidou.mybatisplus.extension.service.IService;
+
 /**
+ * <p>
  * ${functionName}Service接口
- * 
+ * </p>
+ *
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 public interface ${ClassName}Service extends IService<${ClassName}> {
     /**

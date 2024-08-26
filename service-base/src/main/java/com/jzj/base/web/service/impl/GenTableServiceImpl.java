@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.oss.ServiceException;
 import com.jzj.base.factory.VelocityFactory;
+import com.jzj.base.utils.sign.SecurityUtils;
 import com.jzj.common.utils.constant.Constants;
 import com.jzj.base.utils.constant.GenConstants;
 import com.jzj.base.utils.sign.GenUtils;
@@ -77,13 +78,13 @@ public class GenTableServiceImpl implements GenTableService {
      */
     @Transactional
     @Override
-    public void importGenTable(List<GenTable> tableList, String name) {
+    public void importGenTable(List<GenTable> tableList) {
         try
         {
             for (GenTable table : tableList)
             {
                 String tableName = table.getTableName();
-                GenUtils.initTable(table, name);
+                GenUtils.initTable(table, SecurityUtils.getUserName());
                 int row = genTableMapper.insertGenTable(table);
                 if (row > 0)
                 {

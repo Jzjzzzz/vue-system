@@ -20,10 +20,12 @@ import com.ruoyi.common.core.domain.TreeEntity;
 #end
 
 /**
+ * <p>
  * ${functionName}对象 ${tableName}
- * 
+ * </p>
+ *
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 #if($table.crud || $table.sub)
 #set($Entity="CommonEntity")

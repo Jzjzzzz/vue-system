@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.base.utils.constant.CacheConstants;
 import com.jzj.base.utils.constant.UserConstants;
 import com.jzj.base.utils.redis.RedisCache;
+import com.jzj.base.utils.sign.SecurityUtils;
 import com.jzj.common.utils.result.BusinessException;
 import com.jzj.common.utils.StringUtils;
 import com.jzj.common.utils.text.Convert;
@@ -81,6 +82,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 
     @Override
     public int insertConfig(SysConfig config) {
+        config.setCreateBy(SecurityUtils.getUserName());
         int row = configMapper.insertConfig(config);
         if (row > 0) {
             redisCache.setCacheObject(getCacheKey(config.getConfigKey()), config.getConfigValue());
@@ -90,6 +92,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 
     @Override
     public int updateConfig(SysConfig config) {
+        config.setUpdateBy(SecurityUtils.getUserName());
         int row = configMapper.updateConfig(config);
         if (row > 0) {
             redisCache.setCacheObject(getCacheKey(config.getConfigKey()), config.getConfigValue());

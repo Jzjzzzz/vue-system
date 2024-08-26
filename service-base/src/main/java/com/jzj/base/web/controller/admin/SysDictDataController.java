@@ -69,7 +69,6 @@ public class SysDictDataController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(dictDataService.checkDictDataUnique(dict))) {
             return R.error("新增字典类型'" + dict.getDictValue() + "'失败，字典键值已存在");
         }
-        dict.setCreateBy(getUsername());
         return toAjax(dictDataService.insertDictData(dict));
     }
 
@@ -81,7 +80,6 @@ public class SysDictDataController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(dictDataService.checkDictDataUnique(dict))) {
             return R.error("修改字典类型'" + dict.getDictValue() + "'失败，字典键值已存在");
         }
-        dict.setUpdateBy(getUsername());
         return toAjax(dictDataService.updateDictData(dict));
     }
 

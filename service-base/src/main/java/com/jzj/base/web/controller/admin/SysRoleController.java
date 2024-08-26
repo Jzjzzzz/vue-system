@@ -29,6 +29,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/system/role")
 public class SysRoleController extends BaseController {
+
     @Autowired
     private SysRoleService sysRoleService;
 

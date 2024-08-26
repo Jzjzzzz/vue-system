@@ -43,9 +43,8 @@ public interface GenTableService {
      * 导入表结构
      *
      * @param tableList 导入表列表
-     * @param name 操作人员
      */
-    void importGenTable(List<GenTable> tableList, String name);
+    void importGenTable(List<GenTable> tableList);
 
     /**
      * 删除业务信息

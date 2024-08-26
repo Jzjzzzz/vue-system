@@ -23,16 +23,12 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         //这里是属性名称，不是字段名称
         this.setFieldValByName("createTime", new Date(), metaObject);
         this.setFieldValByName("updateTime", new Date(), metaObject);
-        this.setFieldValByName("createBy", getUserName(), metaObject);
+        this.setFieldValByName("createBy", SecurityUtils.getUserName(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         this.setFieldValByName("updateTime", new Date(), metaObject);
-        this.setFieldValByName("updateBy", getUserName(), metaObject);
-    }
-
-    private String getUserName(){
-        return SecurityUtils.getUserName();
+        this.setFieldValByName("updateBy", SecurityUtils.getUserName(), metaObject);
     }
 }
