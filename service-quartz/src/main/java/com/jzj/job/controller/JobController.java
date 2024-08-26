@@ -12,6 +12,7 @@ import com.jzj.job.service.JobService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class JobController extends BaseController {
 
     @ApiOperation("定时计划列表")
     @GetMapping
-    //@PreAuthorize("hasAuthority('btn.job.list')")
+    @PreAuthorize("hasAuthority('btn.job.list')")
     public TableDataInfo list(JobAndTrigger jobAndTrigger) {
         startPage();
         List<JobAndTrigger> list = jobService.selectJobList(jobAndTrigger);
@@ -44,7 +45,7 @@ public class JobController extends BaseController {
     @ApiOperation("保存定时任务")
     @PostMapping
     @Log(title = "定时任务", businessType = BusinessType.INSERT)
-    //@PreAuthorize("hasAuthority('btn.job.add')")
+    @PreAuthorize("hasAuthority('btn.job.add')")
     public R addJob(@RequestBody JobVo form) {
         return toAjax(jobService.addJob(form));
     }
@@ -52,7 +53,7 @@ public class JobController extends BaseController {
     @ApiOperation("删除定时任务")
     @DeleteMapping
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
-    //@PreAuthorize("hasAuthority('btn.job.del')")
+    @PreAuthorize("hasAuthority('btn.job.del')")
     public R deleteJob(@RequestBody JobVo form) {
         if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error();
@@ -63,7 +64,7 @@ public class JobController extends BaseController {
     @ApiOperation("暂停定时任务")
     @PutMapping("/pause")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
-    //@PreAuthorize("hasAuthority('btn.job.edit')")
+    @PreAuthorize("hasAuthority('btn.job.edit')")
     public R pauseJob(@RequestBody JobVo form) {
         if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
@@ -75,7 +76,7 @@ public class JobController extends BaseController {
     @ApiOperation("恢复定时任务")
     @PutMapping("/resume")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
-   // @PreAuthorize("hasAuthority('btn.job.edit')")
+    @PreAuthorize("hasAuthority('btn.job.edit')")
     public R resumeJob(@RequestBody JobVo form) {
         if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
@@ -86,7 +87,7 @@ public class JobController extends BaseController {
     @ApiOperation("修改定时任务，定时时间")
     @PutMapping("/update")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
-    //@PreAuthorize("hasAuthority('btn.job.edit')")
+    @PreAuthorize("hasAuthority('btn.job.edit')")
     public R cronJob(@RequestBody JobVo form) {
         if (StringUtils.isBlank(form.getCronExpression())) {
             return R.error("表达式不能为空");
@@ -97,7 +98,7 @@ public class JobController extends BaseController {
     @ApiOperation("手动调用一次定时计划")
     @PostMapping("/manualJob")
     @Log(title = "定时任务", businessType = BusinessType.OTHER)
-    //@PreAuthorize("hasAuthority('btn.job.edit')")
+    @PreAuthorize("hasAuthority('btn.job.edit')")
     public R manualJob(@RequestBody JobVo form) {
         if (StringUtils.isAllBlank(form.getJobGroupName(), form.getJobClassName())) {
             return R.error("参数不能为空");
