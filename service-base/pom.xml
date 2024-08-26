@@ -117,11 +117,7 @@
             <artifactId>spring-retry</artifactId>
         </dependency>
 
-        <!-- Spring Security依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+
 
         <!--AJ-Captcha-->
         <dependency>
