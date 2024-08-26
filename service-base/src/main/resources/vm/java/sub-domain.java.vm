@@ -7,10 +7,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * <p>
  * ${subTable.functionName}对象 ${subTableName}
- * 
+ * </p>
+ *
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 public class ${subClassName} extends BaseEntity {
     private static final long serialVersionUID = 1L;

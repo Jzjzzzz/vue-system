@@ -8,10 +8,12 @@ import ${packageName}.pojo.entity.${subClassName};
 #end
 
 /**
+ * <p>
  * ${functionName}Mapper接口
- * 
+ * </p>
+ *
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 public interface ${ClassName}Mapper extends BaseMapper<${ClassName}> {
     /**

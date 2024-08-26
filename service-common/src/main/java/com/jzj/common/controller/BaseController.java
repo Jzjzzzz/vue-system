@@ -113,11 +113,4 @@ public class BaseController {
     public R error() {
         return R.error();
     }
-
-    /**
-     * 获取登录用户名
-     */
-    public String getUsername() {
-        return "admin";
-    }
 }

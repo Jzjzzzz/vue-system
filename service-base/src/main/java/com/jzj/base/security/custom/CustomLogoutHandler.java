@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @since  2022/7/22 11:12
  */
 public class CustomLogoutHandler implements LogoutHandler {
+
     private RedisCache redisCache;
 
     public CustomLogoutHandler(RedisCache redisCache) {

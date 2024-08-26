@@ -71,6 +71,4 @@ public class SysDictData extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
-
-
 }
