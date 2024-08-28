@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.oss.ServiceException;
 import com.jzj.base.factory.VelocityFactory;
-import com.jzj.base.utils.sign.SecurityUtils;
+import com.jzj.common.utils.SecurityUtils;
 import com.jzj.common.utils.constant.Constants;
 import com.jzj.base.utils.constant.GenConstants;
 import com.jzj.base.utils.sign.GenUtils;

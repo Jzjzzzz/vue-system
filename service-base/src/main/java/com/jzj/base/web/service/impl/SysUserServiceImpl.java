@@ -9,7 +9,7 @@ import com.jzj.base.utils.constant.UserConstants;
 import com.jzj.base.utils.redis.RedisCache;
 import com.jzj.common.utils.result.BusinessException;
 import com.jzj.base.utils.sign.MD5Utils;
-import com.jzj.base.utils.sign.SecurityUtils;
+import com.jzj.common.utils.SecurityUtils;
 import com.jzj.base.web.mapper.SysUserMapper;
 import com.jzj.base.web.mapper.SysUserRoleMapper;
 import com.jzj.base.web.pojo.entity.SysUser;

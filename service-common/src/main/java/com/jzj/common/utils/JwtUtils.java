@@ -1,7 +1,5 @@
-package com.jzj.base.utils.sign;
+package com.jzj.common.utils;
 
-import com.jzj.base.security.custom.CustomUser;
-import com.jzj.common.utils.StringUtils;
 import com.jzj.common.utils.result.BusinessException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -30,7 +28,7 @@ public class JwtUtils {
     public static final String USERID = "userId";
     public static final String USERNAME = "username";
 
-    public static String getJwtToken(CustomUser customUser){
+    public static String getJwtToken(String id,String username){
 
         String JwtToken = Jwts.builder()
                 //头部信息
@@ -41,8 +39,8 @@ public class JwtUtils {
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 //主体信息
-                .claim(USERID,customUser.getSysUser().getId() )
-                .claim(USERNAME, customUser.getSysUser().getUsername())
+                .claim(USERID,id)
+                .claim(USERNAME,username)
                 //签名哈希
                 .signWith(SignatureAlgorithm.HS256, APP_SECRET)
                 .compact();

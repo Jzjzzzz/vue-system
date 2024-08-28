@@ -7,11 +7,27 @@
 </template>
 
 <script>
+
 export default {
   name: 'AppMain',
+  data() {
+    return {
+      socket: null,
+      message: ''
+    }
+  },
   computed: {
     key() {
       return this.$route.path
+    }
+  },
+  sockets: {
+    broadcast: function(data) {
+      this.$notify({
+        title: '通知',
+        dangerouslyUseHTMLString: true,
+        message: data
+      })
     }
   }
 }

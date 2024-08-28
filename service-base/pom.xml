@@ -27,7 +27,17 @@
             <artifactId>service-quartz</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.jzj</groupId>-->
+<!--            <artifactId>service-socket</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
 
+        <dependency>
+            <groupId>com.jzj</groupId>
+            <artifactId>service-websocket</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- 自定义验证注解 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -116,8 +126,6 @@
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
         </dependency>
-
-
 
         <!--AJ-Captcha-->
         <dependency>

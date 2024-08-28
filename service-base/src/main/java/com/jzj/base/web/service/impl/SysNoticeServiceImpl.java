@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.base.web.mapper.SysNoticeMapper;
 import com.jzj.base.web.pojo.entity.SysNotice;
 import com.jzj.base.web.service.SysNoticeService;
+import com.jzj.websocket.handler.MessageEventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
     @Autowired
     private SysNoticeMapper noticeMapper;
 
+    @Autowired
+    private MessageEventHandler handler;
+
     @Override
     public SysNotice selectNoticeById(String noticeId) {
         return noticeMapper.selectById(noticeId);
@@ -36,6 +40,8 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
 
     @Override
     public int insertNotice(SysNotice notice) {
+        //WebSocketFrameHandler.broadcast("新公告: "+notice.getNoticeContent());
+        handler.broadcast(notice.getNoticeContent());
         return noticeMapper.insert(notice);
     }
 

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzj.base.utils.constant.CacheConstants;
 import com.jzj.base.utils.constant.UserConstants;
 import com.jzj.base.utils.redis.RedisCache;
-import com.jzj.base.utils.sign.SecurityUtils;
+import com.jzj.common.utils.SecurityUtils;
 import com.jzj.common.utils.result.BusinessException;
 import com.jzj.common.utils.StringUtils;
 import com.jzj.common.utils.text.Convert;

@@ -33,6 +33,8 @@ import RightToolbar from '@/components/RightToolbar'
 import Editor from '@/components/Editor'
 // 普通图片上传组件
 import EleUploadImage from 'vue-ele-upload-image'
+import VueSocketIO from 'vue-socket.io'
+import socketIo from 'socket.io-client'
 // Markdown
 import mavonEditor from 'mavon-editor'
 
@@ -41,7 +43,8 @@ import formCreate from '@form-create/element-ui'
 
 // 自定义权限判断方法
 import hasBtnPermission from '@/utils/btn-permission'
-import directive from './directive' // directive
+import directive from './directive'
+import {getToken} from "@/utils/auth"; // directive
 
 /**
  * If you don't want to use mock-server
@@ -82,6 +85,14 @@ Vue.use(mavonEditor)
 Vue.use(directive)
 Vue.use(FcDesigner)
 Vue.use(formCreate)
+Vue.use(new VueSocketIO({
+  debug: true,
+  options: {
+    // 创建时是否自动连接
+    autoConnect: false
+  },
+  connection: socketIo('http://127.0.0.1:9999?token=' + getToken())
+}))
 DictData.install()
 
 Vue.config.productionTip = false

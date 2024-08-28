@@ -5,7 +5,7 @@ import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;
 import com.jzj.common.annotation.Log;
 import com.jzj.common.utils.result.R;
-import com.jzj.base.utils.sign.JwtUtils;
+import com.jzj.common.utils.JwtUtils;
 import com.jzj.base.utils.sign.VerifyCodeUtils;
 import com.jzj.common.controller.BaseController;
 import com.jzj.common.pojo.enums.BusinessType;

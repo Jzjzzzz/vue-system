@@ -3,7 +3,7 @@ package com.jzj.base.security.custom;
 import com.jzj.base.utils.constant.CacheConstants;
 import com.jzj.base.utils.redis.RedisCache;
 import com.jzj.common.utils.result.R;
-import com.jzj.base.utils.sign.JwtUtils;
+import com.jzj.common.utils.JwtUtils;
 import com.jzj.base.utils.sign.ResponseUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;

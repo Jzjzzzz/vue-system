@@ -1,4 +1,4 @@
-package com.jzj.base.utils.sign;
+package com.jzj.common.utils;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,10 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class SecurityUtils {
 
-
     /**
      *  获取登录用户身份校验类
-     * @return
      */
     public static Authentication getAuthentication(){
         return SecurityContextHolder.getContext().getAuthentication();
