@@ -29,4 +29,9 @@ public interface Event {
      * 加入群聊
      */
     String JOIN = "join";
+
+    /**
+     * 登录
+     */
+    String LOGIN = "login";
 }

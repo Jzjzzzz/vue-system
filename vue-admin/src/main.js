@@ -87,10 +87,6 @@ Vue.use(FcDesigner)
 Vue.use(formCreate)
 Vue.use(new VueSocketIO({
   debug: true,
-  options: {
-    // 创建时是否自动连接
-    autoConnect: false
-  },
   connection: socketIo('http://127.0.0.1:9999?token=' + getToken())
 }))
 DictData.install()

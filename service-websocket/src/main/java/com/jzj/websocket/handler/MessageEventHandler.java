@@ -3,6 +3,7 @@ package com.jzj.websocket.handler;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnConnect;
+import com.corundumstudio.socketio.annotation.OnEvent;
 import com.jzj.websocket.config.Connect;
 import com.jzj.websocket.constant.Event;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,19 @@ public class MessageEventHandler {
         for (UUID uuid : Connect.list()) {
             if(socketServer.getClient(uuid)==null) continue;
             socketServer.getClient(uuid).sendEvent(Event.BROADCAST,message);
+        }
+    }
+
+    /**
+     * 登录初始化
+     * @param client 客户端
+     * @param token token
+     */
+    @OnEvent(value = Event.LOGIN)
+    public void onLogin(SocketIOClient client,String token){
+        if(client!=null){
+            UUID sessionId = client.getSessionId();
+            Connect.save(token,sessionId);
         }
     }
 }
