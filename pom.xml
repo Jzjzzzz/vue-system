@@ -37,7 +37,6 @@
         <druid.version>1.2.6</druid.version>
         <commons-pool2.version>2.10.0</commons-pool2.version>
         <commons.io.version>2.13.0</commons.io.version>
-        <netty.version>4.1.111.Final</netty.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -190,13 +189,6 @@
                 <artifactId>easyexcel</artifactId>
                 <version>3.3.2</version>
             </dependency>
-            <!-- netty -->
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-all</artifactId>
-                <version>${netty.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
     <build>
