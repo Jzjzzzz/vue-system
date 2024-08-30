@@ -20,6 +20,7 @@ import com.jzj.base.web.service.ProcessService;
 import com.jzj.base.web.service.SysUserService;
 import com.jzj.common.utils.SecurityUtils;
 import com.jzj.common.utils.result.BusinessException;
+import com.jzj.websocket.handler.MessageEventHandler;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.EndEvent;
 import org.activiti.bpmn.model.FlowNode;
@@ -78,6 +79,9 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper,Process> imple
 
     @Autowired
     private HistoryService historyService;
+
+    @Autowired
+    private MessageEventHandler messageHandler;
 
 
     /**
@@ -297,10 +301,6 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper,Process> imple
         String taskId = approvalVo.getTaskId();
         Integer status = approvalVo.getStatus();
         String description = "";
-        Map<String, Object> variables = taskService.getVariables(taskId);
-        for (Map.Entry<String, Object> entry : variables.entrySet()) {
-            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-        }
         if(1==status){
             //已通过
             Map<String, Object> map = new HashMap<>();
@@ -327,7 +327,9 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper,Process> imple
             for (Task task : taskList) {
                 SysUser user = sysUserService.selectByUserName(task.getAssignee());
                 assigneeList.add(user.getUsername());
-                //TODO 推送消息给下一个审批人
+                //站内推送
+                messageHandler.send("您有一条新的记录待审批!",user.getId());
+                // TODO 微信公众号推送
             }
             process.setDescription("等待" + StringUtils.join(assigneeList.toArray(), ",") + "审批");
             process.setStatus("1");
@@ -357,7 +359,7 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper,Process> imple
         if(endEventList.isEmpty()){
             return;
         }
-        FlowNode endFlowNode = (FlowNode) endEventList.get(0);
+        FlowNode endFlowNode = endEventList.get(0);
         FlowNode currentFlowNode = (FlowNode) bpmnModel.getMainProcess().getFlowElement(task.getTaskDefinitionKey());
         //  临时保存当前活动的原始方向
         List originalSequenceFlowList = new ArrayList<>();
