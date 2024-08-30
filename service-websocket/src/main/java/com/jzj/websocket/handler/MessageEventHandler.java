@@ -52,6 +52,18 @@ public class MessageEventHandler {
     }
 
     /**
+     * 指定用户发送消息
+     * @param message 消息
+     * @param id 用户id
+     */
+    public <T> void send(String message,Object id){
+        if(Connect.isContains(id)){
+            UUID uuid = Connect.getById(id);
+            socketServer.getClient(uuid).sendEvent(Event.BROADCAST,message);
+        }
+    }
+
+    /**
      * 登录初始化
      * @param client 客户端
      * @param token token

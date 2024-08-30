@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Connect {
 
-    private static final ConcurrentHashMap<String, UUID> storage = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Object, UUID> storage = new ConcurrentHashMap<>();
 
     /**
      * 保存链接
@@ -29,6 +29,24 @@ public class Connect {
         if (userId != null && sessionId != null) {
             storage.put(userId, sessionId);
         }
+    }
+
+    /**
+     * 判断key是否存在于map中
+     * @param id 用户id
+     * @return 结果
+     */
+    public static boolean isContains(Object id){
+        return storage.containsKey(id);
+    }
+
+    /**
+     * 根据用户id获取客户端id
+     * @param id 用户id
+     * @return 客户端id
+     */
+    public static UUID getById(Object id){
+        return storage.get(id);
     }
 
     /**
