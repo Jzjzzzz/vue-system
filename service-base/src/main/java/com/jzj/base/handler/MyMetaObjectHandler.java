@@ -1,7 +1,7 @@
 package com.jzj.base.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.jzj.base.utils.sign.SecurityUtils;
+import com.jzj.common.utils.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 

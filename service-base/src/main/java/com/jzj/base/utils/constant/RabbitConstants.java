@@ -8,6 +8,6 @@ package com.jzj.base.utils.constant;
  * @author Jzj
  * @since  2022/7/22 11:12
  */
-public class RabbitConstants {
-    public final static String EMAIL_QUEUE = "email.queue";
+public interface RabbitConstants {
+    String EMAIL_QUEUE = "email.queue";
 }

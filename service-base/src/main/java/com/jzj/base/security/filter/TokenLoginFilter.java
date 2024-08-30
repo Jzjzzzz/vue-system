@@ -11,7 +11,7 @@ import com.jzj.base.utils.redis.RedisCache;
 import com.jzj.common.utils.result.BusinessException;
 import com.jzj.common.utils.result.R;
 import com.jzj.common.utils.result.ResponseEnum;
-import com.jzj.base.utils.sign.JwtUtils;
+import com.jzj.common.utils.JwtUtils;
 import com.jzj.base.utils.sign.ResponseUtil;
 import com.jzj.base.web.pojo.vo.LoginVo;
 import org.apache.commons.lang3.StringUtils;
@@ -83,7 +83,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication auth) throws IOException, ServletException {
         CustomUser customUser = (CustomUser) auth.getPrincipal();
         //注:这里别把权限列表放入jwt中,这会导致生成的token过长,http的header有长度限制.
-        String token = JwtUtils.getJwtToken(customUser);
+        String token = JwtUtils.getJwtToken(customUser.getSysUser().getId(),customUser.getSysUser().getUsername());
         //将token放入缓存
         HashMap<String, String> redisMap = new HashMap<>();
         redisMap.put("token", token);

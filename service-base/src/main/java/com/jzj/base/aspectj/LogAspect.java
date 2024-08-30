@@ -5,7 +5,7 @@ import com.jzj.common.annotation.Log;
 import com.jzj.base.aspectj.manager.AsyncFactory;
 import com.jzj.base.aspectj.manager.AsyncManager;
 import com.jzj.base.utils.sign.IpUtils;
-import com.jzj.base.utils.sign.SecurityUtils;
+import com.jzj.common.utils.SecurityUtils;
 import com.jzj.common.utils.ServletUtils;
 import com.jzj.common.utils.StringUtils;
 import com.jzj.base.web.pojo.entity.SysOperLog;

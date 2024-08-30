@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.jzj.base.utils.constant.CacheConstants;
 import com.jzj.base.utils.redis.RedisCache;
 import com.jzj.common.utils.result.BusinessException;
-import com.jzj.base.utils.sign.JwtUtils;
+import com.jzj.common.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

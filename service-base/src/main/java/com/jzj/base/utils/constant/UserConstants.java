@@ -8,69 +8,67 @@ package com.jzj.base.utils.constant;
  * @author Jzj
  * @since  2022/7/22 11:12
  */
-public class UserConstants {
+public interface UserConstants {
 
     /**
      * 平台内系统用户的唯一标志
      */
-    public static final String SYS_USER = "SYS_USER";
-
-    /*系统超级用户id*/
-    public static final String SYS_ADMIN_ID = "149dd22e7c4e8b0f1121ac1d3718dd93";
+    String SYS_USER = "SYS_USER";
 
     /*是否是超级管理员*/
-    public static final String IS_SUPER = "1";
+    String IS_SUPER = "1";
 
     /** 正常状态 */
-    public static final String NORMAL = "0";
+    String NORMAL = "0";
 
     /** 异常状态 */
-    public static final String EXCEPTION = "1";
+    String EXCEPTION = "1";
 
     /** 用户封禁状态 */
-    public static final String USER_DISABLE = "1";
+    String USER_DISABLE = "1";
 
     /** 角色封禁状态 */
-    public static final String ROLE_DISABLE = "1";
+    String ROLE_DISABLE = "1";
 
     /** 部门正常状态 */
-    public static final String DEPT_NORMAL = "0";
+    String DEPT_NORMAL = "0";
 
     /** 部门停用状态 */
-    public static final String DEPT_DISABLE = "1";
+    String DEPT_DISABLE = "1";
 
     /** 字典正常状态 */
-    public static final String DICT_NORMAL = "0";
+    String DICT_NORMAL = "0";
 
     /** 是否为系统默认（是） */
-    public static final String YES = "Y";
+    String YES = "Y";
 
     /** 是否菜单外链（是） */
-    public static final String YES_FRAME = "0";
+    String YES_FRAME = "0";
 
     /** 是否菜单外链（否） */
-    public static final String NO_FRAME = "1";
+    String NO_FRAME = "1";
 
     /** 菜单类型（目录） */
-    public static final String TYPE_DIR = "M";
+    String TYPE_DIR = "M";
 
     /** 菜单类型（菜单） */
-    public static final String TYPE_MENU = "C";
+    String TYPE_MENU = "C";
 
     /** 菜单类型（按钮） */
-    public static final String TYPE_BUTTON = "F";
+    String TYPE_BUTTON = "F";
 
     /** Layout组件标识 */
-    public final static String LAYOUT = "Layout";
+    String LAYOUT = "Layout";
 
     /** ParentView组件标识 */
-    public final static String PARENT_VIEW = "ParentView";
+    String PARENT_VIEW = "ParentView";
 
     /** InnerLink组件标识 */
-    public final static String INNER_LINK = "InnerLink";
+    String INNER_LINK = "InnerLink";
 
     /** 变动条数 */
-    public final static String UNIQUE = "0";
-    public final static String NOT_UNIQUE = "1";
+    String UNIQUE = "0";
+
+    String NOT_UNIQUE = "1";
 
 }
