@@ -28,10 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -163,5 +161,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public boolean offLine(String id) {
         return redisCache.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + id);
+    }
+
+    @Override
+    public List<SysUser> getLine() {
+        List<SysUser> list = sysUserMapper.selectList(null);
+        return list.stream().filter(s->!s.getUsername().equals(SecurityUtils.getUserName())).collect(Collectors.toList());
     }
 }

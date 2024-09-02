@@ -85,4 +85,6 @@ public interface SysUserService extends IService<SysUser>, UserDetailsService {
      * @return
      */
     boolean offLine(String id);
+
+    List<SysUser> getLine();
 }

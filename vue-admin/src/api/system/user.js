@@ -67,3 +67,11 @@ export function offLine(id) {
     method: 'get'
   })
 }
+
+// 获取在线用户
+export function getLine() {
+  return request({
+    url: `/system/user/getLine`,
+    method: 'get'
+  })
+}

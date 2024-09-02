@@ -103,5 +103,11 @@ public class SysUserController extends BaseController {
     public R offLine(@PathVariable("id") String id){
         return toAjax(sysUserService.offLine(id));
     }
+
+    @ApiOperation("获取所有在线用户")
+    @GetMapping("/getLine")
+    public R getLine(){
+        return R.ok(sysUserService.getLine());
+    }
 }
 

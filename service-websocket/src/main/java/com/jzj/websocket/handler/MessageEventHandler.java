@@ -1,11 +1,14 @@
 package com.jzj.websocket.handler;
 
+import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnConnect;
 import com.corundumstudio.socketio.annotation.OnEvent;
+import com.jzj.common.utils.result.R;
 import com.jzj.websocket.config.Connect;
 import com.jzj.websocket.constant.Event;
+import com.jzj.websocket.pojo.SingleMessageRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -52,7 +55,7 @@ public class MessageEventHandler {
     }
 
     /**
-     * 指定用户发送消息
+     * 指定用户广播
      * @param message 消息
      * @param id 用户id
      */
@@ -60,6 +63,18 @@ public class MessageEventHandler {
         if(Connect.isContains(id)){
             UUID uuid = Connect.getById(id);
             socketServer.getClient(uuid).sendEvent(Event.BROADCAST,message);
+        }
+    }
+
+    @OnEvent(value = Event.CHAT)
+    public void onChat(SocketIOClient client, AckRequest request, SingleMessageRequest messageRequest){
+        String toUid = messageRequest.getToUid();
+        if(Connect.isContains(toUid)){
+            UUID uuid = Connect.getById(toUid);
+            socketServer.getClient(uuid).sendEvent(Event.CHAT,messageRequest.getMessage());
+            request.sendAckData(R.error("发送成功!"));
+        } else {
+            request.sendAckData(R.error("发送失败，对方并不在线!"));
         }
     }
 
