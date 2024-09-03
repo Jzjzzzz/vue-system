@@ -1,4 +1,4 @@
-package com.jzj.base.config;
+package com.jzj.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.web.filter.CorsFilter;
  * </p>
  *
  * @author Jzj
- * @since  2022/7/22 11:12
+ * @since 2022/7/22 11:12
  */
 @Configuration
 public class CorsConfig {

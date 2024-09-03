@@ -16,9 +16,17 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-import { addDateRange, handleTree, parseTime, resetForm,isPerList, selectDictLabel, selectDictLabels } from '@/utils/vblog'
-import { getDicts } from '@/api/system/dict/data'
-import { download } from '@/utils/request'
+import {
+  addDateRange,
+  handleTree,
+  isPerList,
+  parseTime,
+  resetForm,
+  selectDictLabel,
+  selectDictLabels
+} from '@/utils/vblog'
+import {getDicts} from '@/api/system/dict/data'
+import {download} from '@/utils/request'
 
 import plugins from './plugins' // plugins
 // 分页组件
@@ -55,7 +63,7 @@ import {getToken} from "@/utils/auth"; // directive
  * please remove it before going online ! ! !
  */
 if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
+  const {mockXHR} = require('../mock')
   mockXHR()
 }
 
@@ -87,7 +95,11 @@ Vue.use(FcDesigner)
 Vue.use(formCreate)
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: socketIo('http://127.0.0.1:9999?token=' + getToken())
+  connection: socketIo('http://127.0.0.1:9999?token=' + getToken()),
+  transports: ['websocket'],
+  extraHeaders: {
+    'Access-Control-Allow-Origin': '*' // 设置跨域请求头
+  }
 }))
 DictData.install()
 

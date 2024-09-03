@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Jzj
  * @since 2024/8/27 17:06
  */
+@SuppressWarnings("unchecked")
 public class Connect {
 
     private static final ConcurrentHashMap<Object, UUID> storage = new ConcurrentHashMap<>();
