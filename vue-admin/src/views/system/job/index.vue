@@ -26,44 +26,48 @@
           plain
           icon="el-icon-plus"
           size="mini"
+          :disabled="$hasBP('btn.job.add') === false"
           @click="handleAdd"
-          :disabled="$hasBP('btn.job.add')  === false"
         >新增
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-        <el-button icon="el-icon-collection-tag
-" size="mini" @click="openExample">cron示例
+        <el-button
+          icon="el-icon-collection-tag
+"
+          size="mini"
+          @click="openExample"
+        >cron示例
         </el-button>
       </el-form-item>
     </el-form>
 
     <el-table v-loading="loading" :data="list">
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="序号" align="center" type="index"/>
-      <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true"/>
-      <el-table-column label="任务所在组" align="center" prop="jobGroup" :show-overflow-tooltip="true"/>
-      <el-table-column label="任务类名" align="center" prop="jobClassName"/>
-      <el-table-column label="触发器名称" align="center" prop="triggerName"/>
-      <el-table-column label="触发器所在组" align="center" prop="triggerGroup"/>
-      <el-table-column label="表达式" align="center" prop="cronExpression"/>
-      <el-table-column label="时区" align="center" prop="timeZoneId"/>
-      <el-table-column label="状态" align="center" prop="triggerState"/>
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="序号" align="center" type="index" />
+      <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true" />
+      <el-table-column label="任务所在组" align="center" prop="jobGroup" :show-overflow-tooltip="true" />
+      <el-table-column label="任务类名" align="center" prop="jobClassName" />
+      <el-table-column label="触发器名称" align="center" prop="triggerName" />
+      <el-table-column label="触发器所在组" align="center" prop="triggerGroup" />
+      <el-table-column label="表达式" align="center" prop="cronExpression" />
+      <el-table-column label="时区" align="center" prop="timeZoneId" />
+      <el-table-column label="状态" align="center" prop="triggerState" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template v-slot="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-magic-stick"
+            :disabled="$hasBP('btn.job.edit') === false"
             @click="handleManual(scope.$index, scope.row)"
-            :disabled="$hasBP('btn.job.edit')  === false"
           >手动执行
           </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
+            :disabled="$hasBP('btn.job.edit') === false"
             @click="handleUpdate(scope.$index, scope.row)"
-            :disabled="$hasBP('btn.job.edit')  === false"
           >修改
           </el-button>
           <el-button
@@ -71,8 +75,8 @@
             size="mini"
             type="text"
             icon="el-icon-video-pause"
+            :disabled="$hasBP('btn.job.edit') === false"
             @click="handlePause(scope.$index, scope.row)"
-            :disabled="$hasBP('btn.job.edit')  === false"
           >暂停
           </el-button>
           <el-button
@@ -80,16 +84,16 @@
             size="mini"
             type="text"
             icon="el-icon-video-play"
+            :disabled="$hasBP('btn.job.edit') === false"
             @click="handleResume(scope.$index, scope.row)"
-            :disabled="$hasBP('btn.job.edit')  === false"
           >恢复
           </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
+            :disabled="$hasBP('btn.job.del') === false"
             @click="handleDelete(scope.$index, scope.row)"
-            :disabled="$hasBP('btn.job.del')  === false"
           >删除
           </el-button>
         </template>
@@ -108,16 +112,17 @@
       <el-table
         :data="cronData"
         border
-        style="width: 100%">
+        style="width: 100%"
+      >
         <el-table-column
           prop="expression"
           label="表达式"
-          width="180">
-        </el-table-column>
+          width="180"
+        />
         <el-table-column
           prop="effect"
-          label="效果">
-        </el-table-column>
+          label="效果"
+        />
       </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogExample = false">确 定</el-button>
@@ -127,13 +132,13 @@
     <el-dialog :title="title" :visible.sync="dialogFormVisible" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="任务名称" prop="configName">
-          <el-input v-model="form.jobClassName" placeholder="请输入任务名称"/>
+          <el-input v-model="form.jobClassName" placeholder="请输入任务名称" />
         </el-form-item>
         <el-form-item label="任务分组" prop="configKey">
-          <el-input v-model="form.jobGroupName" placeholder="请输入任务分组"/>
+          <el-input v-model="form.jobGroupName" placeholder="请输入任务分组" />
         </el-form-item>
         <el-form-item label="表达式" prop="configValue">
-          <el-input v-model="form.cronExpression" placeholder="请输入表达式"/>
+          <el-input v-model="form.cronExpression" placeholder="请输入表达式" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -145,7 +150,7 @@
     <el-dialog :title="title" :visible.sync="updateFormVisible" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="表达式" prop="configValue">
-          <el-input v-model="updateForm.cronExpression" placeholder="请输入表达式"/>
+          <el-input v-model="updateForm.cronExpression" placeholder="请输入表达式" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -157,7 +162,7 @@
 </template>
 
 <script>
-import {add, del, handlePause,handleManual, handleResume, list, updateCron} from '@/api/system/job'
+import { add, del, handlePause, handleManual, handleResume, list, updateCron } from '@/api/system/job'
 
 export default {
   name: 'Job',
@@ -206,33 +211,33 @@ export default {
       // 表单校验
       rules: {
         jobClassName: [
-          {required: true, message: '任务名称不能为空', trigger: 'blur'}
+          { required: true, message: '任务名称不能为空', trigger: 'blur' }
         ],
         jobGroupName: [
-          {required: true, message: '任务分组不能为空', trigger: 'blur'}
+          { required: true, message: '任务分组不能为空', trigger: 'blur' }
         ],
         cronExpression: [
-          {required: true, message: '表达式不能为空', trigger: 'blur'}
+          { required: true, message: '表达式不能为空', trigger: 'blur' }
         ]
       },
       cronData: [{
-        expression: "0/2 * * * * ?",
-        effect: "表示每2秒 执行任务"
+        expression: '0/2 * * * * ?',
+        effect: '表示每2秒 执行任务'
       }, {
-        expression: "0 0/2 * * * ?",
-        effect: "表示每2分钟 执行任务"
+        expression: '0 0/2 * * * ?',
+        effect: '表示每2分钟 执行任务'
       }, {
-        expression: "0 0 2 1 * ?",
-        effect: "表示在每月的1日的凌晨2点调整任务"
+        expression: '0 0 2 1 * ?',
+        effect: '表示在每月的1日的凌晨2点调整任务'
       }, {
-        expression: "0 15 10 ? * MON-FRI",
-        effect: "表示周一到周五每天上午10:15执行作业"
+        expression: '0 15 10 ? * MON-FRI',
+        effect: '表示周一到周五每天上午10:15执行作业'
       }, {
-        expression: "0 0 10,14,16 * * ? ",
-        effect: "每天上午10点，下午2点，4点 "
+        expression: '0 0 10,14,16 * * ? ',
+        effect: '每天上午10点，下午2点，4点 '
       }, {
-        expression: "0 0 12 * * ?",
-        effect: "每天中午12点触发 "
+        expression: '0 0 12 * * ?',
+        effect: '每天中午12点触发 '
       }]
     }
   },
@@ -245,10 +250,10 @@ export default {
       this.isPreList('btn.job.list')
       this.loading = true
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.list = response.rows
-          this.total = response.total
-          this.loading = false
-        }
+        this.list = response.rows
+        this.total = response.total
+        this.loading = false
+      }
       )
     },
     // 取消按钮
@@ -288,7 +293,7 @@ export default {
       this.dialogFormVisible = true
       this.title = '添加定时任务'
     },
-    //示例按钮操作
+    // 示例按钮操作
     openExample() {
       this.dialogExample = true
       this.title = 'cron示例'
@@ -303,7 +308,7 @@ export default {
       this.title = '修改定时任务'
     },
     /** 提交按钮 */
-    submitForm: function () {
+    submitForm: function() {
       this.$refs['form'].validate(valid => {
         if (valid) {
           add(this.form).then(response => {
@@ -315,7 +320,7 @@ export default {
       })
     },
     /** 修改按钮 **/
-    update: function () {
+    update: function() {
       updateCron(this.updateForm).then(response => {
         this.$modal.msgSuccess('修改成功')
         this.updateFormVisible = false
@@ -323,7 +328,7 @@ export default {
       })
     },
     /** 暂停任务 **/
-    handlePause: function (index, row) {
+    handlePause: function(index, row) {
       this.updateForm.jobClassName = row.jobName
       this.updateForm.jobGroupName = row.jobGroup
       handlePause(this.updateForm).then(res => {
@@ -332,7 +337,7 @@ export default {
       })
     },
     /** 手动调用 **/
-    handleManual: function (index, row) {
+    handleManual: function(index, row) {
       this.updateForm.jobClassName = row.jobName
       this.updateForm.jobGroupName = row.jobGroup
       handleManual(this.updateForm).then(res => {
@@ -341,7 +346,7 @@ export default {
       })
     },
     /** 恢复任务 **/
-    handleResume: function (index, row) {
+    handleResume: function(index, row) {
       this.updateForm.jobClassName = row.jobName
       this.updateForm.jobGroupName = row.jobGroup
       handleResume(this.updateForm).then(res => {

@@ -7,9 +7,7 @@ import com.jzj.base.security.custom.CustomUser;
 import com.jzj.base.utils.constant.CacheConstants;
 import com.jzj.base.utils.constant.UserConstants;
 import com.jzj.base.utils.redis.RedisCache;
-import com.jzj.common.utils.result.BusinessException;
 import com.jzj.base.utils.sign.MD5Utils;
-import com.jzj.common.utils.SecurityUtils;
 import com.jzj.base.web.mapper.SysUserMapper;
 import com.jzj.base.web.mapper.SysUserRoleMapper;
 import com.jzj.base.web.pojo.entity.SysUser;
@@ -19,6 +17,9 @@ import com.jzj.base.web.pojo.vo.UserUpdateVo;
 import com.jzj.base.web.service.SysMenuService;
 import com.jzj.base.web.service.SysRoleService;
 import com.jzj.base.web.service.SysUserService;
+import com.jzj.common.utils.SecurityUtils;
+import com.jzj.common.utils.result.BusinessException;
+import com.jzj.websocket.config.Connect;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -62,7 +64,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public List<User> pageList(SysUser sysUser) {
         List<User> list = sysUserMapper.getPageList(sysUser);
-        list.forEach(s->s.setOnLine(redisCache.hasKey(CacheConstants.LOGIN_TOKEN_KEY + s.getId())));
+        list.forEach(s -> s.setOnLine(redisCache.hasKey(CacheConstants.LOGIN_TOKEN_KEY + s.getId())));
         return list;
     }
 
@@ -82,14 +84,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public SysUser selectByUserName(String username) {
-        return sysUserMapper.selectOne(new QueryWrapper<SysUser>().eq("username",username));
+        return sysUserMapper.selectOne(new QueryWrapper<SysUser>().eq("username", username));
     }
 
     @Override
     public int modify(SysUser sysUser) {
         //用户名不允许修改
         sysUser.setUsername(null);
-        if("0".equals(sysUser.getStatus())){
+        if ("0".equals(sysUser.getStatus())) {
             if (UserConstants.IS_SUPER.equals(sysUser.getIsSuper())) throw new BusinessException("超级管理不允许停用!");
         }
         return sysUserMapper.updateById(sysUser);
@@ -163,5 +165,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public boolean offLine(String id) {
         return redisCache.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + id);
+    }
+
+    @Override
+    public List<SysUser> getLine() {
+        List<SysUser> list = sysUserMapper.selectBatchIds(Connect.keySet());
+        return list.stream().filter(s -> !s.getUsername().equals(SecurityUtils.getUserName())).collect(Collectors.toList());
     }
 }

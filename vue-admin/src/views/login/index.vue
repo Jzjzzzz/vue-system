@@ -53,7 +53,7 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import Verify from './../../components/verifition/Verify'
-import {getToken} from "@/utils/auth";
+import { getToken } from '@/utils/auth'
 export default {
   name: 'Login',
   components: {
@@ -68,8 +68,8 @@ export default {
         code: undefined
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', message:'请输入用户名' }],
-        password: [{ required: true, trigger: 'blur', message:'请输入密码' }]
+        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
+        password: [{ required: true, trigger: 'blur', message: '请输入密码' }]
       },
       loading: false,
       passwordType: 'password',
@@ -91,9 +91,9 @@ export default {
     },
     useVerify() {
       this.$refs.loginForm.validate(valid => {
-          if (valid) {
-            this.$refs.verify.show()
-          }
+        if (valid) {
+          this.$refs.verify.show()
+        }
       })
     },
     showPwd() {
