@@ -48,7 +48,7 @@ public class MessageEventHandler {
      * @param message 消息
      */
     public void broadcast(String message){
-        for (UUID uuid : Connect.list()) {
+        for (UUID uuid : Connect.values()) {
             if(socketServer.getClient(uuid)==null) continue;
             socketServer.getClient(uuid).sendEvent(Event.BROADCAST,message);
         }
@@ -72,7 +72,7 @@ public class MessageEventHandler {
         if(Connect.isContains(toUid)){
             UUID uuid = Connect.getById(toUid);
             socketServer.getClient(uuid).sendEvent(Event.CHAT,messageRequest.getMessage());
-            request.sendAckData(R.error("发送成功!"));
+            request.sendAckData(R.ok("发送成功!"));
         } else {
             request.sendAckData(R.error("发送失败，对方并不在线!"));
         }

@@ -33,26 +33,35 @@ public class Connect {
 
     /**
      * 判断key是否存在于map中
+     *
      * @param id 用户id
      * @return 结果
      */
-    public static boolean isContains(Object id){
+    public static boolean isContains(Object id) {
         return storage.containsKey(id);
     }
 
     /**
      * 根据用户id获取客户端id
+     *
      * @param id 用户id
      * @return 客户端id
      */
-    public static UUID getById(Object id){
+    public static UUID getById(Object id) {
         return storage.get(id);
     }
 
     /**
      * 客户端列表
      */
-    public static Collection<UUID> list() {
+    public static Collection<UUID> values() {
         return storage.values();
+    }
+
+    /**
+     * key列表
+     */
+    public static <T> Collection<T> keySet() {
+        return (Collection<T>) storage.keySet();
     }
 }

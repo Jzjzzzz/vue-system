@@ -90,18 +90,6 @@ export default {
   overflow: hidden;
 }
 
-.chat-header {
-  padding: 10px;
-  background-color: #f2f2f2;
-  display: flex;
-  align-items: center;
-}
-
-.chat-header .h2 {
-  font-size: 16px;
-  color: #333;
-}
-
 .chat-body {
   padding: 20px;
 }
