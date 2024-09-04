@@ -1,20 +1,20 @@
 package com.jzj.base.web.controller.admin;
 
 
-import com.jzj.common.annotation.Log;
-import com.jzj.common.utils.result.R;
-import com.jzj.base.utils.sign.MD5Utils;
-import com.jzj.common.controller.BaseController;
 import com.jzj.base.web.pojo.entity.SysUser;
-import com.jzj.common.pojo.enums.BusinessType;
-import com.jzj.common.pojo.page.TableDataInfo;
 import com.jzj.base.web.pojo.vo.User;
 import com.jzj.base.web.pojo.vo.UserAddRoleVo;
 import com.jzj.base.web.service.SysUserRoleService;
 import com.jzj.base.web.service.SysUserService;
+import com.jzj.common.annotation.Log;
+import com.jzj.common.controller.BaseController;
+import com.jzj.common.pojo.enums.BusinessType;
+import com.jzj.common.pojo.page.TableDataInfo;
+import com.jzj.common.utils.result.R;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,7 +84,7 @@ public class SysUserController extends BaseController {
     @PutMapping("/restPassword")
     @PreAuthorize("hasAuthority('btn.user.edit')")
     public R restPassword(@RequestBody SysUser sysUser) {
-        sysUser.setPassword(MD5Utils.encrypt(sysUser.getPassword()));
+        sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
         return toAjax(sysUserService.modify(sysUser));
     }
 
@@ -100,13 +100,13 @@ public class SysUserController extends BaseController {
     @Log(title = "用户表管理", businessType = BusinessType.UPDATE)
     @GetMapping("/offLine/{id}")
     @PreAuthorize("hasAuthority('btn.user.off')")
-    public R offLine(@PathVariable("id") String id){
+    public R offLine(@PathVariable("id") String id) {
         return toAjax(sysUserService.offLine(id));
     }
 
     @ApiOperation("获取所有在线用户")
     @GetMapping("/getLine")
-    public R getLine(){
+    public R getLine() {
         return R.ok(sysUserService.getLine());
     }
 }

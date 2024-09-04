@@ -12,7 +12,7 @@ import java.util.Collection;
  * </p>
  *
  * @author Jzj
- * @since  2022/7/22 11:12
+ * @since 2022/7/22 11:12
  */
 public class CustomUser extends User {
 
