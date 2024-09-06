@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.base.web.mapper.MtUserMapper">
+
+    <resultMap type="com.jzj.base.web.pojo.entity.MtUser" id="MtUserResult">
+        <result property="id" column="id"/>
+        <result property="mobile" column="mobile"/>
+        <result property="userId" column="user_id"/>
+        <result property="token" column="token"/>
+        <result property="cookie" column="cookie"/>
+        <result property="deviceId" column="device_id"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="ishopId" column="ishop_id"/>
+        <result property="provinceName" column="province_name"/>
+        <result property="cityName" column="city_name"/>
+        <result property="address" column="address"/>
+        <result property="lat" column="lat"/>
+        <result property="lng" column="lng"/>
+        <result property="minute" column="minute"/>
+        <result property="shopType" column="shop_type"/>
+        <result property="randomMinute" column="random_minute"/>
+        <result property="pushPlusToken" column="push_plus_token"/>
+        <result property="jsonResult" column="json_result"/>
+        <result property="remark" column="remark"/>
+        <result property="expireTime" column="expire_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectMtUserVo">
+        select id,
+               status,
+               mobile,
+               user_id,
+               token,
+               cookie,
+               device_id,
+               item_code,
+               ishop_id,
+               province_name,
+               city_name,
+               address,
+               lat,
+               lng, minute, shop_type, random_minute, push_plus_token, json_result, remark, expire_time, create_time, create_by, update_time, update_by
+        from mt_user
+    </sql>
+
+    <select id="selectMtUserList" parameterType="com.jzj.base.web.pojo.entity.MtUser" resultMap="MtUserResult">
+        <include refid="selectMtUserVo"/>
+        <where>
+            <if test="mobile != null ">and mobile = #{mobile}</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="provinceName != null  and provinceName != ''">and province_name like concat('%', #{provinceName},
+                '%')
+            </if>
+            <if test="cityName != null  and cityName != ''">and city_name like concat('%', #{cityName}, '%')</if>
+            <if test="expireTime != null ">and expire_time = #{expireTime}</if>
+        </where>
+    </select>
+</mapper>

@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * </p>
  *
  * @author Jzj
- * @since  2022/7/22 11:12
+ * @since 2022/7/22 11:12
  */
 @SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
@@ -154,7 +154,7 @@ public class RedisCache {
      * @param key
      * @param dataMap
      */
-    public <T> void setCacheMap(final String key, final Map<String, T> dataMap,final long timeout, final TimeUnit unit) {
+    public <T> void setCacheMap(final String key, final Map<String, T> dataMap, final long timeout, final TimeUnit unit) {
         if (dataMap != null) {
             redisTemplate.opsForHash().putAll(key, dataMap);
             expire(key, timeout, unit);
@@ -228,20 +228,21 @@ public class RedisCache {
 
     /**
      * 数量统计
-     * @param key 键
+     *
+     * @param key       键
      * @param initValue 初始值,为空则只执行+1操作
      * @return
      */
-    public Long count(final String key,final Long initValue){
-        if(initValue!=null && initValue>=1){
+    public Long count(final String key, final Long initValue) {
+        if (initValue != null && initValue >= 1) {
             stringRedisTemplate.opsForValue().set(key, String.valueOf(initValue));
         }
         return stringRedisTemplate.opsForValue().increment(key);
     }
 
     /**
-     *
      * 判断key是否存在
+     *
      * @param key 键
      * @return true 存在 false不存在
      */
@@ -252,5 +253,18 @@ public class RedisCache {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * 重新set缓存List数据
+     *
+     * @param key      缓存的键值
+     * @param dataList 待缓存的List数据
+     * @return 缓存的对象
+     */
+    public <T> long reSetCacheList(final String key, final List<T> dataList) {
+        this.deleteObject(key);
+        Long count = redisTemplate.opsForList().rightPushAll(key, dataList);
+        return count == null ? 0 : count;
     }
 }

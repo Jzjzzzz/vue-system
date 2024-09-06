@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.base.web.mapper.MtShopMapper">
+
+    <resultMap type="com.jzj.base.web.pojo.entity.MtShop" id="MtShopResult">
+        <result property="id" column="id"/>
+        <result property="iShopId" column="i_shop_id"/>
+        <result property="provinceName" column="province_name"/>
+        <result property="cityName" column="city_name"/>
+        <result property="districtName" column="district_name"/>
+        <result property="fullAddress" column="full_address"/>
+        <result property="lat" column="lat"/>
+        <result property="lng" column="lng"/>
+        <result property="name" column="name"/>
+        <result property="tenantName" column="tenant_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectMtShopVo">
+        select id,
+               status,
+               i_shop_id,
+               province_name,
+               city_name,
+               district_name,
+               full_address,
+               lat,
+               lng,
+               name,
+               tenant_name,
+               create_time,
+               update_time,
+               create_by,
+               update_by
+        from mt_shop
+    </sql>
+
+    <select id="selectMtShopList" parameterType="com.jzj.base.web.pojo.entity.MtShop" resultMap="MtShopResult">
+        <include refid="selectMtShopVo"/>
+        <where>
+            <if test="iShopId != null  and iShopId != ''">and i_shop_id = #{iShopId}</if>
+            <if test="provinceName != null  and provinceName != ''">and province_name like concat('%', #{provinceName},
+                '%')
+            </if>
+            <if test="cityName != null  and cityName != ''">and city_name like concat('%', #{cityName}, '%')</if>
+            <if test="districtName != null  and districtName != ''">and district_name like concat('%', #{districtName},
+                '%')
+            </if>
+            <if test="fullAddress != null  and fullAddress != ''">and full_address = #{fullAddress}</if>
+            <if test="lat != null  and lat != ''">and lat = #{lat}</if>
+            <if test="lng != null  and lng != ''">and lng = #{lng}</if>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="tenantName != null  and tenantName != ''">and tenant_name like concat('%', #{tenantName}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

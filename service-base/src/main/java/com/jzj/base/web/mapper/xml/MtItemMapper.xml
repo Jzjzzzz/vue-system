@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzj.base.web.mapper.MtItemMapper">
+
+    <resultMap type="com.jzj.base.web.pojo.entity.MtItem" id="MtItemResult">
+        <result property="id" column="id"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="picture" column="picture"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectMtItemVo">
+        select id,
+               status,
+               item_code,
+               title,
+               content,
+               picture,
+               create_time,
+               update_time,
+               create_by,
+               update_by
+        from mt_item
+    </sql>
+
+    <select id="selectMtItemList" parameterType="com.jzj.base.web.pojo.entity.MtItem" resultMap="MtItemResult">
+        <include refid="selectMtItemVo"/>
+        <where>
+            <if test="itemCode != null  and itemCode != ''">and item_code = #{itemCode}</if>
+            <if test="title != null  and title != ''">and title = #{title}</if>
+        </where>
+    </select>
+</mapper>
