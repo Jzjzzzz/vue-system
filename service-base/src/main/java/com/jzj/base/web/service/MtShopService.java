@@ -44,7 +44,6 @@ public interface MtShopService extends IService<MtShop> {
      * @param itemId   项目id即预约项目code
      * @param province 省份，例如：河北省，北京市
      * @param city     市：例如石家庄市
-     * @return
      */
     String getShopId(Long shopType, String itemId, String province, String city, String lat, String lng);
 

@@ -56,14 +56,6 @@ public interface MtUserService extends IService<MtUser> {
     int deleteMtUserByIds(String[] ids);
 
     /**
-     * 删除i茅台用户信息
-     *
-     * @param id i茅台用户主键
-     * @return 结果
-     */
-    int deleteMtUserById(String id);
-
-    /**
      * 发送验证码
      *
      * @param mobile   手机号
@@ -89,4 +81,9 @@ public interface MtUserService extends IService<MtUser> {
      * 预约
      */
     void reservation(MtUser user);
+
+    /**
+     * 获取申购耐力值
+     */
+    String getEnergyAward(MtUser iUser);
 }

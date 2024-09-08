@@ -322,8 +322,8 @@ export default {
   methods: {
     // 预约
     reservation(row) {
-      const mobile = row.mobile || this.ids
-      reservation(mobile).then((response) => {
+      const id = row.id || this.ids
+      reservation(id).then((response) => {
         this.$modal.msgSuccess('请求成功，结果看日志')
       })
     },

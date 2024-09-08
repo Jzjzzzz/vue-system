@@ -2,10 +2,15 @@ package com.jzj.base.web.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.crypto.Mode;
+import cn.hutool.crypto.Padding;
+import cn.hutool.crypto.symmetric.AES;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.Method;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.oss.ServiceException;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -14,6 +19,8 @@ import com.jzj.base.utils.redis.RedisCache;
 import com.jzj.base.web.mapper.MtUserMapper;
 import com.jzj.base.web.pojo.entity.MtShop;
 import com.jzj.base.web.pojo.entity.MtUser;
+import com.jzj.base.web.service.MtItemService;
+import com.jzj.base.web.service.MtLogService;
 import com.jzj.base.web.service.MtShopService;
 import com.jzj.base.web.service.MtUserService;
 import com.jzj.common.utils.StringUtils;
@@ -41,6 +48,10 @@ public class MtUserServiceImpl extends ServiceImpl<MtUserMapper, MtUser> impleme
 
     private final static String SALT = "2af72f100c356273d46284f6fd1dfc08";
 
+    private final static String AES_KEY = "qbhajinldepmucsonaaaccgypwuvcjaa";
+
+    private final static String AES_IV = "2018534749963515";
+
     @Autowired
     private MtUserMapper mtUserMapper;
 
@@ -49,6 +60,12 @@ public class MtUserServiceImpl extends ServiceImpl<MtUserMapper, MtUser> impleme
 
     @Autowired
     private MtShopService shopService;
+
+    @Autowired
+    private MtItemService itemService;
+
+    @Autowired
+    private MtLogService logService;
 
     /**
      * 获取验证码的md5签名，密钥+手机号+时间
@@ -133,17 +150,6 @@ public class MtUserServiceImpl extends ServiceImpl<MtUserMapper, MtUser> impleme
     @Override
     public int deleteMtUserByIds(String[] ids) {
         return mtUserMapper.deleteBatchIds(Arrays.asList(ids));
-    }
-
-    /**
-     * 删除i茅台用户信息
-     *
-     * @param id i茅台用户主键
-     * @return 结果
-     */
-    @Override
-    public int deleteMtUserById(String id) {
-        return mtUserMapper.deleteById(id);
     }
 
     /**
@@ -267,27 +273,131 @@ public class MtUserServiceImpl extends ServiceImpl<MtUserMapper, MtUser> impleme
      */
     @Override
     public void reservation(MtUser user) {
-//        if (StringUtils.isEmpty(user.getItemCode())) {
-//            return;
-//        }
-//        String[] items = user.getItemCode().split("@");
-//
-//        String logContent = "";
-//        for (String itemId : items) {
-//            try {
-//                String shopId = shopService.getShopId(user.getShopType(), itemId,
-//                        user.getProvinceName(), user.getCityName(), user.getLat(), user.getLng());
-//                //预约
-//                JSONObject json = reservation(user, itemId, shopId);
-//                logContent += String.format("[预约项目]：%s\n[shopId]：%s\n[结果返回]：%s\n\n", itemId, shopId, json.toString());
-//
-//                //随机延迟3～5秒
-//                Random random = new Random();
-//                int sleepTime = random.nextInt(3) + 3;
-//                Thread.sleep(sleepTime * 1000);
-//            } catch (Exception e) {
-//                logContent += String.format("执行报错--[预约项目]：%s\n[结果返回]：%s\n\n", itemId, e.getMessage());
-//            }
-//        }
+        if (StringUtils.isEmpty(user.getItemCode())) {
+            return;
+        }
+        String[] items = user.getItemCode().split("@");
+
+        String logContent = "";
+        for (String itemId : items) {
+            try {
+                String shopId = shopService.getShopId(user.getShopType(), itemId,
+                        user.getProvinceName(), user.getCityName(), user.getLat(), user.getLng());
+                //预约
+                JSONObject json = reservation(user, itemId, shopId);
+                logContent += String.format("[预约项目]：%s\n[shopId]：%s\n[结果返回]：%s\n\n", itemId, shopId, json.toString());
+
+                //随机延迟3～5秒
+                Random random = new Random();
+                int sleepTime = random.nextInt(3) + 3;
+                Thread.sleep(sleepTime * 1000);
+            } catch (Exception e) {
+                logContent += String.format("执行报错--[预约项目]：%s\n[结果返回]：%s\n\n", itemId, e.getMessage());
+            }
+        }
+        //日志记录
+        logService.reservation(user, logContent);
+        //预约后延迟领取耐力值
+        getEnergyAwardDelay(user);
+    }
+
+    /**
+     * 获取申购耐力值
+     */
+    @Override
+    public String getEnergyAward(MtUser iUser) {
+        String url = "https://h5.moutai519.com.cn/game/isolationPage/getUserEnergyAward";
+        HttpRequest request = HttpUtil.createRequest(Method.POST, url);
+
+        request.header("MT-Device-ID", iUser.getDeviceId())
+                .header("MT-APP-Version", getMTVersion())
+                .header("User-Agent", "iOS;16.3;Apple;?unrecognized?")
+                .header("MT-Lat", iUser.getLat())
+                .header("MT-Lng", iUser.getLng())
+                .cookie("MT-Token-Wap=" + iUser.getCookie() + ";MT-Device-ID-Wap=" + iUser.getDeviceId() + ";");
+
+        String body = request.execute().body();
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        if (jsonObject.getInteger("code") != 200) {
+            String message = jsonObject.getString("message");
+            throw new ServiceException(message);
+        }
+        return body;
+    }
+
+
+    public JSONObject reservation(MtUser iUser, String itemId, String shopId) {
+        Map<String, Object> map = new HashMap<>();
+        JSONArray itemArray = new JSONArray();
+        Map<String, Object> info = new HashMap<>();
+        info.put("count", 1);
+        info.put("itemId", itemId);
+
+        itemArray.add(info);
+
+        map.put("itemInfoList", itemArray);
+
+        map.put("sessionId", itemService.getCurrentSessionId());
+        map.put("userId", iUser.getUserId().toString());
+        map.put("shopId", shopId);
+
+        map.put("actParam", AesEncrypt(JSON.toJSONString(map)));
+
+        HttpRequest request = HttpUtil.createRequest(Method.POST,
+                "https://app.moutai519.com.cn/xhr/front/mall/reservation/add");
+
+        request.header("MT-Lat", iUser.getLat());
+        request.header("MT-Lng", iUser.getLng());
+        request.header("MT-Token", iUser.getToken());
+        request.header("MT-Info", "028e7f96f6369cafe1d105579c5b9377");
+        request.header("MT-Device-ID", iUser.getDeviceId());
+        request.header("MT-APP-Version", getMTVersion());
+        request.header("User-Agent", "iOS;16.3;Apple;?unrecognized?");
+        request.header("Content-Type", "application/json");
+        request.header("userId", iUser.getUserId().toString());
+
+        HttpResponse execute = request.body(JSONObject.toJSONString(map)).execute();
+
+        JSONObject body = JSONObject.parseObject(execute.body());
+        //{"code":2000,"data":{"successDesc":"申购完成，请于7月6日18:00查看预约申购结果","reservationList":[{"reservationId":17053404357,"sessionId":678,"shopId":"233331084001","reservationTime":1688608601720,"itemId":"10214","count":1}],"reservationDetail":{"desc":"申购成功后将以短信形式通知您，请您在申购成功次日18:00前确认支付方式，并在7天内完成提货。","lotteryTime":1688637600000,"cacheValidTime":1688637600000}}}
+        if (body.getInteger("code") != 2000) {
+            String message = body.getString("message");
+            throw new ServiceException(message);
+        }
+//        logger.info(body.toJSONString());
+        return body;
+    }
+
+    /**
+     * 加密
+     */
+    public static String AesEncrypt(String params) {
+        AES aes = new AES(Mode.CBC, Padding.PKCS5Padding, AES_KEY.getBytes(), AES_IV.getBytes());
+        return aes.encryptBase64(params);
+    }
+
+    /**
+     * 延迟执行：获取申购耐力值，并记录日志
+     */
+    public void getEnergyAwardDelay(MtUser iUser) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                String logContent = "";
+                //sleep 10秒
+                try {
+                    Thread.sleep(10000);
+                    //预约后领取耐力值
+                    String energyAward = getEnergyAward(iUser);
+                    logContent += "[申购耐力值]:" + energyAward;
+                } catch (Exception e) {
+                    logContent += "执行报错--[申购耐力值]:" + e.getMessage();
+                }
+                //日志记录
+                logService.reservation(iUser, logContent);
+            }
+        };
+        new Thread(runnable).start();
+
     }
 }

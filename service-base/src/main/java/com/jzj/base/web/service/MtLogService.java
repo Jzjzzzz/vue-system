@@ -2,6 +2,7 @@ package com.jzj.base.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jzj.base.web.pojo.entity.MtLog;
+import com.jzj.base.web.pojo.entity.MtUser;
 
 import java.util.List;
 
@@ -61,4 +62,11 @@ public interface MtLogService extends IService<MtLog> {
      * @return 结果
      */
     int deleteMtLogById(String id);
+
+    /**
+     * 日志记录
+     * @param iUser 用户
+     * @param logContent 内容
+     */
+    void reservation(MtUser iUser, String logContent);
 }

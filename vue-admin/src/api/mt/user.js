@@ -62,10 +62,10 @@ export function login(mobile, code, deviceId) {
 }
 
 // reservation
-export function reservation(mobile) {
+export function reservation(id) {
   return request({
     url: '/mt/user/reservation',
     method: 'get',
-    params: {mobile}
+    params: {id}
   })
 }

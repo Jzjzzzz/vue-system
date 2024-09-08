@@ -3,11 +3,9 @@ package com.jzj.base.aspectj.manager;
 import com.jzj.base.factory.UploadFactory;
 import com.jzj.base.utils.sign.AddressUtils;
 import com.jzj.base.utils.sign.SpringUtils;
+import com.jzj.base.web.pojo.entity.MtLog;
 import com.jzj.base.web.pojo.entity.SysOperLog;
-import com.jzj.base.web.service.EmailService;
-import com.jzj.base.web.service.SysConfigService;
-import com.jzj.base.web.service.SysOperLogService;
-import com.jzj.base.web.service.UploadService;
+import com.jzj.base.web.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -71,6 +69,15 @@ public class AsyncFactory {
             @Override
             public void run() {
                 SpringUtils.getBean(EmailService.class).sendMail(to,subject,text);
+            }
+        };
+    }
+
+    public static TimerTask mtLogRecords(MtLog log){
+        return new TimerTask() {
+            @Override
+            public void run() {
+                SpringUtils.getBean(MtLogService.class).insertMtLog(log);
             }
         };
     }

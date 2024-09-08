@@ -86,8 +86,8 @@ public class MtUserController extends BaseController {
      * 预约
      */
     @GetMapping(value = "/reservation", name = "预约")
-    public R reservation(String mobile) {
-        MtUser user = mtUserService.getById(mobile);
+    public R reservation(String id) {
+        MtUser user = mtUserService.getById(id);
         if (user == null) {
             return R.error("用户不存在");
         }
