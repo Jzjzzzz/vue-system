@@ -88,12 +88,11 @@
     <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
       <el-table-column align="center" type="selection" width="55"/>
       <el-table-column align="center" label="序号" type="index"/>
-
-      <el-table-column align="center" label="手机号" prop="mobile"/>
+      <el-table-column align="center" label="手机号" prop="mobile" width="110px"/>
       <el-table-column align="center" label="省份" prop="provinceName"/>
       <el-table-column align="center" label="城市" prop="cityName"/>
       <el-table-column align="center" label="地址" prop="address"/>
-      <el-table-column align="center" label="预约的分钟" prop="minute"/>
+      <el-table-column align="center" label="预约分钟" prop="minute"/>
       <el-table-column align="center" label="预约类型" prop="shopType">
         <template v-slot="scope">
           <dict-tag :options="dict.type.mt_pre_type" :value="scope.row.shopType"/>
@@ -109,7 +108,7 @@
           <span>{{ parseTime(scope.row.expireTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" class-name="small-padding fixed-width" label="操作">
+      <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="300px">
         <template v-slot="scope">
           <el-button
             icon="el-icon-thumb"
@@ -119,12 +118,27 @@
           >预约
           </el-button>
           <el-button
+            icon="el-icon-s-promotion"
+            size="mini"
+            type="text"
+            @click="travelReward(scope.row)"
+          >旅行
+          </el-button>
+          <el-button
             :disabled="$hasBP('mt.user.edit') === false"
             icon="el-icon-edit"
             size="mini"
             type="text"
             @click="handleUpdate(scope.row)"
           >修改
+          </el-button>
+          <el-button
+            icon="el-icon-refresh"
+            size="mini"
+            type="text"
+            @click="handleUpdateToken(scope.row)"
+          >
+            刷新token
           </el-button>
           <el-button
             :disabled="$hasBP('mt.user.remove') === false"
@@ -147,7 +161,7 @@
     />
 
     <!-- 新增i茅台账号 -->
-    <el-dialog :visible.sync="openAdd" append-to-body title="新增i茅台账号">
+    <el-dialog :title="title" :visible.sync="openAdd" append-to-body>
       <el-form ref="form" :model="form">
         <el-form-item label="手机号" prop="mobile">
           <el-input v-model="form.mobile" placeholder="请输入i茅台用户手机号"/>
@@ -258,7 +272,17 @@
 </template>
 
 <script>
-import {addUser, delUser, getUser, listUser, login, reservation, sendCode, updateUser} from '@/api/mt/user'
+import {
+  addUser,
+  delUser,
+  getUser,
+  listUser,
+  login,
+  reservation,
+  sendCode,
+  travelReward,
+  updateUser
+} from '@/api/mt/user'
 import {itemAll} from '@/api/mt/item'
 
 export default {
@@ -292,6 +316,7 @@ export default {
       // 是否显示弹出层
       open: false,
       openAdd: false,
+      refreshToken: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -320,6 +345,23 @@ export default {
     })
   },
   methods: {
+    handleUpdateToken(row) {
+      this.refreshToken = true
+      this.reset()
+      this.form = {
+        mobile: row.mobile,
+        deviceId: row.deviceId
+      }
+      this.title = '刷新用户:' + row.remark + '(' + row.mobile + ')登录信息'
+      this.openAdd = true
+    },
+    // 小茅运旅行活动
+    travelReward(row) {
+      const id = row.id || this.ids
+      travelReward(id).then((response) => {
+        this.$modal.msgSuccess('请求成功，结果看日志')
+      })
+    },
     // 预约
     reservation(row) {
       const id = row.id || this.ids
@@ -363,6 +405,7 @@ export default {
       login(mobile, code, deviceId).then((response) => {
         this.$modal.msgSuccess(msg)
         this.openAdd = false
+        this.refreshToken = false
         this.getList()
       })
     },
@@ -388,6 +431,8 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false
+      this.openAdd = false
+      this.refreshToken = false
       this.reset()
     },
     // 表单重置
@@ -438,6 +483,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
+      this.title = '登录'
       this.reset()
       this.openAdd = true
     },

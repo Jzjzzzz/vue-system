@@ -86,4 +86,9 @@ public interface MtUserService extends IService<MtUser> {
      * 获取申购耐力值
      */
     String getEnergyAward(MtUser iUser);
+
+    /**
+     * 获得旅行奖励
+     */
+    void getTravelReward(MtUser user);
 }

@@ -52,7 +52,7 @@ import formCreate from '@form-create/element-ui'
 // 自定义权限判断方法
 import hasBtnPermission from '@/utils/btn-permission'
 import directive from './directive'
-import {getToken} from "@/utils/auth"; // directive
+import {getToken} from '@/utils/auth' // directive
 
 /**
  * If you don't want to use mock-server

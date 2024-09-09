@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form v-show="showSearch" ref="queryForm" :inline="true" :model="queryParams" label-width="68px" size="small">
       <el-form-item label="操作人员" prop="mobile">
         <el-input
           v-model="queryParams.mobile"
@@ -32,9 +32,10 @@
           plain
           icon="el-icon-plus"
           size="mini"
+          :disabled="$hasBP('mt.log.add') === false"
           @click="handleAdd"
-          :disabled="$hasBP('mt.log.add')  === false"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -42,9 +43,10 @@
           plain
           icon="el-icon-edit"
           size="mini"
+          :disabled="single || $hasBP('mt.log.edit') === false"
           @click="handleUpdate"
-          :disabled="single || $hasBP('mt.log.edit')  === false"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -52,11 +54,12 @@
           plain
           icon="el-icon-delete"
           size="mini"
+          :disabled="multiple || $hasBP('mt.log.remove') === false"
           @click="handleDelete"
-          :disabled="multiple || $hasBP('mt.log.remove')  === false"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
     </el-row>
 
     <el-table v-loading="loading" :data="logList" @selection-change="handleSelectionChange">
@@ -64,7 +67,6 @@
       <el-table-column type="index" label="序号" align="center"/>
 
       <el-table-column label="操作人员" align="center" prop="mobile" />
-      <el-table-column label="日志记录内容" align="center" prop="logContent" />
       <el-table-column label="操作状态" align="center" prop="status">
         <template v-slot="scope">
           <dict-tag :options="dict.type.mt_pre_status" :value="scope.row.status"/>
@@ -81,16 +83,18 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
+            :disabled="$hasBP('mt.log.edit') === false"
             @click="handleUpdate(scope.row)"
-            :disabled="$hasBP('mt.log.edit')  === false"
-          >修改</el-button>
+          >详细
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
+            :disabled="$hasBP('mt.log.remove') === false"
             @click="handleDelete(scope.row)"
-            :disabled="$hasBP('mt.log.remove')  === false"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -106,9 +110,16 @@
     <!-- 添加或修改i茅台执行日志对话框 -->
     <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-input
+          v-model="form.logContent"
+          :rows="2"
+          autosize
+          disabled
+          placeholder="请输入内容"
+          type="textarea"
+        />
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -116,10 +127,10 @@
 </template>
 
 <script>
-import { listLog, getLog, delLog, addLog, updateLog } from "@/api/mt/log";
+import {addLog, delLog, getLog, listLog, updateLog} from '@/api/mt/log'
 
 export default {
-  name: "Log",
+  name: 'Log',
   dicts: ['mt_pre_status'],
   data() {
     return {
@@ -138,7 +149,7 @@ export default {
       // i茅台执行日志表格数据
       logList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -146,33 +157,33 @@ export default {
         pageNum: 1,
         pageSize: 10,
         mobile: null,
-        status: null,
+        status: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
       }
-    };
+    }
   },
   created() {
     this.isPreList('mt.log.list')
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询i茅台执行日志列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listLog(this.queryParams).then(response => {
-        this.logList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.logList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
@@ -185,71 +196,72 @@ export default {
         createBy: null,
         updateTime: null,
         updateBy: null
-      };
-      this.resetForm("form");
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加i茅台执行日志";
+      this.reset()
+      this.open = true
+      this.title = '添加i茅台执行日志'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
+      this.reset()
       const id = row.id || this.ids
       getLog(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改i茅台执行日志";
-      });
+        this.form = response.data
+        this.open = true
+        this.title = '执行日志详情'
+      })
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
             updateLog(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.$modal.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             addLog(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+              this.$modal.msgSuccess('新增成功')
+              this.open = false
+              this.getList()
+            })
           }
         }
-      });
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除i茅台执行日志编号为"' + ids + '"的数据项？').then(function() {
-        return delLog(ids);
+      const ids = row.id || this.ids
+      this.$modal.confirm('是否确认删除i茅台执行日志编号为"' + ids + '"的数据项？').then(function () {
+        return delLog(ids)
       }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
-    },
+        this.getList()
+        this.$modal.msgSuccess('删除成功')
+      }).catch(() => {
+      })
+    }
   }
-};
+}
 </script>

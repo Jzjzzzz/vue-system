@@ -61,5 +61,6 @@
             <if test="cityName != null  and cityName != ''">and city_name like concat('%', #{cityName}, '%')</if>
             <if test="expireTime != null ">and expire_time = #{expireTime}</if>
         </where>
+        ORDER BY create_time DESC
     </select>
 </mapper>

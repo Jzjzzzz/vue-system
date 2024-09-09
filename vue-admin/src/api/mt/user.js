@@ -61,10 +61,19 @@ export function login(mobile, code, deviceId) {
   })
 }
 
-// reservation
+// 预约
 export function reservation(id) {
   return request({
     url: '/mt/user/reservation',
+    method: 'get',
+    params: {id}
+  })
+}
+
+// 旅游
+export function travelReward(id) {
+  return request({
+    url: '/mt/user/travelReward',
     method: 'get',
     params: {id}
   })

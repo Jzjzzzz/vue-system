@@ -45,22 +45,6 @@ public class MtLogController extends BaseController {
         return R.ok(mtLogService.selectMtLogById(id));
     }
 
-    @ApiOperation("新增")
-    @PreAuthorize("hasAuthority('mt.log.add')")
-    @Log(title = "i茅台执行日志", businessType = BusinessType.INSERT)
-    @PostMapping
-    public R add(@RequestBody MtLog mtLog) {
-        return toAjax(mtLogService.insertMtLog(mtLog));
-    }
-
-    @ApiOperation("修改")
-    @PreAuthorize("hasAuthority('mt.log.edit')")
-    @Log(title = "i茅台执行日志", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public R edit(@RequestBody MtLog mtLog) {
-        return toAjax(mtLogService.updateMtLog(mtLog));
-    }
-
     @ApiOperation("删除")
     @PreAuthorize("hasAuthority('mt.log.remove')")
     @Log(title = "i茅台执行日志", businessType = BusinessType.DELETE)

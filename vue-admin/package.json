@@ -22,6 +22,7 @@
     "core-js": "3.6.5",
     "crypto-js": "^4.1.1",
     "echarts": "^5.3.3",
+    "element-china-area-data": "^6.1.0",
     "element-ui": "^2.13.2",
     "file-saver": "^2.0.5",
     "highlight.js": "^9.18.5",

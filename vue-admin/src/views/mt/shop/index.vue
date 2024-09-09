@@ -9,6 +9,13 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="省市区" prop="region">
+        <el-cascader
+          v-model="queryParams.region"
+          :options="pcaTextArr"
+          size="large"
+        />
+      </el-form-item>
       <el-form-item label="省份" prop="provinceName">
         <el-input
           v-model="queryParams.provinceName"
@@ -101,11 +108,13 @@
 
 <script>
 import {addShop, listShop} from '@/api/mt/shop'
+import {pcaTextArr} from 'element-china-area-data'
 
 export default {
   name: 'Shop',
   data() {
     return {
+      pcaTextArr,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -136,7 +145,8 @@ export default {
         lat: null,
         lng: null,
         name: null,
-        tenantName: null
+        tenantName: null,
+        region: null
       },
       // 表单参数
       form: {},
@@ -185,6 +195,13 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      const region = this.queryParams.region
+      if (region != null) {
+        this.queryParams.provinceName = region[0]
+        this.queryParams.cityName = region[1]
+        this.queryParams.districtName = region[2]
+        console.log(this.queryParams)
+      }
       this.queryParams.pageNum = 1
       this.getList()
     },

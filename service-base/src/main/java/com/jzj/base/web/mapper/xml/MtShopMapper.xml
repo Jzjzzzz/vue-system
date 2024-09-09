@@ -59,5 +59,6 @@
             <if test="tenantName != null  and tenantName != ''">and tenant_name like concat('%', #{tenantName}, '%')
             </if>
         </where>
+        ORDER BY create_time DESC
     </select>
 </mapper>

@@ -50,28 +50,6 @@ public class MtLogServiceImpl extends ServiceImpl<MtLogMapper, MtLog> implements
     }
 
     /**
-     * 新增i茅台执行日志
-     *
-     * @param mtLog i茅台执行日志
-     * @return 结果
-     */
-    @Override
-    public int insertMtLog(MtLog mtLog) {
-        return mtLogMapper.insert(mtLog);
-    }
-
-    /**
-     * 修改i茅台执行日志
-     *
-     * @param mtLog i茅台执行日志
-     * @return 结果
-     */
-    @Override
-    public int updateMtLog(MtLog mtLog) {
-        return mtLogMapper.updateById(mtLog);
-    }
-
-    /**
      * 批量删除i茅台执行日志
      *
      * @param ids 需要删除的i茅台执行日志主键
@@ -80,17 +58,6 @@ public class MtLogServiceImpl extends ServiceImpl<MtLogMapper, MtLog> implements
     @Override
     public int deleteMtLogByIds(String[] ids) {
         return mtLogMapper.deleteBatchIds(Arrays.asList(ids));
-    }
-
-    /**
-     * 删除i茅台执行日志信息
-     *
-     * @param id i茅台执行日志主键
-     * @return 结果
-     */
-    @Override
-    public int deleteMtLogById(String id) {
-        return mtLogMapper.deleteById(id);
     }
 
     /**
@@ -111,6 +78,5 @@ public class MtLogServiceImpl extends ServiceImpl<MtLogMapper, MtLog> implements
 
         AsyncManager.me().execute(AsyncFactory.mtLogRecords(log));
         //TODO 预约推送功能
-        //PushPlusApi.sendNotice(iUser, operLog);
     }
 }

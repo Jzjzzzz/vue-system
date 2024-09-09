@@ -54,16 +54,6 @@ public class MtShopServiceImpl extends ServiceImpl<MtShopMapper, MtShop> impleme
     @Autowired
     private MtItemService mtItemService;
 
-    public static Double getDisdance(MapPoint point1, MapPoint point2) {
-        double lat1 = (point1.getLatitude() * Math.PI) / 180; //将角度换算为弧度
-        double lat2 = (point2.getLatitude() * Math.PI) / 180; //将角度换算为弧度
-        double latDifference = lat1 - lat2;
-        double lonDifference = (point1.getLongitude() * Math.PI) / 180 - (point2.getLongitude() * Math.PI) / 180;
-        //计算两点之间距离   6378137.0 取自WGS84标准参考椭球中的地球长半径(单位:m)
-        return 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(latDifference / 2), 2)
-                + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(lonDifference / 2), 2))) * 6378137.0;
-    }
-
     /**
      * 查询i茅台商店
      *
@@ -128,7 +118,6 @@ public class MtShopServiceImpl extends ServiceImpl<MtShopMapper, MtShop> impleme
         List<MtShop> iShops = selectShopList();
         //获取今日的门店信息列表
         List<MtShop> list = iShops.stream().filter(i -> shopIdList.contains(i.getIShopId())).collect(Collectors.toList());
-
         String shopId = "";
         if (shopType == 1) {
             //预约本市出货量最大的门店
@@ -141,17 +130,9 @@ public class MtShopServiceImpl extends ServiceImpl<MtShopMapper, MtShop> impleme
             //预约本省距离最近的门店
             shopId = getMinDistanceShopId(list, province, lat, lng);
         }
-
-//        if (shopType == 2) {
-//            // 预约本省距离最近的门店
-//            shopId = getMinDistanceShopId(list, province, lat, lng);
-//        }
-
         if (StringUtils.isEmpty(shopId)) {
             throw new ServiceException("申购时根据类型获取的门店商品id为空");
         }
-
-
         return shopId;
     }
 
@@ -170,11 +151,8 @@ public class MtShopServiceImpl extends ServiceImpl<MtShopMapper, MtShop> impleme
     }
 
     public List<IMTItemInfo> reGetShopsByProvince(String province, String itemId) {
-
         long dayTime = LocalDate.now().atStartOfDay().toInstant(ZoneOffset.of("+8")).toEpochMilli();
-
         String url = "https://static.moutai519.com.cn/mt-backend/xhr/front/mall/shop/list/slim/v3/" + mtItemService.getCurrentSessionId() + "/" + province + "/" + itemId + "/" + dayTime;
-
         String urlRes = HttpUtil.get(url);
         JSONObject res = null;
         try {
@@ -184,8 +162,6 @@ public class MtShopServiceImpl extends ServiceImpl<MtShopMapper, MtShop> impleme
             log.error(message);
             throw new ServiceException(message);
         }
-
-//        JSONObject res = JSONObject.parseObject(HttpUtil.get(url));
         if (!res.containsKey("code") || !res.getString("code").equals("2000")) {
             String message = StringUtils.format("查询所在省市的投放产品和数量error: %s", url);
             log.error(message);
@@ -193,10 +169,8 @@ public class MtShopServiceImpl extends ServiceImpl<MtShopMapper, MtShop> impleme
         }
         //组合信息
         List<IMTItemInfo> imtItemInfoList = new ArrayList<>();
-
         JSONObject data = res.getJSONObject("data");
         JSONArray shopList = data.getJSONArray("shops");
-
         for (Object obj : shopList) {
             JSONObject shops = (JSONObject) obj;
             JSONArray items = shops.getJSONArray("items");
@@ -208,10 +182,7 @@ public class MtShopServiceImpl extends ServiceImpl<MtShopMapper, MtShop> impleme
                     //添加
                     imtItemInfoList.add(iItem);
                 }
-
             }
-
-
         }
         return imtItemInfoList;
     }
@@ -287,5 +258,15 @@ public class MtShopServiceImpl extends ServiceImpl<MtShopMapper, MtShop> impleme
         List<MtShop> collect = iShopList.stream().sorted(Comparator.comparing(MtShop::getDistance)).collect(Collectors.toList());
 
         return collect.get(0).getIShopId();
+    }
+
+    public static Double getDisdance(MapPoint point1, MapPoint point2) {
+        double lat1 = (point1.getLatitude() * Math.PI) / 180; //将角度换算为弧度
+        double lat2 = (point2.getLatitude() * Math.PI) / 180; //将角度换算为弧度
+        double latDifference = lat1 - lat2;
+        double lonDifference = (point1.getLongitude() * Math.PI) / 180 - (point2.getLongitude() * Math.PI) / 180;
+        //计算两点之间距离   6378137.0 取自WGS84标准参考椭球中的地球长半径(单位:m)
+        return 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(latDifference / 2), 2)
+                + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(lonDifference / 2), 2))) * 6378137.0;
     }
 }

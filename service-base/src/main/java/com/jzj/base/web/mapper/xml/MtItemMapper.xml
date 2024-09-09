@@ -37,5 +37,6 @@
             <if test="itemCode != null  and itemCode != ''">and item_code = #{itemCode}</if>
             <if test="title != null  and title != ''">and title = #{title}</if>
         </where>
+        ORDER BY create_time DESC
     </select>
 </mapper>

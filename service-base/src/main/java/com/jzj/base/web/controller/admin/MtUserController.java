@@ -82,10 +82,8 @@ public class MtUserController extends BaseController {
         return toAjax(mtUserService.login(mobile, code, deviceId));
     }
 
-    /**
-     * 预约
-     */
-    @GetMapping(value = "/reservation", name = "预约")
+    @ApiOperation("预约")
+    @GetMapping("/reservation")
     public R reservation(String id) {
         MtUser user = mtUserService.getById(id);
         if (user == null) {
@@ -96,6 +94,18 @@ public class MtUserController extends BaseController {
         }
         mtUserService.reservation(user);
         return R.ok();
+    }
+
+    @ApiOperation("小茅运旅行活动")
+    @GetMapping("/travelReward")
+    public R travelReward(String id) {
+        MtUser user = mtUserService.getById(id);
+        if (user == null) {
+            return R.error("用户不存在");
+        } else {
+            mtUserService.getTravelReward(user);
+            return R.ok();
+        }
     }
 
 }
