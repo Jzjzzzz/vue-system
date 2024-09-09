@@ -1,7 +1,7 @@
-package com.jzj.job.task;
+package com.jzj.base.job;
 
 
-import com.jzj.job.task.base.BaseJob;
+import com.jzj.job.base.BaseJob;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 
@@ -9,11 +9,11 @@ import java.util.Date;
 
 /**
  * <p>
- * 使用示例
+ * 定时任务使用案例
  * </p>
  *
  * @author Jzj
- * @since  2022-08-22
+ * @since 2022-08-22
  */
 @Slf4j
 public class HelloJob implements BaseJob {
