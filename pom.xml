@@ -199,7 +199,7 @@
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                     <compilerArguments>
-                        <bootclasspath>${env.JAVA_HOME}/jre/lib/rt.jar</bootclasspath>
+                        <bootclasspath>${java.home}/lib/rt.jar${path.separator}${java.home}/lib/jce.jar</bootclasspath>
                     </compilerArguments>
                 </configuration>
             </plugin>
