@@ -44,15 +44,15 @@
     <el-table v-loading="loading" :data="list">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序号" align="center" type="index" />
-      <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true" />
-      <el-table-column label="任务所在组" align="center" prop="jobGroup" :show-overflow-tooltip="true" />
-      <el-table-column label="任务类名" align="center" prop="jobClassName" />
-      <el-table-column label="触发器名称" align="center" prop="triggerName" />
-      <el-table-column label="触发器所在组" align="center" prop="triggerGroup" />
-      <el-table-column label="表达式" align="center" prop="cronExpression" />
-      <el-table-column label="时区" align="center" prop="timeZoneId" />
+      <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true" min-width="200px" />
+      <el-table-column label="任务所在组" align="center" prop="jobGroup" :show-overflow-tooltip="true" min-width="150px" />
+      <el-table-column label="任务类名" align="center" prop="jobClassName" :show-overflow-tooltip="true" min-width="200px" />
+      <el-table-column label="触发器名称" align="center" prop="triggerName" :show-overflow-tooltip="true" min-width="200px" />
+      <el-table-column label="触发器所在组" align="center" prop="triggerGroup" :show-overflow-tooltip="true" min-width="150px" />
+      <el-table-column label="表达式" align="center" prop="cronExpression" :show-overflow-tooltip="true" min-width="120px" />
+      <el-table-column label="时区" align="center" prop="timeZoneId" :show-overflow-tooltip="true" min-width="120px" />
       <el-table-column label="状态" align="center" prop="triggerState" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="220px">
         <template v-slot="scope">
           <el-button
             size="mini"
