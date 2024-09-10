@@ -96,8 +96,7 @@ public class MtUser extends CommonEntity {
         this.jsonResult = StringUtils.substring(jsonObject.toJSONString(), 0, 2000);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 30);
-        Date thirtyDaysLater = calendar.getTime();
-        this.expireTime = thirtyDaysLater;
+        this.expireTime = calendar.getTime();
     }
 
     public MtUser(Long mobile, String deviceId, JSONObject jsonObject) {
@@ -112,11 +111,9 @@ public class MtUser extends CommonEntity {
         if (StringUtils.isEmpty(this.remark)) {
             this.remark = data.getString("userName");
         }
-
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 30);
-        Date thirtyDaysLater = calendar.getTime();
-        this.expireTime = thirtyDaysLater;
+        this.expireTime = calendar.getTime();
     }
 
 

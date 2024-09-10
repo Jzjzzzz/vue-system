@@ -63,4 +63,18 @@
         </where>
         ORDER BY create_time DESC
     </select>
+    <select id="selectReservationUser" resultType="com.jzj.base.web.pojo.entity.MtUser">
+        <include refid="selectMtUserVo"></include>
+        <where>
+            <if test="minute != -1">
+                AND minute = #{minute}
+            </if>
+            AND lat != ''
+            AND lat IS NOT NULL
+            AND lng != ''
+            AND lng IS NOT NULL
+            AND item_code != ''
+            AND item_code IS NOT NULL
+        </where>
+    </select>
 </mapper>

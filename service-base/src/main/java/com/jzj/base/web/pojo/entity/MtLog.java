@@ -26,6 +26,4 @@ public class MtLog extends CommonEntity {
 
     @ApiModelProperty(value = "日志记录内容 ")
     private String logContent;
-
-
 }

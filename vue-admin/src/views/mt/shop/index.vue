@@ -74,21 +74,21 @@
         >获取商店列表
         </el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
+      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
     </el-row>
 
     <el-table v-loading="loading" :data="shopList" @selection-change="handleSelectionChange">
-      <el-table-column align="center" fixed label="序号" type="index"/>
-      <el-table-column align="center" fixed label="店铺ID" prop="ishopId" width="150px"/>
-      <el-table-column align="center" label="省份" prop="provinceName"/>
-      <el-table-column align="center" label="城市" prop="cityName"/>
-      <el-table-column align="center" label="地区" prop="districtName"/>
+      <el-table-column align="center" fixed label="序号" type="index" />
+      <el-table-column align="center" fixed label="店铺ID" prop="ishopId" width="150px" />
+      <el-table-column align="center" label="省份" prop="provinceName" />
+      <el-table-column align="center" label="城市" prop="cityName" />
+      <el-table-column align="center" label="地区" prop="districtName" />
 
-      <el-table-column align="center" label="纬度" prop="lat" width="100px"/>
-      <el-table-column align="center" label="经度" prop="lng" width="100px"/>
-      <el-table-column align="center" label="名称" prop="name" width="300px"/>
-      <el-table-column align="center" label="地址" prop="fullAddress" width="300px"/>
-      <el-table-column align="center" label="公司名称" prop="tenantName" width="200px"/>
+      <el-table-column align="center" label="纬度" prop="lat" width="100px" />
+      <el-table-column align="center" label="经度" prop="lng" width="100px" />
+      <el-table-column align="center" label="名称" prop="name" width="300px" />
+      <el-table-column align="center" label="地址" prop="fullAddress" width="300px" />
+      <el-table-column align="center" label="公司名称" prop="tenantName" width="200px" />
       <el-table-column align="center" label="创建时间" prop="createTime" width="180">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -107,8 +107,8 @@
 </template>
 
 <script>
-import {addShop, listShop} from '@/api/mt/shop'
-import {pcaTextArr} from 'element-china-area-data'
+import { addShop, listShop } from '@/api/mt/shop'
+import { pcaTextArr } from 'element-china-area-data'
 
 export default {
   name: 'Shop',

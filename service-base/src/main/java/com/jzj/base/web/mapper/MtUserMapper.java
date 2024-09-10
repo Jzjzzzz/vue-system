@@ -2,6 +2,7 @@ package com.jzj.base.web.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jzj.base.web.pojo.entity.MtUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface MtUserMapper extends BaseMapper<MtUser> {
      */
     List<MtUser> selectMtUserList(MtUser mtUser);
 
+    /**
+     * 查询预约用户列表
+     */
+    List<MtUser> selectReservationUser(@Param("minute")int minute);
 }

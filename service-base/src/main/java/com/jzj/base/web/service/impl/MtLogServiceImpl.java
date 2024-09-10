@@ -79,4 +79,9 @@ public class MtLogServiceImpl extends ServiceImpl<MtLogMapper, MtLog> implements
         AsyncManager.me().execute(AsyncFactory.mtLogRecords(log));
         //TODO 预约推送功能
     }
+
+    @Override
+    public int insertLog(MtLog iLog) {
+        return mtLogMapper.insert(iLog);
+    }
 }

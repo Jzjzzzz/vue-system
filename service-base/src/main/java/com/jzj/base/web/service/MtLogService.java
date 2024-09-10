@@ -46,4 +46,11 @@ public interface MtLogService extends IService<MtLog> {
      * @param logContent 内容
      */
     void reservation(MtUser iUser, String logContent);
+
+    /**
+     * 新增操作日志
+     *
+     * @param iLog 操作日志对象
+     */
+    public int insertLog(MtLog iLog);
 }

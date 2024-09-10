@@ -1,6 +1,7 @@
 package com.jzj.base.web.controller.admin;
 
 import com.jzj.base.web.pojo.entity.MtUser;
+import com.jzj.base.web.service.MtApiService;
 import com.jzj.base.web.service.MtUserService;
 import com.jzj.common.annotation.Log;
 import com.jzj.common.controller.BaseController;
@@ -29,6 +30,9 @@ public class MtUserController extends BaseController {
 
     @Autowired
     private MtUserService mtUserService;
+
+    @Autowired
+    private MtApiService mtApiService;
 
     @ApiOperation("分页列表")
     @PreAuthorize("hasAuthority('mt.user.list')")
@@ -73,13 +77,13 @@ public class MtUserController extends BaseController {
     @ApiOperation("发送验证码")
     @GetMapping("/sendCode")
     public R sendCode(String mobile, String deviceId) {
-        return toAjax(mtUserService.sendCode(mobile, deviceId));
+        return toAjax(mtApiService.sendCode(mobile, deviceId));
     }
 
     @ApiOperation("登录")
     @GetMapping("/login")
     public R login(String mobile, String code, String deviceId) {
-        return toAjax(mtUserService.login(mobile, code, deviceId));
+        return toAjax(mtApiService.login(mobile, code, deviceId));
     }
 
     @ApiOperation("预约")
@@ -92,7 +96,7 @@ public class MtUserController extends BaseController {
         if (StringUtils.isEmpty(user.getItemCode())) {
             return R.error("商品预约code为空");
         }
-        mtUserService.reservation(user);
+        mtApiService.reservation(user);
         return R.ok();
     }
 
@@ -103,7 +107,7 @@ public class MtUserController extends BaseController {
         if (user == null) {
             return R.error("用户不存在");
         } else {
-            mtUserService.getTravelReward(user);
+            mtApiService.getTravelReward(user);
             return R.ok();
         }
     }

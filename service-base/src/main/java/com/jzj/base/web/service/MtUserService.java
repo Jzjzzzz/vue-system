@@ -56,39 +56,17 @@ public interface MtUserService extends IService<MtUser> {
     int deleteMtUserByIds(String[] ids);
 
     /**
-     * 发送验证码
-     *
-     * @param mobile   手机号
-     * @param deviceId 设备id
+     * 通过预约执行分钟查询预约用户列表
      */
-    Boolean sendCode(String mobile, String deviceId);
+    List<MtUser> selectReservationUserByMinute(int minute);
 
     /**
-     * 获取i茅台app版本号
+     * 预购时间每日重置(9-10 0-59分)
      */
-    String getMTVersion();
+    void resetTimeDaily();
 
     /**
-     * 登录
-     *
-     * @param mobile   手机号
-     * @param code     code
-     * @param deviceId 设备id
+     * 查询预约用户列表
      */
-    Boolean login(String mobile, String code, String deviceId);
-
-    /**
-     * 预约
-     */
-    void reservation(MtUser user);
-
-    /**
-     * 获取申购耐力值
-     */
-    String getEnergyAward(MtUser iUser);
-
-    /**
-     * 获得旅行奖励
-     */
-    void getTravelReward(MtUser user);
+    List<MtUser> selectReservationUser();
 }

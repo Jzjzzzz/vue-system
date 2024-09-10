@@ -82,25 +82,25 @@
         >删除
         </el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
+      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
     </el-row>
 
     <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
-      <el-table-column align="center" type="selection" width="55"/>
-      <el-table-column align="center" label="序号" type="index"/>
-      <el-table-column align="center" label="手机号" prop="mobile" width="110px"/>
-      <el-table-column align="center" label="省份" prop="provinceName"/>
-      <el-table-column align="center" label="城市" prop="cityName"/>
-      <el-table-column align="center" label="地址" prop="address"/>
-      <el-table-column align="center" label="预约分钟" prop="minute"/>
+      <el-table-column align="center" type="selection" width="55" />
+      <el-table-column align="center" label="序号" type="index" />
+      <el-table-column align="center" label="手机号" prop="mobile" width="110px" />
+      <el-table-column align="center" label="省份" prop="provinceName" />
+      <el-table-column align="center" label="城市" prop="cityName" />
+      <el-table-column align="center" label="地址" prop="address" />
+      <el-table-column align="center" label="预约分钟" prop="minute" />
       <el-table-column align="center" label="预约类型" prop="shopType">
         <template v-slot="scope">
-          <dict-tag :options="dict.type.mt_pre_type" :value="scope.row.shopType"/>
+          <dict-tag :options="dict.type.mt_pre_type" :value="scope.row.shopType" />
         </template>
       </el-table-column>
       <el-table-column align="center" label="是否随机时间预约" prop="randomMinute" width="150px">
         <template v-slot="scope">
-          <dict-tag :options="dict.type.mt_pre_random" :value="scope.row.randomMinute"/>
+          <dict-tag :options="dict.type.mt_pre_random" :value="scope.row.randomMinute" />
         </template>
       </el-table-column>
       <el-table-column align="center" label="到期时间" prop="expireTime" width="180">
@@ -164,7 +164,7 @@
     <el-dialog :title="title" :visible.sync="openAdd" append-to-body>
       <el-form ref="form" :model="form">
         <el-form-item label="手机号" prop="mobile">
-          <el-input v-model="form.mobile" placeholder="请输入i茅台用户手机号"/>
+          <el-input v-model="form.mobile" placeholder="请输入i茅台用户手机号" />
           <div style="margin-top: 10px">
             <el-button
               :disabled="state"
@@ -176,7 +176,7 @@
         </el-form-item>
 
         <el-form-item label="验证码" prop="userId">
-          <el-input v-model="form.code" placeholder="请输入验证码"/>
+          <el-input v-model="form.code" placeholder="请输入验证码" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -192,19 +192,19 @@
     <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="i茅台手机号" prop="mobile">
-          <el-input v-model="form.mobile" placeholder="请输入i茅台手机号"/>
+          <el-input v-model="form.mobile" placeholder="请输入i茅台手机号" disabled />
         </el-form-item>
         <el-form-item label="i茅台用户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入i茅台用户id"/>
+          <el-input v-model="form.userId" placeholder="请输入i茅台用户id" disabled />
         </el-form-item>
         <el-form-item label="i茅台toekn" prop="token">
-          <el-input v-model="form.token" placeholder="请输入i茅台toekn"/>
+          <el-input v-model="form.token" placeholder="请输入i茅台toekn" disabled />
         </el-form-item>
         <el-form-item label="i茅台cookie" prop="cookie">
-          <el-input v-model="form.cookie" placeholder="请输入i茅台cookie"/>
+          <el-input v-model="form.cookie" placeholder="请输入i茅台cookie" disabled />
         </el-form-item>
         <el-form-item label="设备id" prop="deviceId">
-          <el-input v-model="form.deviceId" placeholder="请输入设备id"/>
+          <el-input v-model="form.deviceId" placeholder="请输入设备id" disabled />
         </el-form-item>
         <el-form-item label="预约code" prop="itemCode">
           <el-select
@@ -222,10 +222,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="店铺id" prop="ishopId">
-          <el-input v-model="form.ishopId" placeholder="请输入门店商品id"/>
+          <el-input v-model="form.ishopId" placeholder="请输入门店商品id" />
         </el-form-item>
-        <el-form-item label="预约的分钟" prop="minute">
-          <el-input v-model="form.minute" placeholder="请输入预约的分钟"/>
+        <el-form-item label="自动预约时间" prop="minute">
+          <el-input v-model="form.minute" placeholder="请输入预约的分钟" />
         </el-form-item>
         <el-form-item label="预约类型" prop="shopType">
           <el-select v-model="form.shopType" placeholder="请选择预约类型">
@@ -247,11 +247,11 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="推送token" prop="pushPlusToken">
-          <el-input v-model="form.pushPlusToken" placeholder="请输入推送token"/>
-        </el-form-item>
+<!--        <el-form-item label="推送token" prop="pushPlusToken">-->
+<!--          <el-input v-model="form.pushPlusToken" placeholder="请输入推送token" />-->
+<!--        </el-form-item>-->
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注"/>
+          <el-input v-model="form.remark" placeholder="请输入备注" />
         </el-form-item>
         <el-form-item label="到期时间" prop="expireTime">
           <el-date-picker
@@ -283,7 +283,7 @@ import {
   travelReward,
   updateUser
 } from '@/api/mt/user'
-import {itemAll} from '@/api/mt/item'
+import { itemAll } from '@/api/mt/item'
 
 export default {
   name: 'User',
@@ -332,7 +332,7 @@ export default {
       // 表单校验
       rules: {
         mobile: [
-          {required: true, message: 'i茅台手机号不能为空', trigger: 'blur'}
+          { required: true, message: 'i茅台手机号不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -412,7 +412,7 @@ export default {
     guid() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
         /[xy]/g,
-        function (c) {
+        function(c) {
           var r = (Math.random() * 16) | 0
           var v = c === 'x' ? r : (r & 0x3) | 0x8
           return v.toString(16)
@@ -534,7 +534,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$modal.confirm('是否确认删除i茅台用户编号为"' + ids + '"的数据项？').then(function () {
+      this.$modal.confirm('是否确认删除i茅台用户编号为"' + ids + '"的数据项？').then(function() {
         return delUser(ids)
       }).then(() => {
         this.getList()
