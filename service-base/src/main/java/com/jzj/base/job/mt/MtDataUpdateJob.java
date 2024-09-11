@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @since 2024/9/10 11:57
  */
 @Slf4j
-public class MtDataUpdate implements BaseJob {
+public class MtDataUpdateJob implements BaseJob {
 
     @Autowired
     private MtShopService mtShopService;

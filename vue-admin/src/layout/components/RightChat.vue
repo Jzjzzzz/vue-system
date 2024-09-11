@@ -3,38 +3,45 @@
     <button class="btn-z" @click="handleBtn">
       <div class="svg-wrapper-1">
         <div class="svg-wrapper">
-          <svg class="icon" height="200" p-id="10952" t="1725009156870" version="1.1"
-               viewBox="0 0 1024 1024" width="200" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            class="icon"
+            height="200"
+            p-id="10952"
+            t="1725009156870"
+            version="1.1"
+            viewBox="0 0 1024 1024"
+            width="200"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M818.564313 1023.999795H512.355665a511.975279 511.975279 0 1 1 368.34894-156.756015v94.369542a62.283898 62.283898 0 0 1-62.242867 62.304412zM512.355665 73.677994a438.572188 438.572188 0 1 0 0 877.144376h295.27409v-98.718747a36.393819 36.393819 0 0 1 11.016619-26.115745A438.469612 438.469612 0 0 0 512.355665 73.677994z"
-              p-id="10953"/>
+              p-id="10953"
+            />
             <path
               d="M512.355665 701.502143a234.775008 234.775008 0 0 1-234.508311-234.508311 36.537425 36.537425 0 0 1 73.074849 0 161.433462 161.433462 0 1 0 322.866924 0 36.537425 36.537425 0 0 1 73.07485 0A234.775008 234.775008 0 0 1 512.355665 701.502143z"
-              p-id="10954"/>
+              p-id="10954"
+            />
           </svg>
         </div>
       </div>
-      <span>聊天</span>
+      <span>操作指引</span>
     </button>
     <el-dialog :visible.sync="open" append-to-body>
-      <div class="chat-card">
-        <div ref="body" class="chat-body"/>
-        <el-form ref="form" :model="form">
-          <div class="chat-footer">
-            <el-select v-model="form.toUid" placeholder="选择私聊用户" style="padding-right: 5px">
-              <el-option v-for="user in users" :key="user.id" :label="user.username" :value="user.id"/>
-            </el-select>
-            <el-input v-model="form.message" placeholder="输入消息"/>
-            <button @click="onSubmit">发送</button>
-          </div>
-        </el-form>
+      <div class="block">
+        <el-timeline :reverse="reverse">
+          <el-timeline-item
+            v-for="(activity, index) in activities"
+            :key="index"
+            :timestamp="activity.timestamp">
+            {{activity.content}}
+          </el-timeline-item>
+        </el-timeline>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
 
-import {getLine} from '@/api/system/user'
 
 export default {
   name: 'RightChat',
@@ -45,88 +52,35 @@ export default {
         message: '',
         toUid: ''
       },
-      users: []
+      users: [],
+      reverse: false,
+      activities: [{
+        content: '在用户列表页面新增账号',
+        timestamp: '第一步'
+      }, {
+        content: '去商店列表搜索距离你最近区域的商店，复制店铺ID',
+        timestamp: '第二步'
+      }, {
+        content: '返回用户列表修改你刚刚新增的账号，把刚刚的店铺id复制进去',
+        timestamp: '第三步'
+      },{
+        content: '继续修改其他信息,比如需要购买啥商品，是否随机时间执行预约等',
+        timestamp: '第四步'
+      }]
     }
-  },
-  created() {
-    this.getUserList()
   },
   methods: {
-    getUserList() {
-      getLine().then(res => {
-        this.users = res.data
-      })
-    },
-    addMessage(data, type) {
-      const body = this.$refs.body
-      const messageDiv = document.createElement('div')
-      messageDiv.className = type
-      messageDiv.setAttribute('data-v-1a9b9037', '')
-      messageDiv.innerHTML = `<p>${data}</p>`
-      body.appendChild(messageDiv)
-      this.scrollToBottom()
-    },
-    scrollToBottom() {
-      const body = this.$refs.body
-      body.scrollTop = body.scrollHeight
-    },
-    onSubmit() {
-      if (this.form.toUid === '') {
-        this.$modal.msgError('请选择私聊用户')
-      } else {
-        this.$socket.emit('chat', this.form)
-        this.addMessage(this.form.message, 'message outgoing')
-      }
-    },
     handleBtn() {
       this.open = true
-    }
-  },
-  sockets: {
-    chat: function (data) {
-      this.addMessage(data, 'message incoming')
     }
   }
 }
 </script>
 <style scoped>
-.chat-card {
-  width: 600px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.chat-body {
-  padding: 20px;
-}
-
-.message {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.incoming {
-  background-color: #e1e1e1;
-}
-
-.outgoing {
-  background-color: #f2f2f2;
-  text-align: right;
-}
-
 .message p {
   font-size: 14px;
   color: #333;
   margin: 0;
-}
-
-.chat-footer {
-  padding: 10px;
-  background-color: #f2f2f2;
-  display: flex;
 }
 
 .chat-footer input[type="text"] {

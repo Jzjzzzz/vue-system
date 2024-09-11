@@ -1,5 +1,5 @@
 <template>
-  <a href="https://github.com/Jzjzzzz/vblog" target="_blank" class="github-corner" aria-label="查看GitHub源码">
+  <a href="http://jzjzzzz.cn/" target="_blank" class="github-corner" aria-label="个人博客">
     <svg
       width="80"
       height="80"

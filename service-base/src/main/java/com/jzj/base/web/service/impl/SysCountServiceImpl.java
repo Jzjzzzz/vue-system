@@ -1,11 +1,11 @@
 package com.jzj.base.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jzj.base.web.service.*;
 import com.jzj.common.utils.DateUtils;
 import com.jzj.base.web.mapper.SysCountMapper;
 import com.jzj.base.web.pojo.entity.SysCount;
 import com.jzj.base.web.pojo.vo.BeforeDayCountVo;
-import com.jzj.base.web.service.SysCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,17 +26,25 @@ public class SysCountServiceImpl extends ServiceImpl<SysCountMapper, SysCount> i
     @Autowired
     private SysCountMapper sysCountMapper;
 
+    @Autowired
+    private MtUserService mtUserService;
+
+    @Autowired
+    private MtItemService mtItemService;
+
+    @Autowired
+    private MtShopService mtShopService;
+
+    @Autowired
+    private MtLogService mtLogService;
+
     @Override
     public SysCount getCount() {
-        SysCount sysCount;
-        sysCount = sysCountMapper.getBeforeDayCount();
-        if (sysCount == null) {
-            sysCount = new SysCount();
-            sysCount.setArticleCount(0L);
-            sysCount.setLikeCount(0L);
-            sysCount.setClickCount(0L);
-            sysCount.setSummaryCount(0L);
-        }
+        SysCount sysCount = new SysCount();
+        sysCount.setArticleCount(mtUserService.count());
+        sysCount.setLikeCount(mtLogService.count());
+        sysCount.setClickCount(mtShopService.count());
+        sysCount.setSummaryCount(mtItemService.count());
         return sysCount;
     }
 

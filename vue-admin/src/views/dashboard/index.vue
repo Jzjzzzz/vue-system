@@ -2,76 +2,18 @@
   <div class="dashboard-editor-container">
     <github-corner class="github-corner" />
     <panel-group />
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData1"  />
-    </el-row>
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData2" />
-    </el-row>
-
-
-    <el-row :gutter="8">
-      <el-col
-        :xs="{span: 24}"
-        :sm="{span: 24}"
-        :md="{span: 24}"
-        :lg="{span: 12}"
-        :xl="{span: 12}"
-        style="padding-right:8px;margin-bottom:30px;"
-      >
-        <transaction-table />
-      </el-col>
-      <el-col
-        :xs="{span: 24}"
-        :sm="{span: 12}"
-        :md="{span: 12}"
-        :lg="{span: 6}"
-        :xl="{span: 6}"
-        style="margin-bottom:30px;"
-      >
-        <todo-list />
-      </el-col>
-      <el-col
-        :xs="{span: 24}"
-        :sm="{span: 12}"
-        :md="{span: 12}"
-        :lg="{span: 6}"
-        :xl="{span: 6}"
-        style="margin-bottom:30px;"
-      >
-        <box-card />
-      </el-col>
-    </el-row>
   </div>
-
 </template>
 
 <script>
 import GithubCorner from '@/components/GithubCorner'
 import PanelGroup from './components/PanelGroup'
-import LineChart from './components/LineChart'
-import RaddarChart from './components/RaddarChart'
-import PieChart from './components/PieChart'
-import BarChart from './components/BarChart'
-import TransactionTable from './components/TransactionTable'
-import TodoList from './components/TodoList'
-import BoxCard from './components/BoxCard'
-import {getSevenCount} from "@/api/system/count";
+import { getSevenCount } from '@/api/system/count'
 export default {
   name: 'Dashboard',
   components: {
     GithubCorner,
-    PanelGroup,
-    LineChart,
-    RaddarChart,
-    PieChart,
-    BarChart,
-    TransactionTable,
-    TodoList,
-    BoxCard
-  },
-  created() {
-    this.getCount()
+    PanelGroup
   },
   data() {
     return {
@@ -84,12 +26,15 @@ export default {
         dataList: [],
         dateList: [],
         title: '点赞量'
-      },
+      }
     }
   },
+  created() {
+    this.getCount()
+  },
   methods: {
-    getCount(){
-      getSevenCount().then(res=>{
+    getCount() {
+      getSevenCount().then(res => {
         this.lineChartData1.dataList = res.data.clickDayCounts
         this.lineChartData1.dateList = res.data.dateList
         this.lineChartData2.dataList = res.data.likeDayCounts

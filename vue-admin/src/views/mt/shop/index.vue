@@ -13,7 +13,7 @@
         <el-cascader
           v-model="queryParams.region"
           :options="pcaTextArr"
-          size="large"
+          size="small"
         />
       </el-form-item>
       <el-form-item label="省份" prop="provinceName">

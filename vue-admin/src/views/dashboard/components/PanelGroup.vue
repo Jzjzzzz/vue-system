@@ -3,52 +3,52 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="article" class-name="card-panel-icon"/>
+          <svg-icon icon-class="article" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            文章数
+            用户数
           </div>
-          <count-to :start-val="0" :end-val="model.articleCount" :duration="2600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="model.articleCount" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="summary" class-name="card-panel-icon"/>
+          <svg-icon icon-class="summary" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            归档数
+            商品数
           </div>
-          <count-to :start-val="0" :end-val="model.summaryCount" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="model.summaryCount" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="see" class-name="card-panel-icon"/>
+          <svg-icon icon-class="see" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            点击数
+            商店数
           </div>
-          <count-to :start-val="0" :end-val="model.clickCount" :duration="3200" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="model.clickCount" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="comment" class-name="card-panel-icon"/>
+          <svg-icon icon-class="comment" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            点赞数
+            日志数
           </div>
-          <count-to :start-val="0" :end-val="model.likeCount" :duration="3600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="model.likeCount" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -57,7 +57,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
-import {getCount} from '@/api/system/count'
+import { getCount } from '@/api/system/count'
 
 export default {
   components: {

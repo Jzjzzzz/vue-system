@@ -1,7 +1,7 @@
 SOURCE_PATH=/usr/local/docker
-SERVER_NAME=vblog.jar
+SERVER_NAME=vue-system.jar
 TAG=latest
-SERVER_PORT=8081
+SERVER_PORT=8089
 CID=$(docker ps | grep "$SERVER_NAME" | awk '{print $1}')
 IID=$(docker images | grep "$SERVER_NAME:$TAG" | awk '{print $3}')
 if [ -n "$CID" ]; then

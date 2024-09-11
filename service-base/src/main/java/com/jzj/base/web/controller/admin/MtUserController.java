@@ -76,18 +76,24 @@ public class MtUserController extends BaseController {
 
     @ApiOperation("发送验证码")
     @GetMapping("/sendCode")
+    @PreAuthorize("hasAuthority('mt.user.add')")
+    @Log(title = "i茅台用户", businessType = BusinessType.OTHER)
     public R sendCode(String mobile, String deviceId) {
         return toAjax(mtApiService.sendCode(mobile, deviceId));
     }
 
     @ApiOperation("登录")
     @GetMapping("/login")
+    @PreAuthorize("hasAuthority('mt.user.add')")
+    @Log(title = "i茅台用户", businessType = BusinessType.OTHER)
     public R login(String mobile, String code, String deviceId) {
         return toAjax(mtApiService.login(mobile, code, deviceId));
     }
 
     @ApiOperation("预约")
     @GetMapping("/reservation")
+    @PreAuthorize("hasAuthority('mt.user.reserv')")
+    @Log(title = "i茅台用户", businessType = BusinessType.OTHER)
     public R reservation(String id) {
         MtUser user = mtUserService.getById(id);
         if (user == null) {
@@ -102,6 +108,8 @@ public class MtUserController extends BaseController {
 
     @ApiOperation("小茅运旅行活动")
     @GetMapping("/travelReward")
+    @PreAuthorize("hasAuthority('mt.user.travel')")
+    @Log(title = "i茅台用户", businessType = BusinessType.OTHER)
     public R travelReward(String id) {
         MtUser user = mtUserService.getById(id);
         if (user == null) {

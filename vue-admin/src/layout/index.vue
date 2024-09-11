@@ -7,7 +7,7 @@
         <navbar />
       </div>
       <app-main />
-      <RightChat></RightChat>
+      <RightChat />
     </div>
   </div>
 </template>
@@ -15,7 +15,7 @@
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
-import RightChat from "@/layout/components/RightChat.vue";
+import RightChat from '@/layout/components/RightChat.vue'
 
 export default {
   name: 'Layout',

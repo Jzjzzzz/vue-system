@@ -7,7 +7,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img src="../../assets/image/avg.jpg" height="80" width="80" alt="用户头像" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -16,15 +16,9 @@
               主页
             </el-dropdown-item>
           </router-link>
-          <el-dropdown-item  @click.native="dialogFormVisible = true">
+          <el-dropdown-item @click.native="dialogFormVisible = true">
             <span style="display:block;">个人资料</span>
           </el-dropdown-item>
-          <a target="_blank" href="https://github.com/Jzjzzzz/vblog">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>文档</el-dropdown-item>
-          </a>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">退出</span>
           </el-dropdown-item>
@@ -37,13 +31,13 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="修改密码" name="second">
             <el-form-item label="旧密码" :label-width="formLabelWidth">
-              <el-input type="password" v-model="form.oldpassword" autocomplete="off"></el-input>
+              <el-input v-model="form.oldpassword" type="password" autocomplete="off" />
             </el-form-item>
             <el-form-item label="新密码" :label-width="formLabelWidth">
-              <el-input type="password" v-model="form.newpassword1" autocomplete="off"></el-input>
+              <el-input v-model="form.newpassword1" type="password" autocomplete="off" />
             </el-form-item>
             <el-form-item label="新密码" :label-width="formLabelWidth">
-              <el-input type="password" v-model="form.newpassword2" autocomplete="off"></el-input>
+              <el-input v-model="form.newpassword2" type="password" autocomplete="off" />
             </el-form-item>
           </el-tab-pane>
         </el-tabs>
@@ -60,35 +54,35 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import {deleteImg} from "@/api/upload";
-import {updateUser} from "@/api/user"
+import { deleteImg } from '@/api/upload'
+import { updateUser } from '@/api/user'
 
 export default {
-  data(){
-    return{
+  components: {
+    Breadcrumb,
+    Hamburger
+  },
+  data() {
+    return {
       activeName: 'second',
       dialogFormVisible: false,
       form: {
         oldpassword: '',
-        newpassword1:'',
-        newpassword2:'',
-        avatar:''
+        newpassword1: '',
+        newpassword2: '',
+        avatar: ''
       },
-      //图片url
-      imgPath:'',
+      // 图片url
+      imgPath: '',
       formLabelWidth: '120px',
       BASE_API: process.env.VUE_APP_BASE_API, // 接口API地址
-      uploadUrl:'/api/upload/uploadImg?name=adminAvatar',
-      //文件上传类型
-      imgType:['png', 'jpg', 'jpeg']
+      uploadUrl: '/api/upload/uploadImg?name=adminAvatar',
+      // 文件上传类型
+      imgType: ['png', 'jpg', 'jpeg']
     }
-  },
-  components: {
-    Breadcrumb,
-    Hamburger
   },
   computed: {
     ...mapGetters([
@@ -100,26 +94,26 @@ export default {
     /** 提交按钮 */
     submitForm: function() {
       updateUser(this.form).then(response => {
-        this.$modal.msgSuccess("修改成功");
-        this.logout();
-      });
+        this.$modal.msgSuccess('修改成功')
+        this.logout()
+      })
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      console.log(tab, event)
     },
-    //图片回显
+    // 图片回显
     handleResponse(response) {
-      if(response.code===20000){
-        this.$modal.msgSuccess("上传文件成功")
+      if (response.code === 20000) {
+        this.$modal.msgSuccess('上传文件成功')
         this.imgPath = response.data.url
-        return response.data.url;
+        return response.data.url
       }
-      return this.$modal.msgError("上传文件失败");
+      return this.$modal.msgError('上传文件失败')
     },
-    //删除图片
-    beforeRemove(){
-      deleteImg(this.imgPath).then(response=>{
-        this.$modal.msgSuccess("删除成功")
+    // 删除图片
+    beforeRemove() {
+      deleteImg(this.imgPath).then(response => {
+        this.$modal.msgSuccess('删除成功')
       })
     },
     toggleSideBar() {

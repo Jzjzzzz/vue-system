@@ -8,7 +8,6 @@ export function getCount() {
   })
 }
 
-
 // 获取过去七天单日统计数据
 export function getSevenCount() {
   return request({

@@ -91,8 +91,7 @@
       <el-table-column align="center" label="手机号" prop="mobile" width="110px" />
       <el-table-column align="center" label="省份" prop="provinceName" />
       <el-table-column align="center" label="城市" prop="cityName" />
-      <el-table-column align="center" label="地址" prop="address" />
-      <el-table-column align="center" label="预约分钟" prop="minute" />
+      <el-table-column align="center" label="执行分钟" prop="minute" />
       <el-table-column align="center" label="预约类型" prop="shopType">
         <template v-slot="scope">
           <dict-tag :options="dict.type.mt_pre_type" :value="scope.row.shopType" />
@@ -111,6 +110,7 @@
       <el-table-column align="center" class-name="small-padding fixed-width" label="操作" width="300px">
         <template v-slot="scope">
           <el-button
+            :disabled="$hasBP('mt.user.reserv') === false"
             icon="el-icon-thumb"
             size="mini"
             type="text"
@@ -118,6 +118,7 @@
           >预约
           </el-button>
           <el-button
+            :disabled="$hasBP('mt.user.travel') === false"
             icon="el-icon-s-promotion"
             size="mini"
             type="text"
@@ -133,6 +134,7 @@
           >修改
           </el-button>
           <el-button
+            :disabled="$hasBP('mt.user.edit') === false"
             icon="el-icon-refresh"
             size="mini"
             type="text"

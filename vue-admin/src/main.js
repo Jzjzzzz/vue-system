@@ -25,8 +25,8 @@ import {
   selectDictLabel,
   selectDictLabels
 } from '@/utils/vblog'
-import {getDicts} from '@/api/system/dict/data'
-import {download} from '@/utils/request'
+import { getDicts } from '@/api/system/dict/data'
+import { download } from '@/utils/request'
 
 import plugins from './plugins' // plugins
 // 分页组件
@@ -41,8 +41,6 @@ import RightToolbar from '@/components/RightToolbar'
 import Editor from '@/components/Editor'
 // 普通图片上传组件
 import EleUploadImage from 'vue-ele-upload-image'
-import VueSocketIO from 'vue-socket.io'
-import socketIo from 'socket.io-client'
 // Markdown
 import mavonEditor from 'mavon-editor'
 
@@ -52,8 +50,6 @@ import formCreate from '@form-create/element-ui'
 // 自定义权限判断方法
 import hasBtnPermission from '@/utils/btn-permission'
 import directive from './directive'
-import {getToken} from '@/utils/auth' // directive
-
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -63,7 +59,7 @@ import {getToken} from '@/utils/auth' // directive
  * please remove it before going online ! ! !
  */
 if (process.env.NODE_ENV === 'production') {
-  const {mockXHR} = require('../mock')
+  const { mockXHR } = require('../mock')
   mockXHR()
 }
 
@@ -93,14 +89,6 @@ Vue.use(mavonEditor)
 Vue.use(directive)
 Vue.use(FcDesigner)
 Vue.use(formCreate)
-Vue.use(new VueSocketIO({
-  debug: true,
-  connection: socketIo('http://127.0.0.1:9999?token=' + getToken()),
-  transports: ['websocket'],
-  extraHeaders: {
-    'Access-Control-Allow-Origin': '*' // 设置跨域请求头
-  }
-}))
 DictData.install()
 
 Vue.config.productionTip = false

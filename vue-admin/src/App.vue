@@ -6,16 +6,7 @@
 
 <script>
 export default {
-  name: 'App',
-  sockets: {
-    broadcast: function(data) {
-      this.$notify({
-        title: '通知',
-        dangerouslyUseHTMLString: true,
-        message: data
-      })
-    }
-  }
+  name: 'App'
 }
 </script>
 <style>

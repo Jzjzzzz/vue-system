@@ -7,11 +7,11 @@ MAINTAINER "Jzj"
 
 WORKDIR app
 
-ADD vblog.jar /app/vblog.jar
+ADD vue-system.jar /app/vue-system.jar
 
 ENV TIME_ZONE=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE >  /etc/timezone
 
-EXPOSE 8081
+EXPOSE 8089
 
-CMD java -jar  -Xms512M -Xmx512M -Duser.timezone=GMT+8 /app/vblog.jar
+CMD java -jar  -Xms512M -Xmx512M -Duser.timezone=GMT+8 /app/vue-system.jar

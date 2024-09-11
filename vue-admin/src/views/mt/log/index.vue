@@ -59,17 +59,17 @@
         >删除
         </el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
+      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
     </el-row>
 
     <el-table v-loading="loading" :data="logList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column type="index" label="序号" align="center"/>
+      <el-table-column type="index" label="序号" align="center" />
 
       <el-table-column label="操作人员" align="center" prop="mobile" />
       <el-table-column label="操作状态" align="center" prop="status">
         <template v-slot="scope">
-          <dict-tag :options="dict.type.mt_pre_status" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.mt_pre_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="操作时间" align="center" prop="createTime" width="180">
@@ -110,14 +110,9 @@
     <!-- 添加或修改i茅台执行日志对话框 -->
     <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-input
-          v-model="form.logContent"
-          :rows="2"
-          autosize
-          disabled
-          placeholder="请输入内容"
-          type="textarea"
-        />
+        <el-descriptions>
+          <el-descriptions-item label="API调用结果">{{ form.logContent }}</el-descriptions-item>
+        </el-descriptions>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
@@ -127,7 +122,7 @@
 </template>
 
 <script>
-import {addLog, delLog, getLog, listLog, updateLog} from '@/api/mt/log'
+import { addLog, delLog, getLog, listLog, updateLog } from '@/api/mt/log'
 
 export default {
   name: 'Log',
@@ -254,7 +249,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$modal.confirm('是否确认删除i茅台执行日志编号为"' + ids + '"的数据项？').then(function () {
+      this.$modal.confirm('是否确认删除i茅台执行日志编号为"' + ids + '"的数据项？').then(function() {
         return delLog(ids)
       }).then(() => {
         this.getList()
