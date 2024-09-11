@@ -23,7 +23,7 @@ public class WebSocketApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        socketServer.start();
+        //socketServer.start();
         System.out.println("WebSocket 服务器启动成功!");
     }
 }
