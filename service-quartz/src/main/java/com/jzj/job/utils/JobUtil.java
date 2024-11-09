@@ -1,7 +1,7 @@
 package com.jzj.job.utils;
 
 
-import com.jzj.job.task.base.BaseJob;
+import com.jzj.job.base.BaseJob;
 
 /**
  * <p>

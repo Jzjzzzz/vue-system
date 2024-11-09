@@ -1,4 +1,4 @@
-package com.jzj.job.task.base;
+package com.jzj.job.base;
 
 import org.quartz.*;
 
