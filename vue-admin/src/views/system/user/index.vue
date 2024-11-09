@@ -65,6 +65,16 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
+          icon="el-icon-download"
+          plain
+          size="mini"
+          type="primary"
+          @click="dialogVisible = true"
+        >导入
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
           :disabled="multiple || $hasBP('btn.user.del')  === false"
           icon="el-icon-delete"
           plain
@@ -171,6 +181,33 @@
       :total="total"
       @pagination="getList"
     />
+
+    <el-dialog title="导入" :visible.sync="dialogVisible" width="30%">
+      <el-form>
+        <el-form-item label="请选择Excel文件">
+          <el-upload
+            :auto-upload="true"
+            :multiple="false"
+            :limit="1"
+            :on-exceed="fileUploadExceed"
+            :on-success="fileUploadSuccess"
+            :on-error="fileUploadError"
+            :action="BASE_API + 'api/excel/import'"
+            name="file"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            :data="{code:'user'}"
+            :headers="header"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">
+          取消
+        </el-button>
+      </div>
+    </el-dialog>
 
     <!-- 添加或修改对话框 -->
     <el-dialog :title="title" :visible.sync="open" append-to-body >
@@ -280,6 +317,7 @@
 <script>
 import {list, get, del, add, update, restPassword, allocationRole, offLine} from '@/api/system/user'
 import {listAll} from '@/api/system/role'
+import {getToken} from '@/utils/auth'
 export default {
   name: 'User',
   dicts: ['sys_user_sex', 'currency_status'],
@@ -310,6 +348,11 @@ export default {
       openRole: false,
       // 重置密码弹出层
       openPassword: false,
+      dialogVisible: false, //文件上传对话框是否显示
+      BASE_API: process.env.VUE_APP_BASE_API, //获取后端接口地址
+      header:{
+        token: getToken()
+      },
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -338,6 +381,23 @@ export default {
     this.getList()
   },
   methods: {
+    // 上传多于一个文件时
+    fileUploadExceed() {
+      this.$message.warning('只能选取一个文件')
+    },
+    //上传成功回调
+    fileUploadSuccess(response) {
+      if (response.code === 0) {
+        this.$message.success('数据导入成功')
+        this.dialogVisible = false
+      } else {
+        this.$message.error(response.message)
+      }
+    },
+    //上传失败回调
+    fileUploadError(error) {
+      this.$message.error('数据导入失败')
+    },
     /** 查询列表 */
     getList() {
       this.isPreList('btn.user.list')
